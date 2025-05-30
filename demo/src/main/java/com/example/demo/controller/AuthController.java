@@ -35,8 +35,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        System.out.println("📅 Tanggal Lahir dari Request: " + request.getTanggalLahir());
-
+        // Cek apakah username sudah dipakai
         if (userService.existsByUsername(request.getUsername())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username sudah digunakan.");
         }
@@ -54,5 +53,4 @@ public class AuthController {
 
         return ResponseEntity.ok("Registrasi berhasil!");
     }
-
 }
