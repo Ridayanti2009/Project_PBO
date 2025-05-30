@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/registrasi.css">
+</head>
+<body>
+    <!-- Floating Background Elements -->
+    <div class="floating-elements">
+        <div class="floating-cake">🎂</div>
+        <div class="floating-cake">🧁</div>
+        <div class="floating-cake">🍰</div>
+        <div class="floating-cake">🎂</div>
+        <div class="floating-cake">🧁</div>
+        <div class="floating-cake">🍰</div>
+    </div>
+
+    <!-- Register Container -->
+    <div class="register-container">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <input type="text" id="nama" placeholder="Nama Lengkap" required />
+            <input type="email" id="email" placeholder="Email" required />
+            <input type="text" id="username" placeholder="Username" required />
+            <input type="password" id="password" placeholder="Password" required />
+            <input type="text" id="nomorTelepon" placeholder="Nomor Telepon" required />
+            <input type="text" id="alamat" placeholder="Alamat" required />
+            <input type="date" id="tanggalLahir" placeholder="Tanggal Lahir" required />
+            <button type="submit">Daftar Sekarang</button>
+        </form>
+
+        <p>Sudah punya akun? <a href="login.html">Login di sini</a></p>
+    </div>
+
+    <!-- Custom Modal -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Notifikasi</h3>
+            <p id="modalMessage">Pesan akan muncul di sini</p>
+            <button onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Custom modal functions
+        function showModal(title, message) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('customModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('customModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Form submission
+        document.getElementById("registerForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            // Simple validation
+            const nama = document.getElementById("nama").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+            const nomorTelepon = document.getElementById("nomorTelepon").value.trim();
+            const alamat = document.getElementById("alamat").value.trim();
+            const tanggalLahir = document.getElementById("tanggalLahir").value;
+
+            if (!nama || !email || !username || !password || !nomorTelepon || !alamat || !tanggalLahir) {
+                showModal('Error', 'Semua field harus diisi!');
+                return;
+            }
+
+            if (password.length < 6) {
+                showModal('Error', 'Password minimal 6 karakter!');
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:8080/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        nama: nama,
+                        email: email,
+                        username: username,
+                        password: password,
+                        nomorTelepon: nomorTelepon,
+                        alamat: alamat,
+                        tanggalLahir: tanggalLahir
+                    }),
+                });
+
+                if (response.ok) {
+                    showModal('Berhasil!', 'Pendaftaran berhasil! Anda akan diarahkan ke halaman login.');
+                    setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 2000);
+                } else {
+                    const errorData = await response.json();
+                    showModal('Gagal!', errorData.message || 'Terjadi kesalahan saat mendaftar!');
+                }
+            } catch (error) {
+                showModal('Error!', 'Tidak dapat terhubung ke server. Pastikan server berjalan di localhost:8080');
+            }
+        });
+    </script>
+</body>
+</html>
