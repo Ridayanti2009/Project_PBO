@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/admin-dashboard.css}">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>🎂 Admin Panel</h2>
+        <ul>
+            <li><a href="#" class="active">🏠 Dashboard</a></li>
+            <li><a href="/products">🍰 Products</a></li>
+            <li><a href="/admin/orders">📋 Orders</a></li>
+            <li><a href="/admin/users">👥 Users</a></li>
+            <li><a href="/logout">🔙 Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1>Dashboard Overview</h1>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-box">
+                <h3>Total Products</h3>
+                <div class="number" th:text="${totalProducts}">0</div>
+            </div>
+            <div class="stat-box">
+                <h3>Total Orders</h3>
+                <div class="number" th:text="${totalOrders}">0</div>
+            </div>
+            <div class="stat-box">
+                <h3>Total Users</h3>
+                <div class="number" th:text="${totalUsers}">0</div>
+            </div>
+            <div class="stat-box">
+                <h3>Today's Revenue</h3>
+                <div class="number" th:text="${todaysRevenue}">Rp 0</div>
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="content-section">
+            <h2>Recent Orders</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order : ${recentOrders}">
+                        <td th:text="${order.id}">#</td>
+                        <td th:text="${order.customerName}">Nama</td>
+                        <td th:text="${order.total}">Rp</td>
+                        <td th:text="${order.status}">Status</td>
+                        <td th:text="${order.date}">Tanggal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -17,4 +17,7 @@ public class ProductController {
         model.addAttribute("products", productService.getAllProducts());
         return "products"; // templates/products.html
     }
+
+    
+
 }

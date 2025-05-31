@@ -11,8 +11,8 @@ public class CelebrationCake extends Product {
 
     public CelebrationCake() {}
 
-    public CelebrationCake(String nama, String deskripsi, Double harga, String gambarUrl, String ukuran) {
-        super(nama, deskripsi, harga, gambarUrl);
+    public CelebrationCake(String nama, String deskripsi, Double harga, String gambarUrl, int stok, String ukuran) {
+        super(nama, deskripsi, harga, gambarUrl, stok);
         this.ukuran = ukuran;
     }
 

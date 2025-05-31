@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manage Products</title>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>🎂 Admin Panel</h2>
+    <ul>
+      <li><a href="#">🏠 Dashboard</a></li>
+      <li><a href="/products" class="active">🍰 Products</a></li>
+      <li><a href="/admin/orders">📋 Orders</a></li>
+      <li><a href="/admin/users">👥 Users</a></li>
+      <li><a href="/logout">🔙 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h1>🍰 Manage Products</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dummy data, replace with Thymeleaf loop -->
+        <tr>
+          <td>Strawberry Tart</td>
+          <td>Dessert Individual</td>
+          <td>Rp 85.000</td>
+          <td>Tart segar dengan topping stroberi</td>
+          <td>12</td>
+          <td>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Kue Kering Nastar</td>
+          <td>Kue Kering & Hampers</td>
+          <td>Rp 120.000</td>
+          <td>Kue kering isi nanas</td>
+          <td>20</td>
+          <td>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Add New Product</h2>
+    <form method="post" action="/products/add" enctype="multipart/form-data">
+      <label for="name">Product Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="category">Category</label>
+      <select id="category" name="category">
+        <option>Kue Ulang Tahun & Acara Spesial</option>
+        <option>Kue Kering & Hampers</option>
+        <option>Dessert Individual</option>
+        <option>Kue Klasik & Tradisional</option>
+      </select>
+
+      <label for="price">Price (Rp)</label>
+      <input type="number" id="price" name="price" required />
+
+      <label for="description">Description</label>
+      <input type="text" id="description" name="description" />
+
+      <label for="stock">Stock</label>
+      <input type="number" id="stock" name="stock" />
+
+      <label for="image">Product Image</label>
+      <input type="file" id="image" name="image" />
+
+      <button type="submit">Add Product</button>
+    </form>
+  </div>
+</body>
+</html>

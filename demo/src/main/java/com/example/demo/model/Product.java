@@ -13,16 +13,18 @@ public abstract class Product {
     private String deskripsi;
     private Double harga;
     private String gambarUrl;
+    private int stok;
 
     // Constructor kosong
     public Product() {}
 
     // Constructor lengkap
-    public Product(String nama, String deskripsi, Double harga, String gambarUrl) {
+    public Product(String nama, String deskripsi, Double harga, String gambarUrl, int stok) {
         this.nama = nama;
         this.deskripsi = deskripsi;
         this.harga = harga;
         this.gambarUrl = gambarUrl;
+        this.stok = stok;
     }
 
     // Getters dan Setters
@@ -64,6 +66,14 @@ public abstract class Product {
 
     public void setGambarUrl(String gambarUrl) {
         this.gambarUrl = gambarUrl;
+    }
+
+    public int getStok() {
+        return stok;
+    }
+
+    public void setStok(int stok) {
+        this.stok = stok;
     }
 
 }

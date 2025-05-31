@@ -31,7 +31,7 @@
             <button type="submit">Daftar Sekarang</button>
         </form>
 
-        <p>Sudah punya akun? <a href="login.html">Login di sini</a></p>
+        <p>Sudah punya akun? <a href="/login">Login di sini</a></p>
     </div>
 
     <!-- Custom Modal -->
@@ -104,7 +104,7 @@
                 if (response.ok) {
                     showModal('Berhasil!', 'Pendaftaran berhasil! Anda akan diarahkan ke halaman login.');
                     setTimeout(() => {
-                        window.location.href = "login.html";
+                        window.location.href = "/login";
                     }, 2000);
                 } else {
                     const errorData = await response.json();

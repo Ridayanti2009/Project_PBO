@@ -11,8 +11,8 @@ public class Dessert extends Product {
 
     public Dessert() {}
 
-    public Dessert(String nama, String deskripsi, Double harga, String gambarUrl, String varian) {
-        super(nama, deskripsi, harga, gambarUrl);
+    public Dessert(String nama, String deskripsi, Double harga, String gambarUrl, int stok, String varian) {
+        super(nama, deskripsi, harga, gambarUrl, stok);
         this.varian = varian;
     }
 

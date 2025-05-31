@@ -11,8 +11,8 @@ public class ClassicCake extends Product {
 
     public ClassicCake() {}
 
-    public ClassicCake(String nama, String deskripsi, Double harga, String gambarUrl, String varian) {
-        super(nama, deskripsi, harga, gambarUrl);
+    public ClassicCake(String nama, String deskripsi, Double harga, String gambarUrl, int stok, String varian) {
+        super(nama, deskripsi, harga, gambarUrl, stok);
         this.varian = varian;
     }
 

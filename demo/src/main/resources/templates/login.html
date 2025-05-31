@@ -22,7 +22,7 @@
       <input type="password" id="password" placeholder="Password" required /><br />
       <button type="submit">Login</button>
     </form>
-    <p>Belum punya akun? <a href="register.html">Daftar di sini</a></p>
+    <p>Belum punya akun? <a href="/registrasi">Daftar di sini</a></p>
   </div>
 
   <script>
@@ -39,7 +39,7 @@
 
       const result = await response.text();
       if (result === "ADMIN") {
-        window.location.href = "admin-dashboard.html";
+        window.location.href = "/admin/dashboard";
       } else if (result === "USER") {
         window.location.href = "user-dashboard.html";
       } else {
