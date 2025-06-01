@@ -5,6 +5,8 @@
   <title>Manage Products</title>
 </head>
 <body>
+
+  <!-- Sidebar -->
   <div class="sidebar">
     <h2>🎂 Admin Panel</h2>
     <ul>
@@ -16,74 +18,83 @@
     </ul>
   </div>
 
-  <div class="main-content">
-    <h1>🍰 Manage Products</h1>
+  <!-- Konten utama -->
+  <div>
+    <h1>Manage Products</h1>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Price</th>
-          <th>Description</th>
-          <th>Stock</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Dummy data, replace with Thymeleaf loop -->
-        <tr>
-          <td>Strawberry Tart</td>
-          <td>Dessert Individual</td>
-          <td>Rp 85.000</td>
-          <td>Tart segar dengan topping stroberi</td>
-          <td>12</td>
-          <td>
-            <button>Edit</button>
-            <button>Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Kue Kering Nastar</td>
-          <td>Kue Kering & Hampers</td>
-          <td>Rp 120.000</td>
-          <td>Kue kering isi nanas</td>
-          <td>20</td>
-          <td>
-            <button>Edit</button>
-            <button>Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Submenu kategori -->
+    <div>
+      <a href="/products/category/celebrationcake">Kue Ulang Tahun</a>
+      <a href="/products/category/dessert">Dessert Individual</a>
+      <a href="/products/category/cookie">Kue Kering</a>
+      <a href="/products/category/classiccake">Kue Klasik</a>
+    </div>
 
-    <h2>Add New Product</h2>
-    <form method="post" action="/products/add" enctype="multipart/form-data">
-      <label for="name">Product Name</label>
-      <input type="text" id="name" name="name" required />
+    <!-- Tombol tambah produk -->
+    <div>
+      <button onclick="openModal()">Add Product</button>
+    </div>
 
-      <label for="category">Category</label>
-      <select id="category" name="category">
-        <option>Kue Ulang Tahun & Acara Spesial</option>
-        <option>Kue Kering & Hampers</option>
-        <option>Dessert Individual</option>
-        <option>Kue Klasik & Tradisional</option>
-      </select>
+    <!-- Modal form (popup) -->
+    <div id="addModal" style="display:none;">
+      <div>
+        <span onclick="closeModal()">[X]</span>
+        <h2>Add New Product</h2>
+        <form method="post" action="/products/add" enctype="multipart/form-data">
+          <label>Product Name</label>
+          <input type="text" name="name" required />
 
-      <label for="price">Price (Rp)</label>
-      <input type="number" id="price" name="price" required />
+          <label>Category</label>
+          <select name="category" required>
+            <option value="celebrationcake">Kue Ulang Tahun</option>
+            <option value="cookie">Kue Kering</option>
+            <option value="dessert">Dessert</option>
+            <option value="classiccake">Kue Klasik</option>
+          </select>
 
-      <label for="description">Description</label>
-      <input type="text" id="description" name="description" />
+          <label>Price</label>
+          <input type="number" name="price" required />
 
-      <label for="stock">Stock</label>
-      <input type="number" id="stock" name="stock" />
+          <label>Description</label>
+          <input type="text" name="description" />
 
-      <label for="image">Product Image</label>
-      <input type="file" id="image" name="image" />
+          <label>Stock</label>
+          <input type="number" name="stock" />
 
-      <button type="submit">Add Product</button>
-    </form>
+          <label>Image</label>
+          <input type="file" name="image" />
+
+          <div id="optionalField"></div>
+
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function openModal() {
+        document.getElementById('addModal').style.display = 'block';
+      }
+
+      function closeModal() {
+        document.getElementById('addModal').style.display = 'none';
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const categorySelect = document.querySelector('select[name="category"]');
+        const optionalField = document.getElementById('optionalField');
+
+        categorySelect.addEventListener('change', function () {
+          optionalField.innerHTML = '';
+          if (this.value === 'dessert' || this.value === 'classiccake') {
+            optionalField.innerHTML = '<label>Varian</label><input type="text" name="varian" />';
+          } else if (this.value === 'cookie' || this.value === 'celebrationcake') {
+            optionalField.innerHTML = '<label>Ukuran</label><input type="text" name="ukuran" />';
+          }
+        });
+      });
+    </script>
+
   </div>
 </body>
 </html>
