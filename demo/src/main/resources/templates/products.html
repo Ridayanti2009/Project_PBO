@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Manage Products</title>
+  <link rel="stylesheet" href="/css/produk.css" /> <!-- perbaiki href jadi hardcoded agar CSS jalan -->
 </head>
 <body>
 
@@ -19,7 +20,7 @@
   </div>
 
   <!-- Konten utama -->
-  <div>
+  <div class="main-content">
     <h1>Manage Products</h1>
 
     <!-- Submenu kategori -->
@@ -38,7 +39,7 @@
     <!-- Modal form (popup) -->
     <div id="addModal" style="display:none;">
       <div>
-        <span onclick="closeModal()">[X]</span>
+        <span onclick="closeModal()">×</span>
         <h2>Add New Product</h2>
         <form method="post" action="/products/add" enctype="multipart/form-data">
           <label>Product Name</label>
@@ -73,7 +74,7 @@
 
     <script>
       function openModal() {
-        document.getElementById('addModal').style.display = 'block';
+        document.getElementById('addModal').style.display = 'flex';
       }
 
       function closeModal() {
