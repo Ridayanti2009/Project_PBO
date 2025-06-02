@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dessert Products</title>
+  <link rel="stylesheet" href="/css/produk.css" />
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>🎂 Admin Panel</h2>
+    <ul>
+      <li><a href="/admin/dashboard">🏠 Dashboard</a></li>
+      <li><a href="/products" class="active">🍰 Products</a></li>
+      <li><a href="/admin/orders">📋 Orders</a></li>
+      <li><a href="/admin/users">👥 Users</a></li>
+      <li><a href="/login">🔙 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h1>Daftar Dessert</h1>
+
+    <div>
+      <a href="/products/category/celebrationcake">Celebration Cake</a>
+      <a href="/products/category/dessert">Dessert</a>
+      <a href="/products/category/cookie">Cookie</a>
+      <a href="/products/category/classiccake">Classic Cake</a>
+    </div>
+
+    <table border="1">
+      <tr>
+        <th>No</th>
+        <th>Product Name</th>
+        <th>Stock</th>
+        <th>Action</th>
+      </tr>
+      <tr th:each="product, iterStat : ${products}">
+        <td th:text="${iterStat.count}"></td>
+        <td th:text="${product.nama}"></td>
+        <td th:text="${product.stok}"></td>
+        <td><a th:href="@{'/products/detail/dessert/' + ${product.id}}">Detail</a></td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+</html>

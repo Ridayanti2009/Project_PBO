@@ -90,29 +90,6 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    // 👇 Menampilkan berdasarkan kategori
-    @GetMapping("/products/category/{category}")
-    public String getProductsByCategory(@PathVariable String category, Model model) {
-        switch (category) {
-            case "celebrationcake":
-                model.addAttribute("products", celebrationCakeRepository.findAll());
-                break;
-            case "cookie":
-                model.addAttribute("products", cookieRepository.findAll());
-                break;
-            case "dessert":
-                model.addAttribute("products", dessertRepository.findAll());
-                break;
-            case "classiccake":
-                model.addAttribute("products", classicCakeRepository.findAll());
-                break;
-            default:
-                model.addAttribute("error", "Kategori tidak ditemukan");
-                return "error";
-        }
-        model.addAttribute("category", category);
-        return "category-products"; // kamu bisa bikin view ini nanti
-    }
 
     // 👇 Helper method simpan file
     public String saveImage(MultipartFile gambarFile) throws IOException {
@@ -132,7 +109,27 @@ public class ProductController {
         return filename;
     }
     return null;
-}
+    }
 
+    @GetMapping("/products/category/{category}")
+    public String getProductsByCategory(@PathVariable String category, Model model) {
+        switch (category) {
+            case "celebrationcake":
+                model.addAttribute("products", celebrationCakeRepository.findAll());
+                return "celebrationcake";
+            case "cookie":
+                model.addAttribute("products", cookieRepository.findAll());
+                return "cookie";
+            case "dessert":
+                model.addAttribute("products", dessertRepository.findAll());
+                return "dessert";
+            case "classiccake":
+                model.addAttribute("products", classicCakeRepository.findAll());
+                return "classiccake";
+            default:
+                model.addAttribute("error", "Kategori tidak ditemukan");
+                return "error";
+        }
+    }
 
 }
