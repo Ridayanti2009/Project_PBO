@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/userdash.css}">
+</head>
+<body>
+<div class="sidebar">
+    <h2>🍰 User Menu</h2>
+    <ul>
+        <li th:each="kategori : ${categories}">
+            <a th:href="@{|/user/kategori/${kategori}|}" th:text="${kategori}">Kategori</a>
+        </li>
+        <li><a href="/user/orderan">🛒 Order Saya</a></li>
+        <li><a href="/logout">🔙 Logout</a></li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <h1>Selamat datang di dashboard!</h1>
+    <p>Pilih kategori kue di sebelah kiri untuk mulai memesan 🍪</p>
+</div>
+</body>
+</html>

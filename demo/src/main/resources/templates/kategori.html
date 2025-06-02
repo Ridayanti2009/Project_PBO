@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Kategori: ' + ${kategori}">Kategori</title>
+    <link rel="stylesheet" th:href="@{/css/kategori.css}">
+</head>
+<body>
+    <div class="main-content">
+        <h2 th:text="'Kategori: ' + ${kategori}"></h2>
+        <div class="produk-list">
+            <div th:each="produk : ${produkList}" class="produk-box">
+                <img th:src="@{${produk.gambar}}" alt="gambar" class="produk-img"/>
+                <h3 th:text="${produk.nama}">Nama</h3>
+                <p th:text="'Rp ' + ${produk.harga}">Harga</p>
+                <p th:text="'Stok: ' + ${produk.stok}">Stok</p>
+                <button>Beli</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
