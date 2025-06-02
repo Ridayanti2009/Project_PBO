@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Produk</title>
+</head>
+<body>
+  <h1>Edit Produk</h1>
+
+    <form th:action="@{'/products/edit/' + ${kategori} + '/' + ${product.id}}" method="post">
+    <label>Product Name</label>
+    <input type="text" name="name" th:value="${product.nama}" required />
+
+    <label>Category</label>
+    <input type="text" name="category" th:value="${kategori}" readonly />
+
+    <label>Price</label>
+    <input type="number" name="price" th:value="${product.harga}" required />
+
+    <label>Description</label>
+    <input type="text" name="description" th:value="${product.deskripsi}" />
+
+    <label>Stock</label>
+    <input type="number" name="stock" th:value="${product.stok}" />
+
+    <div th:if="${kategori == 'cookie' or kategori == 'celebrationcake'}">
+        <label>Ukuran</label>
+        <input type="text" name="ukuran" th:value="${product.ukuran}" />
+    </div>
+
+    <div th:if="${kategori == 'dessert' or kategori == 'classiccake'}">
+        <label>Varian</label>
+        <input type="text" name="varian" th:value="${product.varian}" />
+    </div>
+
+    <button type="submit">Update</button>
+    </form>
+
+  <br>
+  <a th:href="@{'/products/detail/' + ${kategori} + '/' + ${product.id}}">← Kembali ke Detail Produk</a>
+</body>
+</html>

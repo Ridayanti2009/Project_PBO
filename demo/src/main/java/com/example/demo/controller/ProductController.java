@@ -132,4 +132,115 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/products/detail/{kategori}/{id}")
+    public String detailProduk(@PathVariable String kategori, @PathVariable Long id, Model model) {
+        Object produk = null;
+
+        switch (kategori.toLowerCase()) {
+            case "cookie" -> produk = cookieRepository.findById(id).orElse(null);
+            case "dessert" -> produk = dessertRepository.findById(id).orElse(null);
+            case "classiccake" -> produk = classicCakeRepository.findById(id).orElse(null);
+            case "celebrationcake" -> produk = celebrationCakeRepository.findById(id).orElse(null);
+        }
+
+        if (produk == null) {
+            return "redirect:/products";
+        }
+
+        model.addAttribute("product", produk);
+        model.addAttribute("kategori", kategori);
+        return "detail_produk";
+    }
+
+    @GetMapping("/products/delete/{kategori}/{id}")
+    public String deleteProduct(@PathVariable String kategori, @PathVariable Long id) {
+        switch (kategori.toLowerCase()) {
+            case "cookie" -> cookieRepository.deleteById(id);
+            case "dessert" -> dessertRepository.deleteById(id);
+            case "classiccake" -> classicCakeRepository.deleteById(id);
+            case "celebrationcake" -> celebrationCakeRepository.deleteById(id);
+        }
+        return "redirect:/products";
+    }
+
+
+    @PostMapping("/products/edit/{kategori}/{id}")
+    public String updateProduct(
+            @PathVariable String kategori,
+            @PathVariable Long id,
+            @RequestParam String name,
+            @RequestParam double price,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false, defaultValue = "0") int stock,
+            @RequestParam(required = false) String ukuran,
+            @RequestParam(required = false) String varian
+    ) {
+        switch (kategori.toLowerCase()) {
+            case "celebrationcake" -> {
+                CelebrationCake cc = celebrationCakeRepository.findById(id).orElse(null);
+                if (cc != null) {
+                    cc.setNama(name);
+                    cc.setHarga(price);
+                    cc.setDeskripsi(description);
+                    cc.setStok(stock);
+                    cc.setUkuran(ukuran);
+                    celebrationCakeRepository.save(cc);
+                }
+            }
+            case "cookie" -> {
+                Cookie ck = cookieRepository.findById(id).orElse(null);
+                if (ck != null) {
+                    ck.setNama(name);
+                    ck.setHarga(price);
+                    ck.setDeskripsi(description);
+                    ck.setStok(stock);
+                    ck.setUkuran(ukuran);
+                    cookieRepository.save(ck);
+                }
+            }
+            case "dessert" -> {
+                Dessert d = dessertRepository.findById(id).orElse(null);
+                if (d != null) {
+                    d.setNama(name);
+                    d.setHarga(price);
+                    d.setDeskripsi(description);
+                    d.setStok(stock);
+                    d.setVarian(varian);
+                    dessertRepository.save(d);
+                }
+            }
+            case "classiccake" -> {
+                ClassicCake cc = classicCakeRepository.findById(id).orElse(null);
+                if (cc != null) {
+                    cc.setNama(name);
+                    cc.setHarga(price);
+                    cc.setDeskripsi(description);
+                    cc.setStok(stock);
+                    cc.setVarian(varian);
+                    classicCakeRepository.save(cc);
+                }
+            }
+        }
+
+        return "redirect:/products/detail/" + kategori + "/" + id;
+    }
+
+    @GetMapping("/products/edit/{kategori}/{id}")
+    public String showEditForm(@PathVariable String kategori, @PathVariable Long id, Model model) {
+        Object produk = switch (kategori.toLowerCase()) {
+            case "cookie" -> cookieRepository.findById(id).orElse(null);
+            case "dessert" -> dessertRepository.findById(id).orElse(null);
+            case "classiccake" -> classicCakeRepository.findById(id).orElse(null);
+            case "celebrationcake" -> celebrationCakeRepository.findById(id).orElse(null);
+            default -> null;
+        };
+
+        if (produk == null) {
+            return "redirect:/products";
+        }
+
+        model.addAttribute("product", produk);
+        model.addAttribute("kategori", kategori);
+        return "edit_produk";
+    }
 }
