@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${#strings.isEmpty(user.id)} ? 'Tambah User' : 'Edit User'">Form User</title>
+    <link rel="stylesheet" th:href="@{/css/registrasi.css}">
+</head>
+<body>
+
+<div class="floating-elements">
+    <div class="floating-cake">🎂</div>
+    <div class="floating-cake">🧁</div>
+    <div class="floating-cake">🍰</div>
+</div>
+
+<div class="register-container">
+    <h2 th:text="${#strings.isEmpty(user.id)} ? 'Tambah User' : 'Edit User'">Form</h2>
+
+    <form th:action="${#strings.isEmpty(user.id)} ? @{/admin/users/add} : @{'/admin/users/edit/' + ${user.id}}" method="post">
+        <input type="text" name="nama" placeholder="Nama Lengkap" th:value="${user.nama}" required />
+        <input type="email" name="email" placeholder="Email" th:value="${user.email}" required />
+        <input type="text" name="username" placeholder="Username" th:value="${user.username}" required />
+
+        <!-- Password hanya muncul jika user baru -->
+        <div th:if="${#strings.isEmpty(user.id)}">
+            <input type="password" name="password" placeholder="Password" required />
+        </div>
+
+        <input type="text" name="nomorTelepon" placeholder="Nomor Telepon" th:value="${user.nomorTelepon}" required />
+        <input type="text" name="alamat" placeholder="Alamat" th:value="${user.alamat}" required />
+        <input type="date" name="tanggalLahir" placeholder="Tanggal Lahir" th:value="${user.tanggalLahir}" required />
+
+        <button type="submit" th:text="${#strings.isEmpty(user.id)} ? 'Tambah User' : 'Simpan Perubahan'">Simpan</button>
+    </form>
+
+    <p><a href="/admin/users">← Kembali ke Daftar User</a></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Pengguna</title>
+    <link rel="stylesheet" th:href="@{/css/admindash.css}">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>🎂 Admin Panel</h2>
+        <ul>
+            <li><a href="/admin/dashboard">🏠 Dashboard</a></li>
+            <li><a href="/products">🍰 Products</a></li>
+            <li><a href="/admin/orders">📋 Orders</a></li>
+            <li><a href="/admin/users" class="active">👥 Users</a></li>
+            <li><a href="/login">🔙 Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1>Daftar Pengguna</h1>
+        <a href="/admin/users/add">➕ Tambah User</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>No. Telepon</th>
+                    <th>Alamat</th>
+                    <th>Tanggal Lahir</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}">1</td>
+                    <td th:text="${user.nama}">Nama</td>
+                    <td th:text="${user.email}">Email</td>
+                    <td th:text="${user.username}">Username</td>
+                    <td th:text="${user.nomorTelepon}">Telepon</td>
+                    <td th:text="${user.alamat}">Alamat</td>
+                    <td th:text="${user.tanggalLahir}">Tanggal</td>
+                    <td>
+                        <a th:href="@{'/admin/users/edit/' + ${user.id}}">Edit</a> |
+                        <a th:href="@{'/admin/users/delete/' + ${user.id}}"
+                           onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
