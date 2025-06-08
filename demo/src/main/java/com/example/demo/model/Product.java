@@ -2,7 +2,9 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED) // bisa juga SINGLE_TABLE atau TABLE_PER_CLASS
+@Table(name = "products")
 public abstract class Product {
 
     @Id

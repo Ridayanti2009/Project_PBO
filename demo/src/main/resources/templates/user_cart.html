@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Keranjang Saya</title>
+    <link rel="stylesheet" th:href="@{/css/userdash.css}" />
+    <style>
+        .cart-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .cart-table th, .cart-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .cart-table th { background-color: #f2f2f2; }
+        .cart-table img { width: 80px; height: auto; border-radius: 4px; }
+        .remove-btn { color: red; cursor: pointer; text-decoration: none; font-weight: bold; }
+        .grand-total { text-align: right; font-size: 1.5em; font-weight: bold; margin-top: 20px; }
+        .btn-checkout { background-color: #28a745; color: white; padding: 15px 25px; border: none; border-radius: 5px; font-size: 1.2em; cursor: pointer; float: right; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div class="main-content">
+    <h1>🛒 Keranjang Belanja Saya</h1>
+
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th colspan="2">Produk</th>
+                <th>Harga</th>
+                <th>Jumlah</th>
+                <th>Subtotal</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="cart-items-body"></tbody>
+    </table>
+
+    <div class="grand-total">
+        <span>Total Belanja: </span>
+        <span id="grand-total">Rp 0</span>
+    </div>
+
+    <!-- Tombol ini sekarang HANYA berfungsi sebagai link biasa -->
+    <a href="/checkout" class="btn-checkout">Lanjut ke Checkout</a>
+</div>
+
+<!-- ======================================================= -->
+<!-- == SCRIPT BERSIH DAN FINAL == -->
+<!-- ======================================================= -->
+<script>
+    const tbody = document.getElementById('cart-items-body');
+    const grandTotalSpan = document.getElementById('grand-total');
+
+    function formatRupiah(angka) {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency', currency: 'IDR', minimumFractionDigits: 0
+        }).format(angka || 0);
+    }
+
+    function fetchCartData() {
+        fetch('/api/cart', { credentials: 'include' })
+            .then(response => {
+                if (!response.ok) throw new Error('Gagal memuat keranjang, status: ' + response.status);
+                return response.json();
+            })
+            .then(cartDto => {
+                tbody.innerHTML = '';
+                if (!cartDto.items || cartDto.items.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px;">Keranjangmu masih kosong nih!</td></tr>';
+                } else {
+                    cartDto.items.forEach(item => {
+                        const row = `
+                            <tr>
+                                <td><img src="/uploads/${item.imageUrl}" alt="${item.productName}"></td>
+                                <td>${item.productName}</td>
+                                <td>${formatRupiah(item.price)}</td>
+                                <td>
+                                    <div class="quantity-control">
+                                        <button class="quantity-btn minus-btn" data-itemid="${item.cartItemId}" data-quantity="${item.quantity}">-</button>
+                                        <span class="quantity-value">${item.quantity}</span>
+                                        <button class="quantity-btn plus-btn" data-itemid="${item.cartItemId}" data-quantity="${item.quantity}">+</button>
+                                    </div>
+                                </td>
+                                <td>${formatRupiah(item.subtotal)}</td>
+                                <td>
+                                    <a href="#" class="remove-btn" data-itemid="${item.cartItemId}">Hapus</a>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+                }
+                grandTotalSpan.textContent = formatRupiah(cartDto.grandTotal);
+            })
+            .catch(error => {
+                console.error('Error saat fetchCartData:', error);
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px; color: red;">Gagal memuat keranjang. Silakan coba login ulang.</td></tr>';
+            });
+    }
+
+    function updateQuantity(itemId, newQuantity) {
+        fetch(`/api/cart/item/${itemId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ quantity: newQuantity }),
+            credentials: 'include'
+        }).then(response => {
+            if (response.ok) fetchCartData();
+            else alert('Gagal mengupdate jumlah item.');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchCartData);
+
+    tbody.addEventListener('click', function(event) {
+        const target = event.target;
+
+        if (target.classList.contains('remove-btn')) {
+            event.preventDefault();
+            const itemId = target.getAttribute('data-itemid');
+            if (confirm('Yakin ingin menghapus item ini?')) {
+                fetch(`/api/cart/item/${itemId}`, { method: 'DELETE', credentials: 'include' })
+                    .then(response => {
+                        if (response.ok) fetchCartData();
+                        else alert('Gagal menghapus item dari server.');
+                    });
+            }
+        }
+        if (target.classList.contains('minus-btn')) {
+            const itemId = target.getAttribute('data-itemid');
+            let currentQuantity = parseInt(target.getAttribute('data-quantity'));
+            if (currentQuantity > 0) updateQuantity(itemId, currentQuantity - 1);
+        }
+        if (target.classList.contains('plus-btn')) {
+            const itemId = target.getAttribute('data-itemid');
+            let currentQuantity = parseInt(target.getAttribute('data-quantity'));
+            updateQuantity(itemId, currentQuantity + 1);
+        }
+    });
+
+    // Event Listener untuk Logout Form (Diletakkan di body untuk jangkauan luas)
+    document.body.addEventListener('submit', function(event){
+        if(event.target.id === 'logout-form'){
+            event.preventDefault();
+            fetch(event.target.action, { method: 'POST', credentials: 'include' })
+                .then(response => {
+                    if (response.ok) window.location.href = '/login';
+                    else alert('Logout gagal!');
+                });
+        }
+    });
+</script>
+
+</body>
+</html>

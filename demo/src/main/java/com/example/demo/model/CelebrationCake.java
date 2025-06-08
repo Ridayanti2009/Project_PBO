@@ -1,10 +1,12 @@
 package com.example.demo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "celebration_cakes")
+@PrimaryKeyJoinColumn(name = "product_id")
 public class CelebrationCake extends Product {
 
     private String ukuran;

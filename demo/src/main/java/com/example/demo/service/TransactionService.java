@@ -1,5 +1,28 @@
 package com.example.demo.service;
 
-public class TransactionService {
+import com.example.demo.model.Transaction;
+import java.util.List;
+
+public interface TransactionService {
+
+    /**
+     * Membuat transaksi baru dari keranjang user. Ini adalah inti dari proses checkout.
+     */
+    Transaction createTransaction(Long userId, String deliveryOption);
+
+    /**
+     * Mengambil riwayat pesanan untuk seorang user.
+     */
+    List<Transaction> getOrderHistory(Long userId);
     
+    /**
+     * Mengambil semua transaksi untuk ditampilkan di halaman admin.
+     */
+    List<Transaction> getAllTransactions();
+
+    /**
+     * Mengupdate status sebuah transaksi (untuk admin).
+     */
+    Transaction updateTransactionStatus(Long transactionId, String newStatus);
+
 }

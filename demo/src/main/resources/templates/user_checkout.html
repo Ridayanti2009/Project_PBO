@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Konfirmasi Pesanan</title>
+    <link rel="stylesheet" th:href="@{/css/userdash.css}" />
+    <style>
+        .checkout-container { display: flex; gap: 30px; flex-wrap: wrap; }
+        .order-summary, .shipping-options { flex: 1; min-width: 300px; }
+        .summary-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; align-items: center; }
+        .summary-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; margin-right: 10px; }
+        .summary-total { font-size: 1.2em; font-weight: bold; text-align: right; margin-top: 15px; }
+        .shipping-form .form-group { margin-bottom: 15px; }
+        .shipping-form label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .shipping-form input[type="text"], .shipping-form textarea { width: 100%; padding: 8px; box-sizing: border-box; border-radius: 4px; border: 1px solid #ccc; }
+        #address-form { display: none; margin-top: 20px; border-top: 2px solid #f0f0f0; padding-top: 20px;}
+        #confirm-order-btn { background-color: #28a745; color: white; padding: 15px 25px; border: none; border-radius: 5px; font-size: 1.2em; cursor: pointer; width: 100%; margin-top: 20px;}
+        #confirm-order-btn:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+
+<!-- Menggunakan Fragment Sidebar -->
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div class="main-content">
+    <h1>Konfirmasi Pesanan Anda</h1>
+
+    <div class="checkout-container">
+        <!-- Kolom Kiri: Ringkasan Pesanan -->
+        <div class="order-summary">
+            <h3>Ringkasan Pesanan</h3>
+            <!-- Jaring Pengaman: Cek jika cart dan items ada -->
+            <div th:if="${cart != null and not #lists.isEmpty(cart.items)}">
+                <div th:each="item : ${cart.items}" class="summary-item">
+                    <div style="display: flex; align-items: center;">
+                        <!-- Jaring Pengaman: Tampilkan gambar HANYA JIKA imageUrl ada -->
+                        <img th:if="${item.imageUrl != null}" th:src="@{'/uploads/' + ${item.imageUrl}}" />
+                        <!-- Fallback jika tidak ada gambar -->
+                        <img th:if="${item.imageUrl == null}" th:src="@{/images/placeholder.png}" alt="No Image" /> 
+                        
+                        <div>
+                            <span th:text="${item.quantity} + 'x ' + ${item.productName}"></span><br>
+                            <small th:text="${#numbers.formatCurrency(item.price)}"></small>
+                        </div>
+                    </div>
+                    <span th:text="${#numbers.formatCurrency(item.subtotal)}"></span>
+                </div>
+                <div class="summary-total">
+                    <span>Total:</span>
+                    <span th:text="${#numbers.formatCurrency(cart.grandTotal)}"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kolom Kanan: Opsi Pengiriman -->
+        <div class="shipping-options">
+            <h3>Opsi Pengiriman</h3>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <input type="radio" id="pickup" name="deliveryOption" value="PICKUP" checked>
+                    <label for="pickup">Ambil di Toko (Pickup)</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" id="delivery" name="deliveryOption" value="DELIVERY">
+                    <label for="delivery">Antar ke Alamat (Delivery)</label>
+                </div>
+
+                <!-- Form Alamat yang bisa disembunyikan -->
+                <div id="address-form" th:if="${user != null}">
+                    <h4>Alamat Pengiriman</h4>
+                    <div class="form-group">
+                        <label for="alamat">Alamat Lengkap</label>
+                        <!-- Jaring Pengaman: Cek jika user.alamat ada -->
+                        <textarea id="alamat" name="alamat" rows="4" th:text="${user.alamat}" required></textarea>
+                        <small>Pastikan alamat sudah benar. Anda bisa mengubahnya di sini untuk pesanan ini saja.</small>
+                    </div>
+                </div>
+
+                <button type="submit" id="confirm-order-btn">Konfirmasi & Buat Pesanan</button>
+                <div id="checkout-notification" style="margin-top: 15px;"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- (Kode JavaScript tidak ada yang berubah, semua tetap sama) ---
+    const addressForm = document.getElementById('address-form');
+    const deliveryRadio = document.getElementById('delivery');
+    const pickupRadio = document.getElementById('pickup');
+
+    if (deliveryRadio) {
+        deliveryRadio.addEventListener('change', () => {
+            if (deliveryRadio.checked) addressForm.style.display = 'block';
+        });
+    }
+    if (pickupRadio) {
+        pickupRadio.addEventListener('change', () => {
+            if (pickupRadio.checked) addressForm.style.display = 'none';
+        });
+    }
+
+    document.getElementById('checkout-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const deliveryOption = formData.get('deliveryOption');
+        let address = (deliveryOption === 'DELIVERY') ? formData.get('alamat') : '';
+
+        if (deliveryOption === 'DELIVERY' && (!address || address.trim() === '')) {
+            alert('Alamat pengiriman tidak boleh kosong!');
+            return;
+        }
+        
+        const checkoutData = { deliveryOption: deliveryOption, address: address };
+
+        fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(checkoutData),
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) return response.text().then(text => { throw new Error(text || 'Checkout Gagal') });
+            return response.json();
+        })
+        .then(data => {
+            alert(data.message + "\nAnda akan diarahkan ke halaman Riwayat Pesanan.");
+            window.location.href = '/riwayat-pesanan';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('checkout-notification').innerHTML = `<p style="color:red; font-weight:bold;">Checkout Gagal: ${error.message}</p>`;
+        });
+    });
+
+    // Logout script jika ada
+</script>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Riwayat Pesanan</title>
+    <link rel="stylesheet" th:href="@{/css/userdash.css}" />
+    <style>
+        .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .history-table th, .history-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .history-table th { background-color: #f2f2f2; }
+        .detail-btn { background-color: #17a2b8; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; }
+        .status { padding: 5px 10px; border-radius: 12px; color: white; font-weight: bold; }
+        .status-DIPROSES { background-color: #ffc107; color: black; }
+        .status-DIKIRIM { background-color: #007bff; }
+        .status-SELESAI { background-color: #28a745; }
+        .status-DIBATALKAN { background-color: #dc3545; }
+
+        /* Modal Styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 60%; border-radius: 8px; }
+        .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<!-- Menggunakan Fragment Sidebar -->
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+<div class="main-content">
+    <h1>📋 Riwayat Pesanan Saya</h1>
+
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>No. Pesanan</th>
+                <th>Tanggal</th>
+                <th>Total</th>
+                <th>Pengiriman</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="history-body">
+            <!-- Data riwayat pesanan akan dimuat di sini oleh JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal untuk menampilkan Detail Transaksi -->
+<div id="detailModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="document.getElementById('detailModal').style.display='none'">&times;</span>
+        <h2>Detail Pesanan <span id="modal-order-id"></span></h2>
+        <div id="modal-order-details"></div>
+    </div>
+</div>
+
+<script>
+    // --- Fungsi Helper ---
+    function formatRupiah(angka) {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+    }
+    function formatTanggal(tanggalString) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return new Date(tanggalString).toLocaleDateString('id-ID', options);
+    }
+
+    // --- Fungsi Utama untuk Memuat Data ---
+    function fetchOrderHistory() {
+        fetch('/api/orders', { credentials: 'include' })
+            .then(response => {
+                if (!response.ok) throw new Error('Gagal memuat riwayat pesanan');
+                return response.json();
+            })
+            .then(orders => {
+                const tbody = document.getElementById('history-body');
+                tbody.innerHTML = '';
+                if (orders.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">Anda belum memiliki riwayat pesanan.</td></tr>';
+                    return;
+                }
+
+                orders.forEach(order => {
+                    const row = `
+                        <tr>
+                            <td>#${order.id}</td>
+                            <td>${formatTanggal(order.orderDate)}</td>
+                            <td>${formatRupiah(order.totalAmount)}</td>
+                            <td>${order.deliveryOption}</td>
+                            <td><span class="status status-${order.status.replace(' ', '_')}">${order.status}</span></td>
+                            <td><a href="#" class="detail-btn" data-order='${JSON.stringify(order)}'>Lihat Detail</a></td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('history-body').innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:red;">Gagal memuat data.</td></tr>';
+            });
+    }
+    
+    // --- Fungsi untuk Menampilkan Modal Detail ---
+    function showDetailModal(order) {
+        document.getElementById('modal-order-id').innerText = `#${order.id}`;
+        const detailsContainer = document.getElementById('modal-order-details');
+        let detailsHtml = '<ul>';
+        order.transactionDetails.forEach(detail => {
+            detailsHtml += `<li>${detail.quantity}x ${detail.product.nama} @ ${formatRupiah(detail.price)}</li>`;
+        });
+        detailsHtml += '</ul>';
+        detailsContainer.innerHTML = detailsHtml;
+        document.getElementById('detailModal').style.display = 'block';
+    }
+
+    // --- Event Listener ---
+    document.addEventListener('DOMContentLoaded', fetchOrderHistory);
+    
+    document.getElementById('history-body').addEventListener('click', function(event) {
+        if (event.target.classList.contains('detail-btn')) {
+            event.preventDefault();
+            const orderData = JSON.parse(event.target.getAttribute('data-order'));
+            showDetailModal(orderData);
+        }
+    });
+
+    // --- Skrip untuk Logout ---
+    const logoutForm = document.getElementById('logout-form');
+    if (logoutForm) {
+        logoutForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            fetch(this.action, { method: 'POST', credentials: 'include' })
+                .then(response => {
+                    if (response.ok) { window.location.href = '/login'; }
+                    else { alert('Logout gagal!'); }
+                });
+        });
+    }
+</script>
+
+</body>
+</html>

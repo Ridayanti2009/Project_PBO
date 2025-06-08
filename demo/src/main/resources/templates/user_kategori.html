@@ -2,15 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/userdash.css}">
+    <title th:text="'Kategori: ' + ${kategori}">Kategori</title>
+    <link rel="stylesheet" th:href="@{/css/userdash.css}" />
 </head>
 <body>
+
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
-    <h1>Selamat datang di dashboard!</h1>
-    <p>Pilih kategori kue di sebelah kiri untuk mulai memesan 🍪</p>
+    <h1 th:text="'Kategori: ' + ${kategori}">Kategori</h1>
+    <a href="/user/dashboard" class="btn-back">⬅ Kembali</a>
+
+    <div th:if="${#lists.isEmpty(produkList)}">
+        <p>Tidak ada produk dalam kategori ini.</p>
+    </div>
+
+    <div class="product-grid" th:if="${!#lists.isEmpty(produkList)}">
+        <div class="product-card" th:each="p : ${produkList}">
+            <img th:src="@{'/uploads/' + ${p.gambarUrl}}"
+                th:alt="'Gambar ' + ${p.nama}" class="card-img"/>
+            <div class="card-body">
+                <h3 th:text="${p.nama}">Nama</h3>
+                <p th:text="'Rp ' + ${#numbers.formatDecimal(p.harga, 0, 2, 'COMMA')}">Harga</p>
+                <a th:href="@{|/user/detail/${kategori}/${p.id}|}" class="btn-detail">Detail</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>

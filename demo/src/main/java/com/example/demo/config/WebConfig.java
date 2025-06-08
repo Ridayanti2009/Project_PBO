@@ -1,19 +1,18 @@
+// src/main/java/com/example/demo/config/WebConfig.java
 package com.example.demo.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.*;
-
-import java.nio.file.Paths;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Dapatkan path absolut ke folder uploads
-        String uploadPath = Paths.get("uploads").toAbsolutePath().toUri().toString();
-
+        // Ini memberitahu Spring Boot:
+        // "Setiap kali ada request yang URL-nya diawali dengan /uploads/** "
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations(uploadPath); // gunakan path absolut
+                .addResourceLocations("file:uploads/");
     }
 }

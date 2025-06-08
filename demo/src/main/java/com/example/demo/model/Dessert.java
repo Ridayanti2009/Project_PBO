@@ -1,10 +1,12 @@
 package com.example.demo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "desserts")
+@PrimaryKeyJoinColumn(name = "product_id")
 public class Dessert extends Product {
 
     private String varian;
