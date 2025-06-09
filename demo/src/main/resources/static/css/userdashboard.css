@@ -16,7 +16,7 @@ body {
 
 /* Background Emoji */
 body::before {
-    content: '🛍️ 🍪 🧁 🍰 🍩 🎂 🍰 🧁';
+    content: '🍪 🍰 🧁 🍩 🎂 🍪 🎂 🍪';
     position: fixed;
     top: 0;
     left: 0;
@@ -36,7 +36,7 @@ body::before {
     100% { transform: translateX(100%); }
 }
 
-/* SIDEBAR (SAMA PERSIS DENGAN kategori.css) */
+/* SIDEBAR (sama persis dengan kategori.css) */
 .sidebar {
     position: fixed;
     top: 0;
@@ -161,108 +161,27 @@ body::before {
     padding: 3rem 2rem;
     z-index: 10;
     position: relative;
+    text-align: center;
 }
 
 .main-content h1 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     background: linear-gradient(45deg, #ff6b6b, #ff8e8e, #ffa8a8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 700;
     margin-bottom: 1.5rem;
     text-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
-    text-align: center;
 }
 
-/* Tombol Kembali */
-.btn-back {
+.main-content p {
+    font-size: 1.2rem;
+    color: #444;
+    background: rgba(255, 255, 255, 0.8);
     display: inline-block;
-    background-color: #ff6b6b;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 25px;
-    text-decoration: none;
-    margin-bottom: 30px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.btn-back:hover {
-    background-color: #ff4a4a;
-    transform: scale(1.05);
-}
-
-/* PRODUK DETAIL */
-.product-detail {
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-    justify-content: center;
-    flex-wrap: wrap;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 2rem;
+    padding: 1rem 2rem;
     border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(255, 182, 193, 0.3);
-    border: 2px solid rgba(255, 182, 193, 0.2);
-}
-
-.detail-img {
-    width: 280px;
-    height: 280px;
-    object-fit: cover;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.detail-info {
-    flex: 1;
-    min-width: 280px;
-}
-
-.detail-info p {
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-    color: #333;
-}
-
-/* FORM TAMBAH KE KERANJANG */
-.cart-form {
-    margin-top: 1.5rem;
-}
-
-.form-group-inline {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1rem;
-}
-
-.quantity-input {
-    width: 80px;
-    padding: 0.5rem;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    text-align: center;
-}
-
-/* TOMBOL ORDER */
-.btn-order {
-    background: linear-gradient(135deg, #7e57c2, #5e35b1);
-    color: white;
-    padding: 12px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(126, 87, 194, 0.3);
-}
-
-.btn-order:hover {
-    background: linear-gradient(135deg, #5e35b1, #4527a0);
-    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
 }
 
 /* RESPONSIVE */
@@ -286,9 +205,7 @@ body::before {
         font-size: 2rem;
     }
 
-    .detail-img {
-        width: 100%;
-        max-width: 250px;
-        height: auto;
+    .main-content p {
+        font-size: 1rem;
     }
 }

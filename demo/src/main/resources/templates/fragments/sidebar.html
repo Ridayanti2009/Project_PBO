@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="'Kategori: ' + ${kategori}">Kategori</title>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">  
+    </head>
 
 <div class="sidebar" th:fragment="sidebar">
     <h2>🍰 User Menu</h2>
@@ -17,10 +22,11 @@
         <li><a th:href="@{/profile}">👤 My Profile</a></li>
         
         <li>
-            <form th:action="@{/logout}" method="post" style="display:inline;" id="logout-form">
-                <button type="submit" class="logout-button">🔙 Logout</button>
+            <form id="logout-form" th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
             </form>
         </li>
+
     </ul>
 </div>
 

@@ -14,9 +14,9 @@ body {
     overflow-x: hidden;
 }
 
-/* Background Emoji */
+/* Floating Background Emoji */
 body::before {
-    content: '🛍️ 🍪 🧁 🍰 🍩 🎂 🍰 🧁';
+    content: '🛒 🍰 🧁 🎂 🧁 🍰 🛒 🍰';
     position: fixed;
     top: 0;
     left: 0;
@@ -36,7 +36,7 @@ body::before {
     100% { transform: translateX(100%); }
 }
 
-/* SIDEBAR (SAMA PERSIS DENGAN kategori.css) */
+/* Sidebar */
 .sidebar {
     position: fixed;
     top: 0;
@@ -65,8 +65,6 @@ body::before {
 
 .sidebar ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
 }
 
 .sidebar ul li {
@@ -93,56 +91,32 @@ body::before {
     box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
 }
 
-.sidebar ul li a.active {
-    background: linear-gradient(45deg, rgba(255, 107, 107, 0.15), rgba(255, 142, 142, 0.15));
-    color: #ff6b6b;
-    border-left: 4px solid #ff6b6b;
-    transform: translateX(10px);
-}
-
-.sidebar ul li a::after {
-    content: '🍰';
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    margin-left: 0.5rem;
-}
-
-.sidebar ul li a:hover::after {
-    opacity: 1;
-}
-
-.sidebar ul li form {
-    margin: 0;
-    padding: 0;
-}
-
-.sidebar ul li form button {
-    display: block;
+/* Logout */
+#logout-form button {
     width: 100%;
     padding: 1rem 2rem;
     background: linear-gradient(135deg, #ff8a80, #ff5722);
     color: white;
     border: none;
-    text-decoration: none;
     font-size: 1.1rem;
     font-weight: 600;
-    transition: all 0.3s ease;
     border-radius: 0 25px 25px 0;
     margin-right: 1rem;
-    position: relative;
     cursor: pointer;
     font-family: inherit;
     text-align: left;
     box-shadow: 0 3px 10px rgba(255, 87, 34, 0.2);
+    position: relative;
+    transition: all 0.3s ease;
 }
 
-.sidebar ul li form button:hover {
+#logout-form button:hover {
     background: linear-gradient(135deg, #ff5722, #d84315);
     transform: translateX(10px);
     box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4);
 }
 
-.sidebar ul li form button::after {
+#logout-form button::after {
     content: '👋';
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -151,11 +125,11 @@ body::before {
     right: 2rem;
 }
 
-.sidebar ul li form button:hover::after {
+#logout-form button:hover::after {
     opacity: 1;
 }
 
-/* MAIN CONTENT */
+/* Main Content */
 .main-content {
     margin-left: 280px;
     padding: 3rem 2rem;
@@ -169,126 +143,138 @@ body::before {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
     text-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+}
+
+/* Tabel Keranjang */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(255, 182, 193, 0.2);
     text-align: center;
 }
 
-/* Tombol Kembali */
-.btn-back {
-    display: inline-block;
-    background-color: #ff6b6b;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 25px;
-    text-decoration: none;
-    margin-bottom: 30px;
-    font-weight: bold;
-    transition: all 0.3s ease;
+.cart-table th,
+.cart-table td {
+    border: 1px solid #f7d1d1;
+    padding: 12px;
+    font-size: 1rem;
+    vertical-align: middle;
 }
 
-.btn-back:hover {
-    background-color: #ff4a4a;
-    transform: scale(1.05);
+.cart-table th {
+    background-color: #ffe5ec;
+    color: #d63384;
+    font-weight: 600;
+    text-align: center;
 }
 
-/* PRODUK DETAIL */
-.product-detail {
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-    justify-content: center;
-    flex-wrap: wrap;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(255, 182, 193, 0.3);
-    border: 2px solid rgba(255, 182, 193, 0.2);
+.cart-table img {
+    width: 80px;
+    height: auto;
+    border-radius: 6px;
 }
 
-.detail-img {
-    width: 280px;
-    height: 280px;
-    object-fit: cover;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.detail-info {
-    flex: 1;
-    min-width: 280px;
-}
-
-.detail-info p {
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-    color: #333;
-}
-
-/* FORM TAMBAH KE KERANJANG */
-.cart-form {
-    margin-top: 1.5rem;
-}
-
-.form-group-inline {
+/* Quantity Control */
+.quantity-control {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    margin-bottom: 1rem;
 }
 
-.quantity-input {
-    width: 80px;
-    padding: 0.5rem;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+.quantity-btn {
+    background-color: #ffb6b9;
+    border: none;
+    border-radius: 50%;
+    padding: 6px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+    font-weight: bold;
+}
+
+.quantity-btn:hover {
+    background-color: #ff6b81;
+}
+
+.quantity-value {
     font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    min-width: 24px;
     text-align: center;
 }
 
-/* TOMBOL ORDER */
-.btn-order {
-    background: linear-gradient(135deg, #7e57c2, #5e35b1);
-    color: white;
-    padding: 12px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 25px;
+/* Remove Button */
+.remove-btn {
+    color: #ff4d4f;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(126, 87, 194, 0.3);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
 }
 
-.btn-order:hover {
-    background: linear-gradient(135deg, #5e35b1, #4527a0);
+.remove-btn:hover {
+    color: #d63031;
+}
+
+/* Total & Checkout */
+.grand-total {
+    text-align: right;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #555;
+}
+
+.btn-checkout {
+    background: linear-gradient(135deg, #28a745, #218838);
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    float: right;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    margin-top: 20px;
+}
+
+.btn-checkout:hover {
+    background: linear-gradient(135deg, #218838, #1e7e34);
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
     transform: translateY(-2px);
 }
 
-/* RESPONSIVE */
+/* Responsive */
 @media (max-width: 768px) {
     .sidebar {
         width: 250px;
         transform: translateX(-100%);
         transition: transform 0.3s ease;
     }
-
     .sidebar.active {
         transform: translateX(0);
     }
-
     .main-content {
         margin-left: 0;
         padding: 2rem 1rem;
     }
-
-    .main-content h1 {
-        font-size: 2rem;
+    .cart-table th, .cart-table td {
+        font-size: 0.9rem;
+        padding: 8px;
     }
-
-    .detail-img {
+    .btn-checkout {
+        float: none;
         width: 100%;
-        max-width: 250px;
-        height: auto;
     }
 }

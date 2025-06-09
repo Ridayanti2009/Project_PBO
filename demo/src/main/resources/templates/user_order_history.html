@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Riwayat Pesanan</title>
-    <link rel="stylesheet" th:href="@{/css/userdash.css}" />
+    <link rel="stylesheet" th:href="@{/css/history.css}" />
     <style>
         .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         .history-table th, .history-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
@@ -32,13 +32,14 @@
     <table class="history-table">
         <thead>
             <tr>
-                <th>No. Pesanan</th>
-                <th>Tanggal</th>
-                <th>Total</th>
-                <th>Pengiriman</th>
-                <th>Status</th>
-                <th>Aksi</th>
+                <th style="text-align: center;">No. Pesanan</th>
+                <th style="text-align: center;">Tanggal</th>
+                <th style="text-align: center;">Total</th>
+                <th style="text-align: center;">Pengiriman</th>
+                <th style="text-align: center;">Status</th>
+                <th style="text-align: center;">Aksi</th>
             </tr>
+
         </thead>
         <tbody id="history-body">
             <!-- Data riwayat pesanan akan dimuat di sini oleh JavaScript -->
