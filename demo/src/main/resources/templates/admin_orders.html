@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Manajemen Pesanan</title>
     <!-- Kamu bisa gunakan CSS admin yang sudah ada atau buat baru -->
-    <link rel="stylesheet" th:href="@{/css/admindash.css}" /> 
+    <link rel="stylesheet" th:href="@{/css/adminorder.css}" /> 
     <style>
         .orders-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9em; }
         .orders-table th, .orders-table td { border: 1px solid #ddd; padding: 10px; text-align: left; }
@@ -53,7 +53,7 @@
         <tbody>
             <!-- Loop untuk setiap pesanan -->
             <tr th:each="order : ${orders}">
-                <td th:text="'#' + ${order.id}">#1</td>
+                <td th:text="'#' + ${order.id}">1</td>
                 <td th:text="${order.user.nama}">Nama Pelanggan</td>
                 <td th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, HH:mm')}">Tanggal</td>
                 <td th:text="${#numbers.formatCurrency(order.totalAmount)}">Rp 0</td>
