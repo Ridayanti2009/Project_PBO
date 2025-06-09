@@ -103,7 +103,7 @@
     
     // --- Fungsi untuk Menampilkan Modal Detail ---
     function showDetailModal(order) {
-        document.getElementById('modal-order-id').innerText = `#${order.id}`;
+        document.getElementById('modal-order-id').innerText = `${order.id}`;
         const detailsContainer = document.getElementById('modal-order-details');
         let detailsHtml = '<ul>';
         order.transactionDetails.forEach(detail => {
