@@ -84,7 +84,7 @@
                 orders.forEach(order => {
                     const row = `
                         <tr>
-                            <td>#${order.id}</td>
+                            <td>${order.id}</td>
                             <td>${formatTanggal(order.orderDate)}</td>
                             <td>${formatRupiah(order.totalAmount)}</td>
                             <td>${order.deliveryOption}</td>
