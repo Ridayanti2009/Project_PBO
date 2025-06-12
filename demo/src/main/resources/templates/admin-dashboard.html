@@ -12,7 +12,7 @@
             <li><a href="/admin/dashboard" class="active">🏠 Dashboard</a></li>
             <li><a href="/products">🍰 Products</a></li>
             <li><a href="/admin/orders">📋 Orders</a></li>
-            <li><a href="/admin/users">👥 Users</a></li>
+            <li><a href="/admin/users">👥 Customers</a></li>
             <li><a href="/login">🔙 Logout</a></li>
         </ul>
     </div>
@@ -36,7 +36,7 @@
             </div>
             <div class="stat-box">
                 <h3>Today's Revenue</h3>
-                <div class="number" th:text="${todaysRevenue}">Rp 0</div>
+                <div class="number" th:text="'IDR ' + ${#numbers.formatDecimal(todaysRevenue, 0, 'POINT', 0, 'COMMA')}">IDR 0</div>
             </div>
         </div>
 
@@ -50,20 +50,33 @@
                         <th>Customer</th>
                         <th>Total</th>
                         <th>Status</th>
-                        <th>Date</th>
+                        <th>Detail</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="order : ${recentOrders}">
-                        <td th:text="${order.id}">#</td>
-                        <td th:text="${order.customerName}">Nama</td>
-                        <td th:text="${order.total}">Rp</td>
+                        <td th:text="'#' + ${order.id}">#</td>
+                        <td th:text="${order.user.nama}">Name</td>
+                        <td th:with="
+                            amountIncludingShipping=${order.totalAmount},
+                            calculatedShipping=${(order.deliveryOption != null and #strings.toUpperCase(order.deliveryOption) == 'DELIVERY') ? 10000 : 0},
+                            subtotalForTax=${amountIncludingShipping - calculatedShipping},
+                            taxAmount=${subtotalForTax * 0.03},
+                            finalGrandTotal=${amountIncludingShipping + taxAmount}">
+                            <span th:text="'IDR ' + ${#numbers.formatDecimal(finalGrandTotal, 0, 'POINT', 0, 'COMMA')}">IDR</span>
+                        </td>
                         <td th:text="${order.status}">Status</td>
-                        <td th:text="${order.date}">Tanggal</td>
+                        <td th:text="${#temporals.format(order.orderDate, 'dd MMM yy')}">Order Date</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <script>
+
+    </script>
+
+
 </body>
 </html>

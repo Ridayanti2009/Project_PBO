@@ -2,23 +2,83 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Riwayat Pesanan</title>
+    <title>Order History</title>
     <link rel="stylesheet" th:href="@{/css/history.css}" />
+    <!-- Menambahkan CSS untuk struk belanja langsung di sini -->
     <style>
-        .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .history-table th, .history-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        .history-table th { background-color: #f2f2f2; }
-        .detail-btn { background-color: #17a2b8; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; }
-        .status { padding: 5px 10px; border-radius: 12px; color: white; font-weight: bold; }
-        .status-DIPROSES { background-color: #ffc107; color: black; }
-        .status-DIKIRIM { background-color: #007bff; }
-        .status-SELESAI { background-color: #28a745; }
-        .status-DIBATALKAN { background-color: #dc3545; }
+        .receipt-container {
+            font-family: 'Courier New', Courier, monospace;
+            width: 350px;
+            margin: 0 auto;
+            border: 2px dashed #333;
+            padding: 15px;
+            position: relative; /* Diperlukan untuk stempel */
+            background: #fff;
+        }
+        .receipt-header, .shipping-address-container {
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .receipt-header h2 { margin: 0; font-size: 1.5em; }
+        .receipt-header p, .shipping-address-container p { margin: 2px 0; font-size: 0.9em; }
+        .shipping-address-container h4 { margin: 0 0 5px 0; font-size: 1em; }
 
-        /* Modal Styles */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
-        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 60%; border-radius: 8px; }
-        .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .receipt-body table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        .receipt-body th, .receipt-body td {
+            text-align: left;
+            padding: 5px 0;
+            border-bottom: 1px dotted #ccc;
+        }
+        .receipt-body .item-col { width: 50%; }
+        .receipt-body .qty-col { width: 15%; }
+        .receipt-body .price-col { text-align: right; }
+        .receipt-footer {
+            margin-top: 15px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+        .receipt-footer div {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        .paid-stamp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-20deg);
+            font-size: 4em;
+            color: rgba(0, 128, 0, 0.3);
+            border: 5px solid rgba(0, 128, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            z-index: 100;
+            pointer-events: none;
+            display: none;
+        }
+        .cancel-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .cancel-button-container button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .cancel-button-container button:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -27,116 +87,220 @@
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
-    <h1>📋 Riwayat Pesanan Saya</h1>
+    <h1>📋 My Order History</h1>
 
     <table class="history-table">
         <thead>
             <tr>
-                <th style="text-align: center;">No. Pesanan</th>
-                <th style="text-align: center;">Tanggal</th>
-                <th style="text-align: center;">Total</th>
-                <th style="text-align: center;">Pengiriman</th>
+                <th style="text-align: center;">No</th>
+                <th>Date</th>
+                <th style="text-align: center;">Amount</th>
+                <th style="text-align: center;">Shipping</th>
                 <th style="text-align: center;">Status</th>
-                <th style="text-align: center;">Aksi</th>
+                <th style="text-align: center;">Action</th>
             </tr>
-
         </thead>
         <tbody id="history-body">
-            <!-- Data riwayat pesanan akan dimuat di sini oleh JavaScript -->
+            <!-- Data riwayat pesanan dimuat di sini -->
         </tbody>
     </table>
 </div>
 
-<!-- Modal untuk menampilkan Detail Transaksi -->
+<!-- Modal untuk menampilkan Struk Belanja -->
 <div id="detailModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="document.getElementById('detailModal').style.display='none'">&times;</span>
-        <h2>Detail Pesanan <span id="modal-order-id"></span></h2>
-        <div id="modal-order-details"></div>
+        <div id="modal-receipt-content"></div>
     </div>
 </div>
 
 <script>
     // --- Fungsi Helper ---
     function formatRupiah(angka) {
-        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        const formatted = new Intl.NumberFormat('id-ID').format(angka || 0);
+        return `IDR ${formatted}`;
     }
     function formatTanggal(tanggalString) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-        return new Date(tanggalString).toLocaleDateString('id-ID', options);
+        const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return new Date(tanggalString).toLocaleDateString('en-GB', options); // Menggunakan locale Inggris
     }
 
-    // --- Fungsi Utama untuk Memuat Data ---
+    // --- Fungsi Utama ---
     function fetchOrderHistory() {
         fetch('/api/orders', { credentials: 'include' })
-            .then(response => {
-                if (!response.ok) throw new Error('Gagal memuat riwayat pesanan');
-                return response.json();
-            })
+            .then(response => response.ok ? response.json() : Promise.reject('Failed to load history'))
             .then(orders => {
                 const tbody = document.getElementById('history-body');
                 tbody.innerHTML = '';
                 if (orders.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">Anda belum memiliki riwayat pesanan.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">You have no order history yet.</td></tr>';
                     return;
                 }
-
                 orders.forEach(order => {
+                    // === INI PERUBAHANNYA ===
+                    // Kita akan hitung ulang grand total di sini agar sudah termasuk PPN.
+                    const shippingFee = (order.deliveryOption && order.deliveryOption.toUpperCase() === 'DELIVERY') ? 10000 : 0;
+                    const subtotal = order.totalAmount - shippingFee; // Dapatkan subtotal murni
+                    const vat = subtotal * 0.03; // Hitung PPN 3%
+                    const finalGrandTotal = order.totalAmount + vat; // Total akhir = (subtotal + ongkir) + PPN
+
                     const row = `
                         <tr>
                             <td>${order.id}</td>
                             <td>${formatTanggal(order.orderDate)}</td>
-                            <td>${formatRupiah(order.totalAmount)}</td>
+                            <!-- Menampilkan Grand Total yang sudah termasuk PPN -->
+                            <td>${formatRupiah(finalGrandTotal)}</td>
                             <td>${order.deliveryOption}</td>
-                            <td><span class="status status-${order.status.replace(' ', '_')}">${order.status}</span></td>
-                            <td><a href="#" class="detail-btn" data-order='${JSON.stringify(order)}'>Lihat Detail</a></td>
+                            <td><span class="status" style="color: #d63384; font-weight: 600;">${order.status}</span></td>
+                            <td><a href="#" class="detail-btn" data-order='${JSON.stringify(order)}'>Detail</a></td>
                         </tr>
                     `;
+                    // =========================
                     tbody.innerHTML += row;
                 });
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('history-body').innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:red;">Gagal memuat data.</td></tr>';
+                document.getElementById('history-body').innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:red;">${error}.</td></tr>`;
             });
     }
-    
-    // --- Fungsi untuk Menampilkan Modal Detail ---
+
     function showDetailModal(order) {
-        document.getElementById('modal-order-id').innerText = `${order.id}`;
-        const detailsContainer = document.getElementById('modal-order-details');
-        let detailsHtml = '<ul>';
+        const receiptContent = document.getElementById('modal-receipt-content');
+        let subtotal = 0;
+        let itemsHtml = '';
         order.transactionDetails.forEach(detail => {
-            detailsHtml += `<li>${detail.quantity}x ${detail.product.nama} @ ${formatRupiah(detail.price)}</li>`;
+            const itemTotal = detail.price * detail.quantity;
+            subtotal += itemTotal;
+            itemsHtml += `
+                <tr>
+                    <td class="qty-col">${detail.quantity}x</td>
+                    <td class="item-col">${detail.product.nama}</td>
+                    <td class="price-col">${formatRupiah(itemTotal)}</td>
+                </tr>
+            `;
         });
-        detailsHtml += '</ul>';
-        detailsContainer.innerHTML = detailsHtml;
+
+        let shippingCost = 0;
+        let shippingHtml = '';
+        if (order.deliveryOption && order.deliveryOption.toUpperCase() === 'DELIVERY') {
+            shippingCost = 10000;
+            shippingHtml = `<div><span>Shipping Fee</span><span>${formatRupiah(shippingCost)}</span></div>`;
+        }
+
+        let shippingAddressHtml = '';
+        if (order.shippingAddress && order.shippingAddress.trim() !== '') {
+            shippingAddressHtml = `
+                <div class="shipping-address-container">
+                    <h4>Shipping To:</h4>
+                    <p>${order.shippingAddress.replace(/\n/g, '<br>')}</p>
+                </div>
+            `;
+        }
+
+        const tax = subtotal * 0.03;
+        const grandTotal = subtotal + tax + shippingCost;
+
+        let cancelButtonHtml = '';
+        if (order.status && order.status.toUpperCase() === 'PENDING') {
+            cancelButtonHtml = `
+                <div class="cancel-button-container">
+                    <button onclick="cancelOrder(${order.id})">Cancel Order</button>
+                </div>
+            `;
+        }
+
+        const receiptHtml = `
+            <div class="receipt-container">
+                <div class="paid-stamp" style="display: ${order.status && order.status.toUpperCase() === 'COMPLETED' ? 'block' : 'none'};">PAID</div>
+                <div class="receipt-header">
+                    <h2>Sweet Shop</h2>
+                    <p>Order ID: #${order.id}</p>
+                    <p>Date: ${formatTanggal(order.orderDate)}</p>
+                </div>
+                ${shippingAddressHtml}
+                <div class="receipt-body">
+                    <table>
+                        <thead><tr><th>Qty</th><th>Item</th><th class="price-col">Total</th></tr></thead>
+                        <tbody>${itemsHtml}</tbody>
+                    </table>
+                </div>
+                <div class="receipt-footer">
+                    <div><span>Subtotal</span><span>${formatRupiah(subtotal)}</span></div>
+                    <div><span>VAT (3%)</span><span>${formatRupiah(tax)}</span></div>
+                    ${shippingHtml}
+                    <hr>
+                    <div><span>GRAND TOTAL</span><span>${formatRupiah(grandTotal)}</span></div>
+                </div>
+                ${cancelButtonHtml}
+            </div>
+        `;
+
+        receiptContent.innerHTML = receiptHtml;
         document.getElementById('detailModal').style.display = 'block';
     }
 
+    function cancelOrder(orderId) {
+        if (!confirm('Are you sure you want to cancel this order?')) {
+            return;
+        }
+
+        fetch(`/api/orders/${orderId}/cancel`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text || 'Failed to cancel order') });
+            }
+            return "Success";
+        })
+        .then(() => {
+            alert('Order successfully cancelled!');
+            document.getElementById('detailModal').style.display = 'none';
+            fetchOrderHistory(); // Muat ulang riwayat pesanan
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(`Error: ${error.message}`);
+        });
+    }
+
     // --- Event Listener ---
-    document.addEventListener('DOMContentLoaded', fetchOrderHistory);
-    
-    document.getElementById('history-body').addEventListener('click', function(event) {
-        if (event.target.classList.contains('detail-btn')) {
-            event.preventDefault();
-            const orderData = JSON.parse(event.target.getAttribute('data-order'));
-            showDetailModal(orderData);
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchOrderHistory();
+
+        document.getElementById('history-body').addEventListener('click', function(event) {
+            if (event.target.classList.contains('detail-btn')) {
+                event.preventDefault();
+                const orderData = JSON.parse(event.target.getAttribute('data-order'));
+                showDetailModal(orderData);
+            }
+        });
+
+        const logoutForm = document.getElementById('logout-form');
+        if (logoutForm) {
+            logoutForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                fetch(this.action, {
+                    method: 'POST',
+                    credentials: 'include'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/login';
+                    } else {
+                        alert('Logout failed!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Logout error:', error);
+                    alert('An error occurred during logout.');
+                });
+            });
         }
     });
 
-    // --- Skrip untuk Logout ---
-    const logoutForm = document.getElementById('logout-form');
-    if (logoutForm) {
-        logoutForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            fetch(this.action, { method: 'POST', credentials: 'include' })
-                .then(response => {
-                    if (response.ok) { window.location.href = '/login'; }
-                    else { alert('Logout gagal!'); }
-                });
-        });
-    }
 </script>
 
 </body>

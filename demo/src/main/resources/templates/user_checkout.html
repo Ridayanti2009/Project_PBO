@@ -2,20 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Konfirmasi Pesanan</title>
+    <title>Order Confirmation</title>
     <link rel="stylesheet" th:href="@{/css/chekout.css}" />
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}" />
     <style>
         .checkout-container { display: flex; gap: 30px; flex-wrap: wrap; }
         .order-summary, .shipping-options { flex: 1; min-width: 300px; }
-        .summary-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; align-items: center; }
+        .summary-item, .summary-line { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; align-items: center; }
         .summary-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; margin-right: 10px; }
-        .summary-total { font-size: 1.2em; font-weight: bold; text-align: right; margin-top: 15px; }
+        /* Mengubah nama class agar lebih jelas */
+        .summary-grand-total { font-size: 1.2em; font-weight: bold; text-align: right; margin-top: 15px; border-top: 2px solid #ddd; padding-top: 10px; }
         .shipping-form .form-group { margin-bottom: 15px; }
         .shipping-form label { display: block; margin-bottom: 5px; font-weight: bold; }
         .shipping-form input[type="text"], .shipping-form textarea { width: 100%; padding: 8px; box-sizing: border-box; border-radius: 4px; border: 1px solid #ccc; }
         #address-form { display: none; margin-top: 20px; border-top: 2px solid #f0f0f0; padding-top: 20px;}
         #confirm-order-btn { background-color: #28a745; color: white; padding: 15px 25px; border: none; border-radius: 5px; font-size: 1.2em; cursor: pointer; width: 100%; margin-top: 20px;}
         #confirm-order-btn:hover { background-color: #218838; }
+
+        /* === INI TAMBAHANNYA === */
+        /* CSS untuk merapikan form alamat */
+        #address-form .form-group textarea {
+            display: block; /* Memaksa textarea untuk mengambil satu baris penuh */
+            width: 100%;
+        }
+        #address-form .form-group small {
+            display: block; /* Memaksa teks kecil untuk berada di baris baru */
+            margin-top: 8px; /* Memberi jarak dari textarea di atasnya */
+            font-size: 0.9em;
+            color: #666;
+        }
+        /* ======================== */
     </style>
 </head>
 <body>
@@ -24,60 +40,76 @@
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
-    <h1>Konfirmasi Pesanan Anda</h1>
+    <h1 style="text-align: center;">Order Confirmation</h1>
 
     <div class="checkout-container">
         <!-- Kolom Kiri: Ringkasan Pesanan -->
         <div class="order-summary">
-            <h3>Ringkasan Pesanan</h3>
-            <!-- Jaring Pengaman: Cek jika cart dan items ada -->
+            <h3>Order Summary</h3>
             <div th:if="${cart != null and not #lists.isEmpty(cart.items)}">
+                <!-- Daftar item (tidak berubah) -->
                 <div th:each="item : ${cart.items}" class="summary-item">
                     <div style="display: flex; align-items: center;">
-                        <!-- Jaring Pengaman: Tampilkan gambar HANYA JIKA imageUrl ada -->
                         <img th:if="${item.imageUrl != null}" th:src="@{'/uploads/' + ${item.imageUrl}}" />
-                        <!-- Fallback jika tidak ada gambar -->
-                        <img th:if="${item.imageUrl == null}" th:src="@{/images/placeholder.png}" alt="No Image" /> 
-                        
+                        <img th:if="${item.imageUrl == null}" th:src="@{/images/placeholder.png}" alt="No Image" />
                         <div>
                             <span th:text="${item.quantity} + 'x ' + ${item.productName}"></span><br>
-                            <small th:text="${#numbers.formatCurrency(item.price)}"></small>
+                            <span th:text="'IDR ' + ${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'COMMA')}"></span>
                         </div>
                     </div>
-                    <span th:text="${#numbers.formatCurrency(item.subtotal)}"></span>
+                    <span th:text="'IDR ' + ${#numbers.formatDecimal(item.subtotal, 0, 'POINT', 0, 'COMMA')}"></span>
                 </div>
-                <div class="summary-total">
-                    <span>Total:</span>
-                    <span th:text="${#numbers.formatCurrency(cart.grandTotal)}"></span>
+
+                <!-- === INI BAGIAN YANG DIPERBARUI === -->
+                <div class="summary-line">
+                    <span>Subtotal</span>
+                    <!-- Menyimpan subtotal mentah di hidden input untuk dibaca JavaScript -->
+                    <input type="hidden" id="subtotal-value" th:value="${cart.grandTotal}" />
+                    <span id="subtotal-display" th:text="'IDR ' + ${#numbers.formatDecimal(cart.grandTotal, 0, 'POINT', 0, 'COMMA')}"></span>
                 </div>
+
+                <div class="summary-line" id="vat-line">
+                    <span>VAT (3%)</span>
+                    <span id="vat-amount">IDR 0</span>
+                </div>
+
+                <div class="summary-line" id="shipping-line" style="display: none;">
+                    <span>Shipping Fee</span>
+                    <span id="shipping-amount">IDR 10,000</span>
+                </div>
+
+                <div class="summary-grand-total">
+                    <span>Grand Total:</span>
+                    <span id="grand-total-display">IDR 0</span>
+                </div>
+                <!-- =================================== -->
             </div>
         </div>
 
         <!-- Kolom Kanan: Opsi Pengiriman -->
         <div class="shipping-options">
-            <h3>Opsi Pengiriman</h3>
+            <h3>Shipping Options</h3>
             <form id="checkout-form">
                 <div class="form-group">
                     <input type="radio" id="pickup" name="deliveryOption" value="PICKUP" checked>
-                    <label for="pickup">Ambil di Toko (Pickup)</label>
+                    <label for="pickup">Pickup</label>
                 </div>
                 <div class="form-group">
                     <input type="radio" id="delivery" name="deliveryOption" value="DELIVERY">
-                    <label for="delivery">Antar ke Alamat (Delivery)</label>
+                    <label for="delivery">Delivery</label> <!-- Teks ongkir dihapus dari sini -->
                 </div>
 
                 <!-- Form Alamat yang bisa disembunyikan -->
                 <div id="address-form" th:if="${user != null}">
-                    <h4>Alamat Pengiriman</h4>
+                    <h4>Shipping Details</h4>
                     <div class="form-group">
-                        <label for="alamat">Alamat Lengkap</label>
-                        <!-- Jaring Pengaman: Cek jika user.alamat ada -->
+                        <label for="alamat">Address</label>
                         <textarea id="alamat" name="alamat" rows="4" th:text="${user.alamat}" required></textarea>
-                        <small>Pastikan alamat sudah benar. Anda bisa mengubahnya di sini untuk pesanan ini saja.</small>
+                        <small>Please verify your address is correct.</small>
                     </div>
                 </div>
 
-                <button type="submit" id="confirm-order-btn">Konfirmasi & Buat Pesanan</button>
+                <button type="submit" id="confirm-order-btn">Confirm & Place Order</button>
                 <div id="checkout-notification" style="margin-top: 15px;"></div>
             </form>
         </div>
@@ -85,22 +117,49 @@
 </div>
 
 <script>
-    // --- (Kode JavaScript tidak ada yang berubah, semua tetap sama) ---
+    // --- (Variabel elemen) ---
     const addressForm = document.getElementById('address-form');
     const deliveryRadio = document.getElementById('delivery');
     const pickupRadio = document.getElementById('pickup');
 
-    if (deliveryRadio) {
-        deliveryRadio.addEventListener('change', () => {
-            if (deliveryRadio.checked) addressForm.style.display = 'block';
-        });
-    }
-    if (pickupRadio) {
-        pickupRadio.addEventListener('change', () => {
-            if (pickupRadio.checked) addressForm.style.display = 'none';
-        });
+    // --- (Variabel baru untuk elemen total) ---
+    const subtotalValueInput = document.getElementById('subtotal-value');
+    const vatAmountSpan = document.getElementById('vat-amount');
+    const shippingLineDiv = document.getElementById('shipping-line');
+    const grandTotalDisplaySpan = document.getElementById('grand-total-display');
+
+    // === TAMBAHAN: FUNGSI BARU UNTUK MENGHITUNG TOTAL ===
+    function updateOrderSummary() {
+        const subtotal = parseFloat(subtotalValueInput.value) || 0;
+        const vat = subtotal * 0.03; // PPN 3%
+        const isDelivery = deliveryRadio.checked;
+        const shippingFee = isDelivery ? 10000 : 0;
+        const grandTotal = subtotal + vat + shippingFee;
+
+        // Update tampilan
+        vatAmountSpan.textContent = formatRupiah(vat);
+        grandTotalDisplaySpan.textContent = formatRupiah(grandTotal);
+        shippingLineDiv.style.display = isDelivery ? 'flex' : 'none';
+
+        // Menampilkan atau menyembunyikan form alamat
+        addressForm.style.display = isDelivery ? 'block' : 'none';
     }
 
+    // === TAMBAHAN: FUNGSI UNTUK FORMAT RUPIAH ===
+    function formatRupiah(angka) {
+        const numberToFormat = Math.round(angka || 0); // Pembulatan untuk menghindari desimal
+        const formattedNumber = new Intl.NumberFormat('id-ID').format(numberToFormat);
+        return 'IDR ' + formattedNumber;
+    }
+
+    // Panggil fungsi saat halaman pertama kali dimuat
+    document.addEventListener('DOMContentLoaded', updateOrderSummary);
+
+    // Tambahkan event listener ke radio button
+    deliveryRadio.addEventListener('change', updateOrderSummary);
+    pickupRadio.addEventListener('change', updateOrderSummary);
+
+    // (Kode JavaScript lain untuk submit form, tidak ada yang berubah)
     document.getElementById('checkout-form').addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(this);
@@ -108,10 +167,10 @@
         let address = (deliveryOption === 'DELIVERY') ? formData.get('alamat') : '';
 
         if (deliveryOption === 'DELIVERY' && (!address || address.trim() === '')) {
-            alert('Alamat pengiriman tidak boleh kosong!');
+            alert('Shipping details cannot be empty!');
             return;
         }
-        
+
         const checkoutData = { deliveryOption: deliveryOption, address: address };
 
         fetch('/api/checkout', {
@@ -121,20 +180,18 @@
             credentials: 'include'
         })
         .then(response => {
-            if (!response.ok) return response.text().then(text => { throw new Error(text || 'Checkout Gagal') });
+            if (!response.ok) return response.text().then(text => { throw new Error(text || 'Checkout Failed') });
             return response.json();
         })
         .then(data => {
-            alert(data.message + "\nAnda akan diarahkan ke halaman Riwayat Pesanan.");
+            alert(data.message + "\nYou will be redirected to the Order History page.");
             window.location.href = '/riwayat-pesanan';
         })
         .catch(error => {
             console.error('Error:', error);
-            document.getElementById('checkout-notification').innerHTML = `<p style="color:red; font-weight:bold;">Checkout Gagal: ${error.message}</p>`;
+            document.getElementById('checkout-notification').innerHTML = `<p style="color:red; font-weight:bold;">Checkout Failed: ${error.message}</p>`;
         });
     });
-
-    // Logout script jika ada
 </script>
 
 </body>

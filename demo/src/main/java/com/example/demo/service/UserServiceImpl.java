@@ -29,12 +29,13 @@ public class UserServiceImpl implements UserService {
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
-    
+
     // 👇 IMPLEMENTASI METHOD BARU
     @Override
     public Optional<User> findUserById(Long id) {
         return userRepository.findById(id);
     }
+
 
     @Override
     public void updateUserProfile(Long id, UpdateProfileRequest request) {
@@ -42,19 +43,24 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            
+
             // Update data dari DTO
             user.setNama(request.getNama());
             user.setEmail(request.getEmail());
             user.setNomorTelepon(request.getNomorTelepon());
             user.setAlamat(request.getAlamat());
             user.setTanggalLahir(request.getTanggalLahir());
-            
+
             // Simpan perubahan ke database
             userRepository.save(user);
         } else {
             // Bisa tambahkan error handling jika user tidak ditemukan
             throw new RuntimeException("User not found with id: " + id);
         }
+    }
+
+    @Override
+    public long countTotalUsers() {
+        return userRepository.count(); // Menghitung semua user
     }
 }

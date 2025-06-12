@@ -48,7 +48,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartDto getCartForUser(Long userId) {
-        Cart cart = cartRepository.findByUserId(userId).orElse(new Cart());
+        Cart cart = cartRepository.findByUserIdWithDetails(userId)
+                .orElse(null);
 
         List<CartItemDto> itemDtos = cart.getCartItems().stream()
                 .map(this::convertToDto)
@@ -77,14 +78,14 @@ public class CartServiceImpl implements CartService {
         dto.setCartItemId(cartItem.getId());
         dto.setProductId(product.getId());
         dto.setProductName(product.getNama());
-        
+
         // --- PERBAIKAN UTAMA: Safety Check untuk Harga ---
         double price = (product.getHarga() != null) ? product.getHarga() : 0.0;
         dto.setPrice(price);
-        
+
         dto.setQuantity(cartItem.getQuantity());
         dto.setImageUrl(product.getGambarUrl());
-        
+
         // Hitung subtotal dengan harga yang sudah aman
         dto.setSubtotal(price * cartItem.getQuantity());
 

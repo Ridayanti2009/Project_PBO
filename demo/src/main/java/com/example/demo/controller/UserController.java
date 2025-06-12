@@ -77,7 +77,7 @@ public class UserController {
     public String showEditProfileForm(Model model, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
         if (userId == null) return "redirect:/login";
-        
+
         User user = userService.findUserById(userId).orElseThrow();
         model.addAttribute("user", user);
         model.addAttribute("categories", new String[] { "Celebration Cake", "Classic Cake", "Cookie", "Dessert" });
@@ -92,8 +92,8 @@ public class UserController {
         model.addAttribute("categories", new String[] { "Celebration Cake", "Classic Cake", "Cookie", "Dessert" });
         return "user_order_history";
     }
-    
-     @GetMapping("/checkout")
+
+    @GetMapping("/checkout")
     public String showCheckoutPage(Model model, HttpSession session) {
         System.out.println("--- DEBUG LOG 1: Memasuki method showCheckoutPage ---");
 
@@ -111,17 +111,17 @@ public class UserController {
             System.out.println("--- DEBUG LOG INFO: Keranjang kosong. Mengarahkan ke halaman keranjang. ---");
             return "redirect:/keranjang";
         }
-        
+
         User user = userService.findUserById(userId)
                 .orElse(null); // Diubah sementara untuk tidak melempar error
-        
+
         if (user == null) {
             System.out.println("--- DEBUG LOG ERROR: User dengan ID " + userId + " tidak ditemukan di database! ---");
             // Seharusnya ini tidak terjadi jika sesi valid, tapi kita cek untuk keamanan
             throw new RuntimeException("Data user tidak valid.");
         }
         System.out.println("--- DEBUG LOG 4: Berhasil mendapatkan data user: " + user.getNama() + " ---");
-        
+
         model.addAttribute("cart", cart);
         model.addAttribute("user", user);
         model.addAttribute("categories", new String[] { "Celebration Cake", "Classic Cake", "Cookie", "Dessert" });
@@ -129,7 +129,7 @@ public class UserController {
 
         return "user_checkout";
     }
-    
+
     // =======================================================
     // == AKSI DARI FORM (POST)
     // =======================================================
@@ -138,10 +138,10 @@ public class UserController {
     public String updateProfile(@ModelAttribute UpdateProfileRequest request, HttpSession session, RedirectAttributes redirectAttributes) {
         Long userId = (Long) session.getAttribute("userId");
         if (userId == null) return "redirect:/login";
-        
+
         try {
             userService.updateUserProfile(userId, request);
-            redirectAttributes.addFlashAttribute("success", "Profil berhasil diperbarui!");
+            redirectAttributes.addFlashAttribute("success", "Profile updated successfully.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Gagal memperbarui profil.");
         }

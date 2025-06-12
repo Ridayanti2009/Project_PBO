@@ -3,12 +3,12 @@
 <body>
     <head>
         <meta charset="UTF-8">
-        <title th:text="'Kategori: ' + ${kategori}">Kategori</title>
-        <link rel="stylesheet" th:href="@{/css/sidebar.css}">  
+        <title th:text="'Kategori: ' + ${kategori}">Category</title>
+        <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     </head>
 
 <div class="sidebar" th:fragment="sidebar">
-    <h2>🍰 User Menu</h2>
+    <h2>🍰 Sweet Shop</h2>
     <ul>
         <li th:each="kategoriItem : ${categories}">
             <a th:href="@{|/user/kategori/${kategoriItem}|}"
@@ -16,11 +16,11 @@
                 th:classappend="${#strings.equals(kategori, kategoriItem)} ? 'active' : ''">
             </a>
         </li>
-        
-        <li><a href="/keranjang">🛒 Keranjang Saya</a></li>
-        <li><a th:href="@{/riwayat-pesanan}">📋 Riwayat Pesanan</a></li>
+
+        <li><a href="/keranjang">🛒 Cart</a></li>
+        <li><a th:href="@{/riwayat-pesanan}">📋 Purchase History</a></li>
         <li><a th:href="@{/profile}">👤 My Profile</a></li>
-        
+
         <li>
             <form id="logout-form" th:action="@{/logout}" method="post">
                 <button type="submit">Logout</button>

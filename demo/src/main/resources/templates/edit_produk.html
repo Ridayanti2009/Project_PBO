@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Edit Produk</title>
+  <title>Edit Product</title>
 </head>
 <body>
-  <h1>Edit Produk</h1>
+  <h1>Edit Product</h1>
 
     <form th:action="@{'/products/edit/' + ${kategori} + '/' + ${product.id}}" method="post">
     <label>Product Name</label>
@@ -24,12 +24,12 @@
     <input type="number" name="stock" th:value="${product.stok}" />
 
     <div th:if="${kategori == 'cookie' or kategori == 'celebrationcake'}">
-        <label>Ukuran</label>
+        <label>Size</label>
         <input type="text" name="ukuran" th:value="${product.ukuran}" />
     </div>
 
     <div th:if="${kategori == 'dessert' or kategori == 'classiccake'}">
-        <label>Varian</label>
+        <label>Variant</label>
         <input type="text" name="varian" th:value="${product.varian}" />
     </div>
 
@@ -37,6 +37,6 @@
     </form>
 
   <br>
-  <a th:href="@{'/products/detail/' + ${kategori} + '/' + ${product.id}}">← Kembali ke Detail Produk</a>
+  <a th:href="@{'/products/detail/' + ${kategori} + '/' + ${product.id}}">← Back to Product Detail</a>
 </body>
 </html>

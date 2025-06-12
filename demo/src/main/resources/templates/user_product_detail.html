@@ -1,86 +1,133 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${product.nama}">Detail Produk</title>
+    <meta charset="UTF-8" />
+    <title th:text="${product.nama}">Product Detail</title>
     <link rel="stylesheet" th:href="@{/css/detail1.css}" />
+    <!-- CSS untuk Notifikasi di Atas -->
+    <style>
+        #notification-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            z-index: 2000;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .btn-order:disabled {
+            background: linear-gradient(135deg, #ff8a80, #ff5722); /* Ganti dengan gradient asli tombol Anda */
+            opacity: 0.5;
+            cursor: not-allowed; /* Mengubah kursor menjadi 'tidak diizinkan' */
+            box-shadow: none; /* Menghilangkan bayangan agar terlihat flat dan disabled */
+            transform: none;
+            /* Penting: Override gaya default browser */
+            -webkit-appearance: none; /* Untuk browser Webkit (Chrome, Safari) */
+            -moz-appearance: none;    /* Untuk Firefox */
+            appearance: none;         /* Standar */
+        }
+
+        /* Pastikan efek hover dan active tidak berlaku saat disabled */
+        .btn-order:disabled:hover,
+        .btn-order:disabled:active {
+            background: linear-gradient(135deg, #ff8a80, #ff5722);
+            opacity: 0.5; /* Pertahankan opacity disabled */
+            transform: none; /* Hilangkan efek transisi */
+            box-shadow: none; /* Hilangkan bayangan */
+            cursor: not-allowed;
+        }
+
+    </style>
 </head>
 <body>
 
+<!-- Elemen Notifikasi Baru -->
+<div id="notification-bar"></div>
+
+<!-- Sidebar Anda -->
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
-    <h1 th:text="${product.nama}">Nama Produk</h1>
-    <a th:href="@{|/user/kategori/${kategori}|}" class="btn-back">⬅ Kembali ke Kategori</a>
+    <h1 th:text="${product.nama}">Product</h1>
+    <a th:href="@{|/user/kategori/${kategori}|}" class="btn-back">⬅ Back to Category</a>
 
     <div class="product-detail">
         <img th:src="@{'/uploads/' + ${product.gambarUrl}}" th:alt="'Gambar ' + ${product.nama}" class="detail-img" />
         <div class="detail-info">
-            <p><strong>Harga:</strong>
-                <span th:if="${product.harga != null}" th:text="${#numbers.formatCurrency(product.harga)}"></span>
-                <span th:if="${product.harga == null}">Harga tidak tersedia</span>
+            <p><strong>Price:</strong>
+                <span th:if="${product.harga != null}" th:text="'IDR ' + ${#numbers.formatDecimal(product.harga, 0, 'POINT', 0, 'COMMA')}"></span>
+                <span th:if="${product.harga == null}">Price not Available</span>
             </p>
-            <p><strong>Stok:</strong>
+            <p><strong>Stock:</strong>
                 <span th:text="${product.stok} + ' pcs'">0 pcs</span>
             </p>
-            <p><strong>Deskripsi:</strong></p>
-            <p th:text="${product.deskripsi}">Deskripsi produk</p>
-            
+            <p><strong>Description:</strong>
+                <span th:text="${product.deskripsi}">No description available</span>
+            </p>
+
             <form id="add-to-cart-form" class="cart-form">
                 <input type="hidden" name="productId" th:value="${product.id}">
-                
+
                 <div class="form-group-inline">
-                    <label for="quantity">Jumlah:</label>
+                    <label for="quantity">  Quantity:</label>
                     <input type="number" id="quantity" name="quantity" value="1" min="1" th:max="${product.stok}" class="quantity-input">
                 </div>
-                
-                <button type="submit" class="btn-order">🛒 Tambah ke Keranjang</button>
+
+                <button type="submit" class="btn-order" th:disabled="${product.stok == 0}">🛒 Add to Cart</button>
             </form>
-            <div id="notification" style="margin-top: 15px;"></div>
+            <!-- Div notifikasi lama sudah dihapus -->
         </div>
     </div>
 </div>
 
 <script>
-    document.getElementById('logout-form').addEventListener('submit', function(event) {
-        // 1. Mencegah form dikirim secara normal
-        event.preventDefault(); 
+    // --- FUNGSI BARU UNTUK NOTIFIKASI ATAS ---
+    function showNotification(message, isError = false) {
+        const notifBar = document.getElementById('notification-bar');
+        notifBar.textContent = message;
+        notifBar.style.backgroundColor = isError ? '#dc3545' : '#28a745'; // Merah untuk error, Hijau untuk sukses
+        notifBar.style.display = 'block';
+        setTimeout(() => { notifBar.style.display = 'none'; }, 3000);
+    }
 
-        // 2. Kirim request POST ke /logout menggunakan JavaScript
-        fetch(this.action, {
-            method: 'POST',
-            headers: {
-                // Jika kamu menggunakan CSRF protection, header ini mungkin perlu
-                // 'X-CSRF-TOKEN': 'nilai_token_csrf_kamu' 
-            }
-        })
-        .then(response => {
-            // 3. Jika server merespons OK (logout berhasil)
-            if (response.ok) {
-                // 4. Arahkan browser ke halaman login
-                window.location.href = '/login'; 
-            } else {
-                alert('Logout gagal!');
-            }
-        })
-        .catch(error => {
-            console.error('Error saat logout:', error);
-            alert('Terjadi kesalahan saat mencoba logout.');
-        });
+    // --- LOGIKA LOGOUT ---
+    // Pastikan event listener logout ada di dalam DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutForm = document.getElementById('logout-form');
+        if (logoutForm) {
+            logoutForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                fetch(this.action, { method: 'POST', credentials: 'include' })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = '/login';
+                        } else {
+                            alert('Logout failed!');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error during logout:', error);
+                        alert('An error occurred while trying to logout.');
+                    });
+            });
+        }
     });
 
+    // --- LOGIKA ADD TO CART (SUDAH DIPERBARUI) ---
     document.getElementById('add-to-cart-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Mencegah form reload halaman
+        event.preventDefault();
 
         const form = event.target;
         const productId = form.querySelector('input[name="productId"]').value;
         const quantity = form.querySelector('input[name="quantity"]').value;
-        const notificationDiv = document.getElementById('notification');
 
-        // Data yang akan dikirim ke API
         const data = {
             productId: productId,
-            quantity: parseInt(quantity) // Pastikan quantity adalah angka
+            quantity: parseInt(quantity)
         };
 
         fetch('/api/cart/add', {
@@ -89,23 +136,21 @@
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-            credentials: 'include' // <-- TAMBAHKAN BARIS INI
+            credentials: 'include'
         })
-        
         .then(response => {
             if (response.ok) {
-                // Jika berhasil, tampilkan notifikasi sukses
-                notificationDiv.innerHTML = '<p style="color: green; font-weight: bold;">✅ Berhasil ditambahkan ke keranjang!</p>';
+                // Panggil fungsi notifikasi baru untuk sukses
+                showNotification('✅ Added to cart successfully!');
             } else {
-                // Jika gagal, tampilkan notifikasi error
-                notificationDiv.innerHTML = '<p style="color: red; font-weight: bold;">❌ Gagal menambahkan, coba lagi.</p>';
+                // Panggil fungsi notifikasi baru untuk error
+                showNotification('❌ Failed to add, please try again.', true);
             }
-            // Hapus notifikasi setelah beberapa detik
-            setTimeout(() => { notificationDiv.innerHTML = ''; }, 3000);
         })
         .catch(error => {
             console.error('Error:', error);
-            notificationDiv.innerHTML = '<p style="color: red; font-weight: bold;">❌ Terjadi kesalahan jaringan.</p>';
+            // Panggil fungsi notifikasi baru untuk network error
+            showNotification('❌ Network error occurred.', true);
         });
     });
 </script>

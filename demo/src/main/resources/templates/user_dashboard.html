@@ -9,28 +9,28 @@
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
-    <h1>Selamat datang di Sweetshop!</h1>
-    <p>Silahkan pilih kategori kue di sebelah kiri untuk mulai memesan 🍪</p>
+    <h1>Welcome to Sweetshop!</h1>
+    <p>Please select a cake category on the left to start ordering 🍪</p>
 </div>
 
 <script>
     document.getElementById('logout-form').addEventListener('submit', function(event) {
         // 1. Mencegah form dikirim secara normal
-        event.preventDefault(); 
+        event.preventDefault();
 
         // 2. Kirim request POST ke /logout menggunakan JavaScript
         fetch(this.action, {
             method: 'POST',
             headers: {
                 // Jika kamu menggunakan CSRF protection, header ini mungkin perlu
-                // 'X-CSRF-TOKEN': 'nilai_token_csrf_kamu' 
+                // 'X-CSRF-TOKEN': 'nilai_token_csrf_kamu'
             }
         })
         .then(response => {
             // 3. Jika server merespons OK (logout berhasil)
             if (response.ok) {
                 // 4. Arahkan browser ke halaman login
-                window.location.href = '/login'; 
+                window.location.href = '/login';
             } else {
                 alert('Logout gagal!');
             }

@@ -173,6 +173,10 @@ body::before {
     margin-bottom: 0.5rem;
 }
 
+.stat-box:last-child {
+    flex-grow: 1.5; /* Angka ini bisa diubah (misal: 2) jika butuh lebih banyak ruang */
+}
+
 /* Content Section */
 .content-section {
     background: rgba(255, 255, 255, 0.9);
@@ -208,16 +212,18 @@ table thead {
 
 table thead th {
     padding: 1.2rem 1rem;
-    text-align: left;
+    text-align: center;
     font-weight: 600;
     font-size: 1.1rem;
     letter-spacing: 0.5px;
+    text-align: center;
 }
 
 table tbody tr {
     background: rgba(255, 255, 255, 0.8);
     border-bottom: 1px solid rgba(255, 182, 193, 0.2);
     transition: all 0.3s ease;
+    text-align: center;
 }
 
 table tbody tr:nth-child(even) {
@@ -370,4 +376,157 @@ table tbody td:first-child {
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 107, 107, 0.8);
+}
+
+/* --- CSS untuk Struk Belanja & Modal Detail (dari Order History) --- */
+
+/* Gaya Modal Umum */
+.modal {
+    display: none; /* Sembunyikan secara default */
+    position: fixed; /* Tetap di tempat */
+    z-index: 2000; /* Di atas segalanya */
+    left: 0;
+    top: 0;
+    width: 100%; /* Lebar penuh */
+    height: 100%; /* Tinggi penuh */
+    overflow: auto; /* Aktifkan scroll jika konten terlalu besar */
+    background-color: rgba(0,0,0,0.6); /* Latar belakang gelap transparan */
+    backdrop-filter: blur(5px); /* Efek blur pada latar belakang */
+    display: flex; /* Gunakan flexbox untuk centering */
+    align-items: center; /* Pusatkan secara vertikal */
+    justify-content: center; /* Pusatkan secara horizontal */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Otomatis terpusat oleh flexbox */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Lebar modal */
+    max-width: 400px; /* Lebar maksimal */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative; /* Diperlukan untuk tombol close */
+    border-radius: 10px;
+    animation: fadeInScale 0.3s ease-out; /* Animasi masuk */
+}
+
+/* Animasi masuk modal */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Tombol Tutup Modal */
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    transform: scale(1.1);
+}
+
+
+/* --- Gaya Khusus Struk Belanja (.receipt-container) --- */
+.receipt-container {
+    font-family: 'Courier New', Courier, monospace;
+    width: 100%; /* Sesuaikan dengan lebar modal-content */
+    margin: 0 auto;
+    border: 2px dashed #333;
+    padding: 15px;
+    position: relative; /* Diperlukan untuk stempel */
+    background: #fff;
+    box-sizing: border-box; /* Pastikan padding termasuk dalam lebar */
+}
+.receipt-header, .shipping-address-container {
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.receipt-header h2 { margin: 0; font-size: 1.5em; }
+.receipt-header p, .shipping-address-container p { margin: 2px 0; font-size: 0.9em; }
+.shipping-address-container h4 { margin: 0 0 5px 0; font-size: 1em; }
+
+.receipt-body table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+.receipt-body th, .receipt-body td {
+    text-align: left;
+    padding: 5px 0;
+    border-bottom: 1px dotted #ccc;
+}
+.receipt-body .item-col { width: 50%; }
+.receipt-body .qty-col { width: 15%; }
+.receipt-body .price-col { text-align: right; }
+.receipt-footer {
+    margin-top: 15px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+.receipt-footer div {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+.paid-stamp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-20deg);
+    font-size: 4em;
+    color: rgba(0, 128, 0, 0.3);
+    border: 5px solid rgba(0, 128, 0, 0.3);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 100;
+    pointer-events: none;
+    display: none;
+}
+.cancel-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+.cancel-button-container button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+.cancel-button-container button:hover {
+    background-color: #c82333;
+}
+
+/* Gaya untuk tombol Detail di tabel */
+.detail-btn {
+    background: linear-gradient(45deg, #1abc9c, #16a085); /* Contoh warna hijau */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.detail-btn:hover {
+    background: linear-gradient(45deg, #16a085, #138d72);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

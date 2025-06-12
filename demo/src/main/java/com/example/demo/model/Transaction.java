@@ -26,6 +26,8 @@ public class Transaction {
     private Double totalAmount;
     private String status; // Contoh: "PENDING", "PROCESSING", "SHIPPED", "COMPLETED"
     private String deliveryOption; // Contoh: "DELIVERY", "PICKUP"
+    private String shippingAddress;
+
 
     @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -46,4 +48,11 @@ public class Transaction {
     public void setDeliveryOption(String deliveryOption) { this.deliveryOption = deliveryOption; }
     public List<TransactionDetail> getTransactionDetails() { return transactionDetails; }
     public void setTransactionDetails(List<TransactionDetail> transactionDetails) { this.transactionDetails = transactionDetails; }
+    public String getShippingAddress() {
+    return shippingAddress;
+    }
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
 }

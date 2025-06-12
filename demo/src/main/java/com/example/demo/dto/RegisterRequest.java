@@ -3,8 +3,6 @@ package com.example.demo.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 
-import org.springframework.cglib.core.Local;
-
 public class RegisterRequest {
     private String nama;
     private String email;

@@ -2,36 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Detail Produk</title>
-  <link rel="stylesheet" th:href="@{/css/detail.css}">
+  <title>Product Detail</title>
+  <link rel="stylesheet" th:href="@{/css/detail1.css}">
 </head>
 <body>
-  <h1>Detail Produk</h1>
+  <h1>Product Detail</h1>
 
-  <img th:src="@{'/uploads/' + ${product.gambarUrl}}" alt="Gambar Produk" width="300"/>
+  <img th:src="@{'/uploads/' + ${product.gambarUrl}}" alt="Product Image" width="300"/>
 
-  <p><strong>Nama:</strong> <span th:text="${product.nama}"></span></p>
-  <p><strong>Kategori:</strong> <span th:text="${kategori}"></span></p>
-  <p><strong>Deskripsi:</strong> <span th:text="${product.deskripsi}"></span></p>
-  <p><strong>Harga:</strong> Rp <span th:text="${product.harga}"></span></p>
-  <p><strong>Stok:</strong> <span th:text="${product.stok}"></span></p>
+  <p><strong>Name:</strong> <span th:text="${product.nama}"></span></p>
+  <p><strong>Category:</strong> <span th:text="${kategori}"></span></p>
+  <p><strong>Description:</strong> <span th:text="${product.deskripsi}"></span></p>
+  <p><strong>Price:</strong> <span th:text="'IDR ' + ${#numbers.formatDecimal(product.harga, 0, 'POINT', 0, 'COMMA')}"></span></p>
+  <p><strong>Stock:</strong> <span th:text="${product.stok}"></span></p>
 
   <p th:if="${kategori == 'cookie' or kategori == 'celebrationcake'}">
-    <strong>Ukuran:</strong> <span th:text="${product.ukuran}"></span>
+    <strong>Size:</strong> <span th:text="${product.ukuran}"></span>
   </p>
 
   <p th:if="${kategori == 'dessert' or kategori == 'classiccake'}">
-    <strong>Varian:</strong> <span th:text="${product.varian}"></span>
+    <strong>Variant:</strong> <span th:text="${product.varian}"></span>
   </p>
 
   <div>
     <a th:href="@{'/products/edit/' + ${kategori} + '/' + ${product.id}}">Edit</a>
     |
     <a th:href="@{'/products/delete/' + ${kategori} + '/' + ${product.id}}"
-       onclick="return confirm('Yakin ingin menghapus produk ini?')">Hapus</a>
+        onclick="return confirm('Yakin ingin menghapus produk ini?')">Delete</a>
   </div>
 
   <br>
-  <a href="/products">← Kembali ke Daftar Produk</a>
+  <a href="/products">← Back to Product Detail</a>
 </body>
 </html>

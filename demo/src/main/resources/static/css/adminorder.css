@@ -99,34 +99,53 @@ body {
     color: #555;
 }
 
-/* TABEL PESANAN */
+/* TABEL PESANAN (Ini yang diganti agar sama dengan userlist.css yang sudah diperbarui) */
 .orders-table {
     width: 100%;
     border-collapse: collapse;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
+    border-radius: 15px; /* Border radius lebih besar */
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(255, 182, 193, 0.2);
-    font-size: 0.95rem;
+    box-shadow: 0 10px 25px rgba(255, 182, 193, 0.2); /* Shadow yang lebih lembut */
+    font-size: 0.95rem; /* Ukuran font dipertahankan */
+    text-align: left; /* Teks diatur ke kiri seperti tabel userlist */
 }
 
 .orders-table th {
-    background-color: #ffe5ec;
-    color: #d63384;
-    font-weight: bold;
-    padding: 1rem;
-    border-bottom: 2px solid #f5c2c7;
-    text-align: left;
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e); /* Gradient background */
+    color: white;
+    font-weight: 600; /* Font weight lebih tebal */
+    padding: 1.2rem 1rem; /* Padding lebih besar */
+    border-bottom: none; /* Hapus border bawah yang lama */
+    text-align: center; /* Teks diatur ke kiri */
+    font-size: 1.1rem; /* Ukuran font lebih besar */
+    letter-spacing: 0.5px; /* Spasi antar huruf */
 }
 
 .orders-table td {
-    padding: 0.9rem;
-    border-bottom: 1px solid #f5d0d0;
-    color: #444;
+    padding: 1rem; /* Padding sel lebih besar */
+    border-bottom: 1px solid rgba(255, 182, 193, 0.2); /* Border bawah yang lebih lembut */
+    color: #666; /* Warna teks */
+    font-weight: 500; /* Font weight disamakan */
+    text-align: center;
 }
 
 .orders-table tr:last-child td {
     border-bottom: none;
+}
+
+.orders-table tr {
+    background: rgba(255, 255, 255, 0.8); /* Background transparan */
+    transition: all 0.3s ease;
+}
+
+.orders-table tr:nth-child(even) {
+    background: rgba(255, 248, 248, 0.8); /* Background untuk baris genap */
+}
+
+.orders-table tr:hover {
+    background: rgba(255, 107, 107, 0.1); /* Hover background */
+    transform: scale(1.02); /* Sedikit membesar saat hover */
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2); /* Shadow saat hover */
 }
 
 /* DROPDOWN STATUS */
@@ -150,26 +169,18 @@ body {
     border-radius: 20px;
     font-weight: bold;
     font-size: 0.85rem;
-    color: white;
+    color: #d63384;
     display: inline-block;
 }
 
-.status-DIPROSES {
-    background-color: #ffc107;
-    color: black;
+.status-COMPLETED { /* PERUBAHAN DI SINI! */
+    color: #d63384;
 }
 
-.status-DIKIRIM {
-    background-color: #007bff;
+.status-CANCELLED { /* PERUBAHAN DI SINI! */
+    color: #d63384;
 }
 
-.status-SELESAI {
-    background-color: #28a745;
-}
-
-.status-DIBATALKAN {
-    background-color: #dc3545;
-}
 
 /* NOTIFIKASI */
 #notification-bar {
@@ -177,7 +188,7 @@ body {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #28a745;
+    background-color: #d63384;;
     color: white;
     padding: 15px 30px;
     border-radius: 0 0 10px 10px;

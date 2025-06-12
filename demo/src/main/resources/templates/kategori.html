@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Kategori: ' + ${kategori}">Kategori</title>
+    <title th:text="'Kategori: ' + ${kategori}">Category</title>
     <link rel="stylesheet" th:href="@{/css/kategori.css}">
 </head>
 <body>
@@ -11,10 +11,10 @@
         <div class="produk-list">
             <div th:each="produk : ${produkList}" class="produk-box">
                 <img th:src="@{${produk.gambar}}" alt="gambar" class="produk-img"/>
-                <h3 th:text="${produk.nama}">Nama</h3>
-                <p th:text="'Rp ' + ${produk.harga}">Harga</p>
-                <p th:text="'Stok: ' + ${produk.stok}">Stok</p>
-                <button>Beli</button>
+                <h3 th:text="${produk.nama}">Product</h3>
+                <p th:text="'Rp ' + ${produk.harga}">Price</p>
+                <p th:text="'Stok: ' + ${produk.stok}">Stock</p>
+                <button>Buy Now</button>
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Kategori: ' + ${kategori}">Kategori</title>
+    <title th:text="'Kategori: ' + ${kategori}">Category</title>
     <link rel="stylesheet" th:href="@{/css/perkategori.css}" />
 </head>
 <body>
@@ -10,11 +10,11 @@
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
-    <h1 th:text="'Kategori: ' + ${kategori}">Kategori</h1>
-    <a href="/user/dashboard" class="btn-back">⬅ Kembali</a>
+    <h1 th:text="${kategori}"></h1>
+    <a href="/user/dashboard" class="btn-back">⬅ Back</a>
 
     <div th:if="${#lists.isEmpty(produkList)}">
-        <p>Tidak ada produk dalam kategori ini.</p>
+        <p>Nothing Product in this Category</p>
     </div>
 
     <div class="product-grid" th:if="${!#lists.isEmpty(produkList)}">
@@ -22,8 +22,8 @@
             <img th:src="@{'/uploads/' + ${p.gambarUrl}}"
                 th:alt="'Gambar ' + ${p.nama}" class="card-img"/>
             <div class="card-body">
-                <h3 th:text="${p.nama}">Nama</h3>
-                <p th:text="'Rp ' + ${#numbers.formatDecimal(p.harga, 0, 2, 'COMMA')}">Harga</p>
+                <h3 th:text="${p.nama}">Name</h3>
+                <p th:text="'IDR ' + ${#numbers.formatDecimal(p.harga, 0, 2, 'COMMA')}">Price</p>
                 <a th:href="@{|/user/detail/${kategori}/${p.id}|}" class="btn-detail">Detail</a>
             </div>
         </div>
@@ -33,28 +33,28 @@
 <script>
     document.getElementById('logout-form').addEventListener('submit', function(event) {
         // 1. Mencegah form dikirim secara normal
-        event.preventDefault(); 
+        event.preventDefault();
 
         // 2. Kirim request POST ke /logout menggunakan JavaScript
         fetch(this.action, {
             method: 'POST',
             headers: {
                 // Jika kamu menggunakan CSRF protection, header ini mungkin perlu
-                // 'X-CSRF-TOKEN': 'nilai_token_csrf_kamu' 
+                // 'X-CSRF-TOKEN': 'nilai_token_csrf_kamu'
             }
         })
         .then(response => {
             // 3. Jika server merespons OK (logout berhasil)
             if (response.ok) {
                 // 4. Arahkan browser ke halaman login
-                window.location.href = '/login'; 
+                window.location.href = '/login';
             } else {
-                alert('Logout gagal!');
+                alert('Logout failed!');
             }
         })
         .catch(error => {
             console.error('Error saat logout:', error);
-            alert('Terjadi kesalahan saat mencoba logout.');
+            alert('An error occurred while trying to log out.');
         });
     });
 </script>

@@ -95,6 +95,7 @@ body::before {
     border-left: 4px solid #ff6b6b;
 }
 
+
 /* Main Content Styles */
 .main-content {
     margin-left: 280px;
@@ -224,7 +225,7 @@ body::before {
     transform: translateY(-2px);
 }
 
-/* Modal Overlay */
+/* Modal Overlay - FIXED */
 #addModal {
     display: none;
     position: fixed;
@@ -236,9 +237,12 @@ body::before {
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
     animation: fadeIn 0.3s ease;
+    display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 1rem;
+    align-items: flex-start;
+    padding: 2rem 1rem;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 @keyframes fadeIn {
@@ -247,33 +251,34 @@ body::before {
 }
 
 @keyframes modalSlideIn {
-    from { 
+    from {
         opacity: 0;
         transform: scale(0.8) translateY(-50px);
     }
-    to { 
+    to {
         opacity: 1;
         transform: scale(1) translateY(0);
     }
 }
 
-/* Modal Content */
-#addModal > div {
+/* Modal Content - FIXED untuk struktur HTML yang benar */
+#addModal .modal-content {
     background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(20px);
     border-radius: 25px;
     width: 100%;
     max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
+    min-height: fit-content;
     box-shadow: 0 25px 60px rgba(255, 107, 107, 0.3);
     border: 2px solid rgba(255, 182, 193, 0.3);
     animation: modalSlideIn 0.4s ease;
     position: relative;
+    overflow: hidden;
+    margin-top: 1rem;
 }
 
-/* Modal Header */
-#addModal h2 {
+/* Modal Header - FIXED */
+#addModal .modal-content h2 {
     background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
     color: white;
     margin: 0;
@@ -283,38 +288,16 @@ body::before {
     font-weight: 600;
     text-align: center;
     position: relative;
+    box-sizing: border-box;
 }
 
-/* Close Button */
-#addModal span {
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-#addModal span:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: rotate(90deg);
-}
-
-/* Form Styles */
-#addModal form {
+/* Form Styles - IMPROVED */
+#addModal .modal-content form {
     padding: 2rem;
+    box-sizing: border-box;
 }
 
-#addModal label {
+#addModal .modal-content label {
     display: block;
     margin-bottom: 0.5rem;
     margin-top: 1rem;
@@ -323,12 +306,12 @@ body::before {
     font-size: 1rem;
 }
 
-#addModal label:first-of-type {
+#addModal .modal-content label:first-of-type {
     margin-top: 0;
 }
 
-#addModal input,
-#addModal select {
+#addModal .modal-content input,
+#addModal .modal-content select {
     width: 100%;
     padding: 0.8rem 1rem;
     border: 2px solid rgba(255, 182, 193, 0.3);
@@ -337,10 +320,11 @@ body::before {
     background: rgba(255, 248, 248, 0.8);
     transition: all 0.3s ease;
     font-family: inherit;
+    box-sizing: border-box;
 }
 
-#addModal input:focus,
-#addModal select:focus {
+#addModal .modal-content input:focus,
+#addModal .modal-content select:focus {
     outline: none;
     border-color: #ff6b6b;
     background: rgba(255, 255, 255, 0.9);
@@ -348,19 +332,19 @@ body::before {
     transform: translateY(-2px);
 }
 
-#addModal select {
+#addModal .modal-content select {
     cursor: pointer;
 }
 
 /* File Input Styling */
-#addModal input[type="file"] {
+#addModal .modal-content input[type="file"] {
     padding: 0.5rem;
     border-style: dashed;
     border-color: #ff6b6b;
     background: rgba(255, 107, 107, 0.05);
 }
 
-#addModal input[type="file"]:hover {
+#addModal .modal-content input[type="file"]:hover {
     background: rgba(255, 107, 107, 0.1);
 }
 
@@ -379,8 +363,8 @@ body::before {
     background: rgba(255, 232, 232, 0.8);
 }
 
-/* Submit Button */
-#addModal button[type="submit"] {
+/* Submit Buttons - IMPROVED */
+#addModal .modal-content button[type="submit"] {
     background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
     color: white;
     border: none;
@@ -390,18 +374,31 @@ body::before {
     border-radius: 25px;
     cursor: pointer;
     width: 100%;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     transition: all 0.3s ease;
     box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+    box-sizing: border-box;
 }
 
-#addModal button[type="submit"]:hover {
+#addModal .modal-content button[type="submit"]:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
 }
 
-#addModal button[type="submit"]:active {
+#addModal .modal-content button[type="submit"]:active {
     transform: translateY(-1px);
+}
+
+/* Close Button - ADDED SPECIFIC STYLING */
+#addModal .modal-content button[type="submit"]:last-of-type {
+    background: linear-gradient(45deg, #ccc, #ddd);
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+#addModal .modal-content button[type="submit"]:last-of-type:hover {
+    background: linear-gradient(45deg, #bbb, #ccc);
+    color: #444;
 }
 
 /* Menu Toggle Button for Mobile */
@@ -428,7 +425,7 @@ body::before {
     box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
 }
 
-/* Responsive Design */
+/* Responsive Design - IMPROVED */
 @media (max-width: 768px) {
     .sidebar {
         width: 250px;
@@ -465,16 +462,22 @@ body::before {
         max-width: 300px;
     }
 
-    #addModal > div {
-        margin: 1rem;
-        max-width: calc(100% - 2rem);
+    /* Modal responsive fixes */
+    #addModal {
+        padding: 1rem;
+        align-items: flex-start;
     }
 
-    #addModal form {
+    #addModal .modal-content {
+        margin-top: 1rem;
+        max-width: none;
+    }
+
+    #addModal .modal-content form {
         padding: 1.5rem;
     }
 
-    #addModal h2 {
+    #addModal .modal-content h2 {
         font-size: 1.3rem;
         padding: 1rem 1.5rem;
     }
@@ -490,17 +493,21 @@ body::before {
         font-size: 1rem;
     }
 
-    #addModal form {
+    #addModal {
+        padding: 0.5rem;
+    }
+
+    #addModal .modal-content form {
         padding: 1rem;
     }
 
-    #addModal input,
-    #addModal select {
+    #addModal .modal-content input,
+    #addModal .modal-content select {
         padding: 0.6rem 0.8rem;
         font-size: 0.9rem;
     }
 
-    #addModal button[type="submit"] {
+    #addModal .modal-content button[type="submit"] {
         padding: 0.8rem 1.5rem;
         font-size: 1rem;
     }
@@ -541,11 +548,11 @@ body::before {
 }
 
 /* Form Validation Styles */
-#addModal input:valid {
+#addModal .modal-content input:valid {
     border-color: #4caf50;
 }
 
-#addModal input:invalid:not(:focus):not(:placeholder-shown) {
+#addModal .modal-content input:invalid:not(:focus):not(:placeholder-shown) {
     border-color: #f44336;
 }
 
@@ -572,6 +579,6 @@ body::before {
     100% { transform: scale(1); }
 }
 
-#addModal button[type="submit"]:focus {
+#addModal .modal-content button[type="submit"]:focus {
     animation: successPulse 0.3s ease;
 }

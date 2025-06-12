@@ -122,14 +122,15 @@ body::before {
     font-weight: 700;
     text-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
     animation: welcomeGlow 3s ease-in-out infinite alternate;
+    text: center;
 }
 
 @keyframes welcomeGlow {
-    0% { 
+    0% {
         transform: scale(1);
         filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.3));
     }
-    100% { 
+    100% {
         transform: scale(1.02);
         filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.5));
     }
@@ -227,6 +228,7 @@ body::before {
 
     .main-content h1 {
         font-size: 2.2rem;
+        text-align: center;
     }
 
     .main-content p {
@@ -243,6 +245,7 @@ body::before {
 @media (max-width: 480px) {
     .main-content h1 {
         font-size: 1.8rem;
+        text-align: center;
     }
 
     .main-content p {
@@ -583,15 +586,65 @@ body::before {
         flex-direction: column;
         gap: 20px;
     }
-    
+
     .order-summary, .shipping-options {
         min-width: auto;
         padding: 1.5rem;
     }
-    
+
     .summary-item {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
+}
+
+/* Tambahkan atau ganti style ini di dalam file chekout.css Anda */
+
+/* Mengatur kontainer form alamat agar rapi */
+#address-form {
+    display: block; /* Pastikan ini adalah block, bukan flex/inline */
+    margin-top: 20px;
+    border-top: 2px solid #f0f0f0;
+    padding-top: 20px;
+}
+
+#address-form h4 {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Mengatur grup form di dalamnya */
+#address-form .form-group {
+    /* Tidak perlu style khusus jika elemen di dalamnya sudah block */
+}
+
+#address-form .form-group label {
+    display: block; /* Pastikan label berada di barisnya sendiri */
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+#address-form .form-group textarea {
+    width: 100%; /* Buat textarea mengisi lebar penuh */
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: inherit; /* Gunakan font yang sama dengan body */
+    font-size: 1rem;
+    min-height: 100px;
+    resize: vertical; /* Izinkan user mengubah tinggi textarea */
+    /* Pastikan textarea juga merupakan block untuk konsistensi */
+    display: block;
+}
+
+#address-form .form-group small {
+    display: block; /* Paksa teks kecil ini untuk berada di baris baru */
+    margin-top: 8px; /* Beri jarak dari textarea di atasnya */
+    font-size: 0.85rem;
+    color: #777;
+    line-height: 1.4;
 }

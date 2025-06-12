@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Keranjang Saya</title>
+    <title>My Shopping Cart</title>
     <link rel="stylesheet" th:href="@{/css/keranjang.css}" />
     <style>
         .cart-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
@@ -19,53 +19,58 @@
 <div class="sidebar" th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
-    <h1>🛒 Keranjang Belanja Saya</h1>
+    <h1>🛒 My Shopping Cart</h1>
 
     <table class="cart-table">
         <thead>
             <tr>
-                <th colspan="2">Produk</th>
-                <th style="text-align: center;">Harga</th>
-                <th style="text-align: center;">Jumlah</th>
-                <th style="text-align: center;">Subtotal</th>
-                <th style="text-align: center;">Aksi</th>
+                <th colspan="2">Product</th>
+                <th style="text-align: center;">Price</th>
+                <th style="text-align: center;">Quantity</th>
+                <th style="text-align: center;">Amount</th>
+                <th style="text-align: center;">Action</th>
             </tr>
         </thead>
         <tbody id="cart-items-body"></tbody>
     </table>
 
     <div class="grand-total">
-        <span>Total Belanja: </span>
-        <span id="grand-total">Rp 0</span>
+        <span>Total Purchase: </span>
+        <span id="grand-total">IDR 0</span>
     </div>
 
     <!-- Tombol ini sekarang HANYA berfungsi sebagai link biasa -->
-    <a href="/checkout" class="btn-checkout">Lanjut ke Checkout</a>
+    <a href="/checkout" class="btn-checkout">Place Order</a>
 </div>
 
-<!-- ======================================================= -->
-<!-- == SCRIPT BERSIH DAN FINAL == -->
-<!-- ======================================================= -->
 <script>
     const tbody = document.getElementById('cart-items-body');
     const grandTotalSpan = document.getElementById('grand-total');
 
     function formatRupiah(angka) {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency', currency: 'IDR', minimumFractionDigits: 0
-        }).format(angka || 0);
-    }
+    // Pastikan kita bekerja dengan angka, default ke 0 jika kosong
+    const numberToFormat = angka || 0;
+
+    // 1. Format angka menggunakan standar Indonesia (misal: 50.000)
+    const formattedNumber = new Intl.NumberFormat('id-ID', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(numberToFormat);
+
+    // 2. Tambahkan "IDR " di depannya secara manual
+    return 'IDR ' + formattedNumber;
+}
 
     function fetchCartData() {
         fetch('/api/cart', { credentials: 'include' })
             .then(response => {
-                if (!response.ok) throw new Error('Gagal memuat keranjang, status: ' + response.status);
+                if (!response.ok) throw new Error('Failed to load cart, status: ' + response.status);
                 return response.json();
             })
             .then(cartDto => {
                 tbody.innerHTML = '';
                 if (!cartDto.items || cartDto.items.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px;">Keranjangmu masih kosong nih!</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px;">Your shopping cart is empty</td></tr>';
                 } else {
                     cartDto.items.forEach(item => {
                         const row = `
@@ -82,7 +87,7 @@
                                 </td>
                                 <td>${formatRupiah(item.subtotal)}</td>
                                 <td>
-                                    <a href="#" class="remove-btn" data-itemid="${item.cartItemId}">Hapus</a>
+                                    <a href="#" class="remove-btn" data-itemid="${item.cartItemId}">Delete</a>
                                 </td>
                             </tr>
                         `;
@@ -117,7 +122,7 @@
         if (target.classList.contains('remove-btn')) {
             event.preventDefault();
             const itemId = target.getAttribute('data-itemid');
-            if (confirm('Yakin ingin menghapus item ini?')) {
+            if (confirm('Are you sure you want to delete this item?')) {
                 fetch(`/api/cart/item/${itemId}`, { method: 'DELETE', credentials: 'include' })
                     .then(response => {
                         if (response.ok) fetchCartData();

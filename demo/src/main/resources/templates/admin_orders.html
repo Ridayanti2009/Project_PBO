@@ -2,78 +2,62 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Manajemen Pesanan</title>
-    <!-- Kamu bisa gunakan CSS admin yang sudah ada atau buat baru -->
-    <link rel="stylesheet" th:href="@{/css/adminorder.css}" /> 
-    <style>
-        .orders-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9em; }
-        .orders-table th, .orders-table td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        .orders-table th { background-color: #f8f9fa; }
-        .status-select { padding: 5px; border-radius: 4px; border: 1px solid #ccc; }
-        .status-badge { padding: 5px 10px; border-radius: 12px; color: white; font-weight: bold; display: inline-block; }
-        /* Pastikan nama kelas CSS sama dengan nilai status di database */
-        .status-DIPROSES { background-color: #ffc107; color: black; }
-        .status-DIKIRIM { background-color: #007bff; }
-        .status-SELESAI { background-color: #28a745; }
-        .status-DIBATALKAN { background-color: #dc3545; }
-        #notification-bar { position: fixed; top: 0; left: 50%; transform: translateX(-50%); background-color: #28a745; color: white; padding: 15px; border-radius: 0 0 8px 8px; z-index: 1000; display: none; }
-    </style>
+    <title>Orders Management</title>
+    <link rel="stylesheet" th:href="@{/css/adminorder.css}" />
 </head>
 <body>
 
-<!-- Kamu bisa buat fragment untuk sidebar admin juga jika mau -->
 <div class="sidebar">
     <h2>🎂 Admin Panel</h2>
     <ul>
         <li><a href="/admin/dashboard">🏠 Dashboard</a></li>
         <li><a href="/products">🍰 Products</a></li>
         <li><a href="/admin/orders" class="active">📋 Orders</a></li>
-        <li><a href="/admin/users">👥 Users</a></li>
+        <li><a href="/admin/users">👥 Customers</a></li>
         <li><a href="/login">🔙 Logout</a></li>
     </ul>
 </div>
 
 <div class="main-content">
-    <h1>Manajemen Pesanan</h1>
-    <p>Ubah status pesanan langsung dari tabel di bawah ini.</p>
-    
-    <!-- Notifikasi Bar -->
+    <h1>Orders Management</h1>
+    <p>Change order status directly from the table below</p>
+
     <div id="notification-bar"></div>
 
     <table class="orders-table">
         <thead>
             <tr>
-                <th style="text-align: center;">ID Pesanan</th>
-                <th style="text-align: center;">Nama Pelanggan</th>
-                <th style="text-align: center;">Tanggal</th>
-                <th style="text-align: center;">Total</th>
-                <th style="text-align: center;">Status</th>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Total Amount</th>
+                <th>Order Date</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Loop untuk setiap pesanan -->
             <tr th:each="order : ${orders}">
                 <td th:text="${order.id}">1</td>
-                <td th:text="${order.user.nama}">Nama Pelanggan</td>
-                <td th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, HH:mm')}">Tanggal</td>
-                <td th:text="${#numbers.formatCurrency(order.totalAmount)}">Rp 0</td>
+                <td th:text="${order.user.nama}">Customer Name</td>
+                <td th:text="'IDR ' + ${#numbers.formatDecimal(order.totalAmount, 0, 'POINT', 0, 'COMMA')}">IDR 0</td>
+                <td th:text="${#temporals.format(order.orderDate, 'dd MMM yy, HH:mm')}">Order Date</td>
+
                 <td>
                     <!-- =============================================== -->
-                    <!-- PERBAIKAN: Logika untuk status final diperkuat -->
+                    <!-- == PERBAIKAN PADA DROPDOWN == -->
                     <!-- =============================================== -->
-                    
-                    <!-- JIKA status BUKAN 'SELESAI' DAN BUKAN 'DIBATALKAN', tampilkan dropdown -->
-                    <div th:if="${order.status != 'SELESAI' and order.status != 'DIBATALKAN'}">
-                        <select class="status-select" onchange="updateStatus(this, [[${order.id}]])">
-                            <option value="DIPROSES" th:selected="${order.status == 'DIPROSES'}">Diproses</option>
-                            <option value="DIKIRIM" th:selected="${order.status == 'DIKIRIM'}">Dikirim</option>
-                            <option value="SELESAI" th:selected="${order.status == 'SELESAI'}">Selesai</option>
-                            <option value="DIBATALKAN" th:selected="${order.status == 'DIBATALKAN'}">Dibatalkan</option>
+                    <div th:if="${order.status != 'COMPLETED' and order.status != 'CANCELLED'}" style="text: #d63384">
+                        <select class="status-select"
+                                onchange="updateStatus(this)"
+                                th:data-orderid="${order.id}"> <!-- 1. ID disimpan di data-orderid -->
+                            <option value="PENDING" th:selected="${order.status == 'PENDING'}">PENDING</option>
+                            <option value="PROCESSING" th:selected="${order.status == 'PROCESSING'}">PROCESSING</option>
+                            <option value="SHIPPED" th:selected="${order.status == 'SHIPPED'}">SHIPPED</option>
+                            <option value="COMPLETED" th:selected="${order.status == 'COMPLETED'}">COMPLETED</option>
+                            <option value="CANCELLED" th:selected="${order.status == 'CANCELLED'}">CANCELLED</option>
                         </select>
                     </div>
-                    
-                    <!-- JIKA status SUDAH final, tampilkan sebagai teks biasa (badge) -->
-                    <div th:if="${order.status == 'SELESAI' or order.status == 'DIBATALKAN'}">
+
+                    <div th:if="${order.status == 'COMPLETED' or order.status == 'CANCELLED'}">
                         <span class="status-badge" th:classappend="'status-' + ${order.status}" th:text="${order.status}"></span>
                     </div>
                 </td>
@@ -88,14 +72,16 @@
         notifBar.textContent = message;
         notifBar.style.backgroundColor = isError ? '#dc3545' : '#28a745';
         notifBar.style.display = 'block';
-
-        setTimeout(() => {
-            notifBar.style.display = 'none';
-        }, 3000); // Sembunyikan setelah 3 detik
+        setTimeout(() => { notifBar.style.display = 'none'; }, 3000);
     }
 
-    function updateStatus(selectElement, transactionId) {
+    // ===============================================
+    // == PERBAIKAN PADA FUNGSI JAVASCRIPT ==
+    // ===============================================
+    function updateStatus(selectElement) { // 2. Fungsi hanya menerima elemen 'select'
         const newStatus = selectElement.value;
+        const transactionId = selectElement.getAttribute('data-orderid'); // 3. ID diambil dari atribut data-
+
         const data = { status: newStatus };
 
         fetch(`/admin/api/orders/${transactionId}/status`, {
@@ -105,16 +91,13 @@
             credentials: 'include'
         })
         .then(response => {
-            if (!response.ok) return response.text().then(text => { throw new Error(text || 'Gagal update status') });
+            if (!response.ok) return response.text().then(text => { throw new Error(text || 'Failed to update status') });
             return response;
         })
         .then(() => {
-            showNotification(`Status pesanan #${transactionId} berhasil diubah menjadi ${newStatus}!`);
-            
-
-            if (newStatus === 'SELESAI' || newStatus === 'DIBATALKAN') {
+            showNotification(`Order ${transactionId} status successfully changed to ${newStatus}!`);
+            if (newStatus === 'COMPLETED' || newStatus === 'CANCELLED') {
                 const parentDiv = selectElement.parentNode;
-                // Buat badge baru dan ganti dropdown
                 parentDiv.innerHTML = `<span class="status-badge status-${newStatus}">${newStatus}</span>`;
             }
         })

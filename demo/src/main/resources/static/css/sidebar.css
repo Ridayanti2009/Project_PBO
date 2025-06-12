@@ -87,7 +87,7 @@
     display: block;
     width: 100%;
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, #ff8a80, #ff5722);
+    background: linear-gradient(135deg, #ff85a2, #ff6392);
     color: white;
     border: none;
     text-decoration: none;
@@ -104,7 +104,7 @@
 }
 
 #logout-form button:hover {
-    background: linear-gradient(135deg, #ff5722, #d84315);
+    background: linear-gradient(135deg, #ff85a2, #ff6392);
     transform: translateX(10px);
     box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4);
     color: white;

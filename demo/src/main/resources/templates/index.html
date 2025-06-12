@@ -22,7 +22,7 @@
                     <li><a href="#blog" class="nav-linkk cta-buttonn">Blog</a></li>
                     <li><a href="#contact" class="nav-linkk cta-buttonn">Contact</a></li>
                     <li><a href="/login" class="nav-link cta-button">Login</a></li>
-                    <li><a href="/register" class="nav-link cta-button">Register</a></li>
+                    <li><a href="/registrasi" class="nav-link cta-button">Register</a></li>
                 </ul>
             </nav>
         </div>
@@ -62,7 +62,7 @@
                 Delight in Every <span class="highlight">Bite!</span>
             </h1>
             <p class="video-subtitle">
-                Experience the magic of freshly baked perfection. Every cake tells a story, 
+                Experience the magic of freshly baked perfection. Every cake tells a story,
                 every bite creates a memory that lasts forever. Made with love, crafted with passion.
             </p>
             <div class="video-buttons">
@@ -75,7 +75,7 @@
                     <span class="btn-text">Our Story</span>
                 </a>
             </div>
-            
+
             <!-- Stats -->
             <div class="hero-stats">
                 <div class="stat-item">
@@ -123,18 +123,18 @@
                         Where every celebration becomes sweeter with our handcrafted delights
                     </p>
                 </div>
-                
+
                 <div class="about-grid">
                     <div class="about-text">
                         <h3 class="about-title">Our Sweet Story</h3>
                         <p class="about-description">
-                            Born from a passion for creating moments of joy, Sweetshop has been 
-                            crafting exceptional baked goods that bring families together. Our journey 
+                            Born from a passion for creating moments of joy, Sweetshop has been
+                            crafting exceptional baked goods that bring families together. Our journey
                             began with a simple belief: every bite should be a celebration.
                         </p>
                         <p class="about-description">
-                            From our artisanal cakes to our signature pastries, each creation is 
-                            made with premium ingredients and endless love. We don't just bake - 
+                            From our artisanal cakes to our signature pastries, each creation is
+                            made with premium ingredients and endless love. We don't just bake -
                             we create edible memories that last a lifetime.
                         </p>
                     </div>
@@ -144,7 +144,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="features">
                     <div class="feature-card">
                         <div class="feature-icon">🎨</div>
@@ -183,7 +183,7 @@
                     Discover our collection of handcrafted treats
                 </p>
             </div>
-            
+
             <div class="products-grid">
                 <div class="product-card">
                     <div class="product-image">🍰</div>
@@ -266,7 +266,7 @@
         // Video loading fallback
         video.addEventListener('error', function() {
             console.log('Video failed to load, showing fallback background');
-            document.querySelector('.video-hero').style.background = 
+            document.querySelector('.video-hero').style.background =
                 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 30%, #fad0c4 100%)';
         });
 
@@ -294,7 +294,7 @@
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-10px) scale(1.02)';
             });
-            
+
             card.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0) scale(1)';
             });
@@ -307,7 +307,7 @@
                 const finalValue = stat.textContent;
                 const numericValue = parseInt(finalValue.replace(/\D/g, ''));
                 const suffix = finalValue.replace(/\d/g, '');
-                
+
                 let current = 0;
                 const increment = numericValue / 50;
                 const timer = setInterval(() => {

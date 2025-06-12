@@ -10,8 +10,6 @@ import com.example.demo.repository.CookieRepository;
 import com.example.demo.repository.DessertRepository;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 
 @Service
@@ -29,6 +27,9 @@ public class ProductService {
     @Autowired
     private DessertRepository dessertRepo;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     public List<Product> getAllProducts() {
         List<Product> allProducts = new ArrayList<>();
         allProducts.addAll(celebrationCakeRepo.findAll());
@@ -37,6 +38,11 @@ public class ProductService {
         allProducts.addAll(dessertRepo.findAll());
         return allProducts;
     }
+
+    public long countTotalProducts() {
+        return productRepository.count();
+    }
+
 }
 
 

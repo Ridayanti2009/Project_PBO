@@ -249,7 +249,7 @@ body::before {
 
 .btn-order {
     padding: 0.7rem 1.5rem;
-    background: linear-gradient(135deg, #ff8a80, #ff5722);
+    background: linear-gradient(135deg, #ff85a2, #ff6392);
     color: white;
     border: none;
     border-radius: 20px;
@@ -259,8 +259,10 @@ body::before {
 }
 
 .btn-order:hover {
-    background: linear-gradient(135deg, #ff5722, #d84315);
+    background: linear-gradient(135deg, #ff85a2, #ff6392);
 }
+
+
 
 #notification {
     text-align: center;

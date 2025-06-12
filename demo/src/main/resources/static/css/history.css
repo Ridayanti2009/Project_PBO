@@ -201,27 +201,31 @@ body::before {
 .status {
     padding: 6px 12px;
     border-radius: 20px;
-    color: white;
+    color: #d63384;
     font-weight: bold;
     display: inline-block;
     font-size: 0.9rem;
+    background-color: transparent;
 }
 
-.status-DIPROSES {
-    background-color: #ffc107;
-    color: black;
+.status-PENDING {
+    color: #d63384;
 }
 
-.status-DIKIRIM {
-    background-color: #007bff;
+.status-PROCESSING {
+    color: #d63384;
 }
 
-.status-SELESAI {
-    background-color: #28a745;
+.status-SHIPPED {
+    color: #d63384;
 }
 
-.status-DIBATALKAN {
-    background-color: #dc3545;
+.status-COMPLETED {
+    color: #d63384;
+}
+
+.status-CANCELLED {
+    color: #d63384;
 }
 
 /* Modal Detail */
@@ -283,4 +287,55 @@ body::before {
         padding: 8px;
         font-size: 0.85rem;
     }
+}
+
+.receipt-container {
+    font-family: 'Courier New', Courier, monospace;
+    width: 350px;
+    margin: 0 auto;
+    border: 2px dashed #333;
+    padding: 15px;
+    position: relative; /* Diperlukan untuk stempel */
+}
+.receipt-header {
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.receipt-header h2 { margin: 0; font-size: 1.5em; }
+.receipt-header p { margin: 2px 0; }
+.receipt-body table { width: 100%; border-collapse: collapse; }
+.receipt-body th, .receipt-body td {
+    text-align: left;
+    padding: 5px 0;
+    border-bottom: 1px dotted #ccc;
+}
+.receipt-body .item-col { width: 50%; }
+.receipt-body .qty-col { width: 15%; }
+.receipt-body .price-col { text-align: right; }
+.receipt-footer {
+    margin-top: 15px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+.receipt-footer div {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+.paid-stamp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-20deg);
+    font-size: 4em;
+    color: rgba(0, 128, 0, 0.3);
+    border: 5px solid rgba(0, 128, 0, 0.3);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 100;
+    pointer-events: none; /* Agar stempel tidak bisa diklik */
+    display: none; /* Disembunyikan secara default */
 }

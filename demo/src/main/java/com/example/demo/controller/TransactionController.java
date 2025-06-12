@@ -32,14 +32,14 @@ public class TransactionController {
         }
 
         try {
-            Transaction newTransaction = transactionService.createTransaction(userId, request.getDeliveryOption());
-            String message = "Checkout berhasil! ID Transaksi Anda: " + newTransaction.getId();
-            
+            Transaction newTransaction = transactionService.createTransaction(userId, request);
+            String message = "Transaction successful! Your Transaction ID:" + newTransaction.getId();
+
 
             CheckoutResponse response = new CheckoutResponse(newTransaction.getId(), message);
 
             return ResponseEntity.ok(response);
-            
+
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

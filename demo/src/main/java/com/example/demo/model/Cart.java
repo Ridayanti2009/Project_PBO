@@ -33,6 +33,16 @@ public class Cart {
         this.user = user;
     }
 
+    @Transient // Tidak disimpan di database, dihitung saat dibutuhkan
+    public double getGrandTotal() {
+        if (cartItems == null) {
+            return 0.0;
+        }
+        return cartItems.stream()
+                .mapToDouble(item -> item.getProduct().getHarga() * item.getQuantity())
+                .sum();
+    }
+
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

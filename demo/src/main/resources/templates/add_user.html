@@ -17,7 +17,7 @@
     <h2 th:text="${#strings.isEmpty(user.id)} ? 'Tambah User' : 'Edit User'">Form</h2>
 
     <form th:action="${#strings.isEmpty(user.id)} ? @{/admin/users/add} : @{'/admin/users/edit/' + ${user.id}}" method="post">
-        <input type="text" name="nama" placeholder="Nama Lengkap" th:value="${user.nama}" required />
+        <input type="text" name="nama" placeholder="Full Name" th:value="${user.nama}" required />
         <input type="email" name="email" placeholder="Email" th:value="${user.email}" required />
         <input type="text" name="username" placeholder="Username" th:value="${user.username}" required />
 
@@ -26,14 +26,14 @@
             <input type="password" name="password" placeholder="Password" required />
         </div>
 
-        <input type="text" name="nomorTelepon" placeholder="Nomor Telepon" th:value="${user.nomorTelepon}" required />
-        <input type="text" name="alamat" placeholder="Alamat" th:value="${user.alamat}" required />
-        <input type="date" name="tanggalLahir" placeholder="Tanggal Lahir" th:value="${user.tanggalLahir}" required />
+        <input type="text" name="nomorTelepon" placeholder="Phone Number" th:value="${user.nomorTelepon}" required />
+        <input type="text" name="alamat" placeholder="Address" th:value="${user.alamat}" required />
+        <input type="date" name="tanggalLahir" placeholder="Date of Birth" th:value="${user.tanggalLahir}" required />
 
-        <button type="submit" th:text="${#strings.isEmpty(user.id)} ? 'Tambah User' : 'Simpan Perubahan'">Simpan</button>
+        <button type="submit" th:text="${#strings.isEmpty(user.id)} ? 'Tambah User' : 'Simpan Perubahan'">Save</button>
     </form>
 
-    <p><a href="/admin/users">← Kembali ke Daftar User</a></p>
+    <p><a href="/admin/users">← Back to User List</a></p>
 </div>
 
 </body>

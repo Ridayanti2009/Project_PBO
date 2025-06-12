@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Manage Products</title>
-  <link rel="stylesheet" href="/css/produk.css" /> <!-- perbaiki href jadi hardcoded agar CSS jalan -->
+  <link rel="stylesheet" href="/css/produk.css" />
 </head>
 <body>
 
@@ -31,6 +31,7 @@
       <a href="/products/category/classiccake">Classic Cake</a>
     </div>
 
+
     <!-- Tombol tambah produk -->
     <div>
       <button onclick="openModal()">Add Product</button>
@@ -38,8 +39,7 @@
 
     <!-- Modal form (popup) -->
     <div id="addModal" style="display:none;">
-      <div>
-        <span onclick="closeModal()">×</span>
+      <div class="modal-content">
         <h2>Add New Product</h2>
         <form method="post" action="/products/add" enctype="multipart/form-data">
           <label>Product Name</label>
@@ -68,34 +68,34 @@
           <div id="optionalField"></div>
 
           <button type="submit">Submit</button>
+          <button type="submit" onclick="closeModal()">Close</button> 
         </form>
       </div>
     </div>
 
     <script>
-      function openModal() {
-        document.getElementById('addModal').style.display = 'flex';
-      }
+        function openModal() {
+            document.getElementById('addModal').style.display = 'flex';
+        }
 
-      function closeModal() {
-        document.getElementById('addModal').style.display = 'none';
-      }
+        function closeModal() {
+            document.getElementById('addModal').style.display = 'none';
+        }
 
-      document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
         const categorySelect = document.querySelector('select[name="category"]');
         const optionalField = document.getElementById('optionalField');
 
         categorySelect.addEventListener('change', function () {
-          optionalField.innerHTML = '';
-          if (this.value === 'dessert' || this.value === 'classiccake') {
-            optionalField.innerHTML = '<label>Varian</label><input type="text" name="varian" />';
-          } else if (this.value === 'cookie' || this.value === 'celebrationcake') {
-            optionalField.innerHTML = '<label>Ukuran</label><input type="text" name="ukuran" />';
-          }
+                optionalField.innerHTML = '';
+            if (this.value === 'dessert' || this.value === 'classiccake') {
+                optionalField.innerHTML = '<label>Varian</label><input type="text" name="varian" />';
+            } else if (this.value === 'cookie' || this.value === 'celebrationcake') {
+                optionalField.innerHTML = '<label>Ukuran</label><input type="text" name="ukuran" />';
+            }
         });
-      });
+    });
     </script>
-
-  </div>
+    </div>
 </body>
 </html>
