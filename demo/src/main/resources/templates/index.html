@@ -3,204 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sweetshop - Delight in Every Bites!</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Sweetshop - Delight in Every Bite! 🍰</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/oke.css}">
 </head>
 <body>
-    <div class="floating-elements">
-        <span class="floating-cake">🍰</span>
-        <span class="floating-cake">🍩</span>
-        <span class="floating-cake">🍪</span>
-        <span class="floating-cake">🧁</span>
-        <span class="floating-cake">🥐</span>
-        <span class="floating-cake">🎂</span>
-    </div>
-
-    <header class="header">
+    <!-- Header -->
+    <header class="header" id="header">
         <div class="container">
             <nav class="navbar">
                 <div class="nav-brand">
-                    <h1>Sweetshop</h1> </div>
+                    <span class="logo-icon">🍰</span>
+                    <h1>Sweetshop</h1>
+                </div>
                 <ul class="nav-menu">
-                    <li><a href="#about" class="nav-link">ABOUT</a></li>
-                    <li><a href="#products" class="nav-link">PRODUCTS</a></li>
-                    <li><a href="#blog" class="nav-link">BLOG</a></li>
-                    <li><a href="#contact" class="nav-link">CONTACT</a></li>
-                    <li><a href="/login" class="nav-link cta-button">LOGIN</a></li> 
-                    <li><a href="/registrasi" class="nav-link cta-button">REGISTER</a></li> </ul>
+                    <li><a href="#about" class="nav-linkk cta-buttonn">About</a></li>
+                    <li><a href="#products" class="nav-linkk cta-buttonn">Products</a></li>
+                    <li><a href="#blog" class="nav-linkk cta-buttonn">Blog</a></li>
+                    <li><a href="#contact" class="nav-linkk cta-buttonn">Contact</a></li>
+                    <li><a href="/login" class="nav-link cta-button">Login</a></li>
+                    <li><a href="/register" class="nav-link cta-button">Register</a></li>
+                </ul>
             </nav>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="hero-main-content container">
-            <div class="hero-left">
-                <div class="laptop-container">
-                    <div class="laptop-screen">
-                        <img src="https://placehold.co/800x500/ffb6c1/ffffff?text=Hero+Laptop+Image" alt="Sweetshop Website" class="laptop-image">
-                        <div class="testimonial-card">
-                            <p>"Sweetshop made my daughter's birthday special with a cake that tasted as good as it looked!"</p>
-                            <span>- Mike Johnson</span>
-                        </div>
-                    </div>
-                </div>
+    <!-- Video Hero Section -->
+    <section class="video-hero">
+        <!-- Background Video -->
+        <video class="video-background" autoplay muted loop playsinline>
+            <source src="/videos/sweetshop-hero.mp4" type="video/mp4">
+            <source src="/videos/sweetshop-hero.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Video Overlay -->
+        <div class="video-overlay"></div>
+
+        <!-- Floating Elements -->
+        <div class="floating-elements">
+            <div class="floating-item">🍰</div>
+            <div class="floating-item">🍩</div>
+            <div class="floating-item">🍪</div>
+            <div class="floating-item">🧁</div>
+            <div class="floating-item">🥐</div>
+            <div class="floating-item">🎂</div>
+            <div class="floating-item">🍭</div>
+            <div class="floating-item">🍫</div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="video-content">
+            <div class="hero-badge">
+                <span class="badge-icon">✨</span>
+                <span class="badge-text">Premium Bakery Since 2020</span>
             </div>
-
-            <div class="hero-right">
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        Delight in
-                        <span class="gradient-text">every bites!</span> </h1>
-                    <p class="hero-subtitle">
-                        Experience the joy of perfectly baked cakes, made with love and crafted to bring a smile to every celebration.
-                    </p>
-                    <a href="#products" class="btn btn-primary">SHOP NOW</a> </div>
-
-                <div class="hero-decorations">
-                    <img src="/img/dessert1.jpg" alt="Croissant" class="floating-croissant">
-                    <div class="sparkle sparkle-1">✦</div>
-                    <div class="sparkle sparkle-2">✧</div>
-                    <div class="sparkle sparkle-3">✦</div>
+            <h1 class="video-title">
+                Delight in Every <span class="highlight">Bite!</span>
+            </h1>
+            <p class="video-subtitle">
+                Experience the magic of freshly baked perfection. Every cake tells a story, 
+                every bite creates a memory that lasts forever. Made with love, crafted with passion.
+            </p>
+            <div class="video-buttons">
+                <a href="/login" class="btn btn-primary">
+                    <span class="btn-icon">🛍️</span>
+                    <span class="btn-text">Shop Now</span>
+                </a>
+                <a href="#about" class="btn btn-secondary">
+                    <span class="btn-icon">📖</span>
+                    <span class="btn-text">Our Story</span>
+                </a>
+            </div>
+            
+            <!-- Stats -->
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Cake Varieties</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5★</span>
+                    <span class="stat-label">Customer Rating</span>
                 </div>
             </div>
         </div>
 
-        <div class="wave-separator">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"></path>
-                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5"></path>
-                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"></path>
-            </svg>
+        <!-- Video Controls -->
+        <div class="video-controls">
+            <button class="control-btn" onclick="toggleVideo()" id="playPauseBtn" title="Play/Pause">
+                <span class="control-icon">⏸️</span>
+            </button>
+            <button class="control-btn" onclick="toggleMute()" id="muteBtn" title="Mute/Unmute">
+                <span class="control-icon">🔇</span>
+            </button>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <span class="scroll-text">Discover More</span>
+            <div class="scroll-arrow">⬇️</div>
         </div>
     </section>
 
+    <!-- About Section -->
     <section class="about" id="about">
         <div class="container">
             <div class="about-content">
-                <div class="about-text">
+                <div class="section-header">
+                    <span class="section-badge">About Us</span>
                     <h2 class="section-title">
-                        Best Choice for<br>
-                        <span class="title-highlight">Every Occasion</span>
+                        Welcome to <span class="highlight">Sweetshop</span>
                     </h2>
-                    <p class="about-description">
-                        At SWEETSHOP, we turn simple ingredients into delectable works of edible art. Satisfy your cravings with our irresistible pastries and baked goods, delivered fresh from the oven for you truly. </p>
-
-                    <div class="features-tags">
-                        <span class="feature-tag active">QUALITY INGREDIENTS</span>
-                        <span class="feature-tag">PERSONALIZED DESIGNS</span>
-                        <span class="feature-tag">ON-TIME DELIVERY</span>
-                        <span class="feature-tag">AFFORDABLE PRICES</span>
-                        <span class="feature-tag">VALUES</span>
+                    <p class="section-subtitle">
+                        Where every celebration becomes sweeter with our handcrafted delights
+                    </p>
+                </div>
+                
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h3 class="about-title">Our Sweet Story</h3>
+                        <p class="about-description">
+                            Born from a passion for creating moments of joy, Sweetshop has been 
+                            crafting exceptional baked goods that bring families together. Our journey 
+                            began with a simple belief: every bite should be a celebration.
+                        </p>
+                        <p class="about-description">
+                            From our artisanal cakes to our signature pastries, each creation is 
+                            made with premium ingredients and endless love. We don't just bake - 
+                            we create edible memories that last a lifetime.
+                        </p>
+                    </div>
+                    <div class="about-visual">
+                        <div class="about-image">
+                            <span class="about-emoji">👨‍🍳</span>
+                        </div>
                     </div>
                 </div>
-
-                <div class="about-visual">
-                    <div class="rating-badge">
-                        <span class="rating-text">Choco Croissant ( 0.8 )</span>
+                
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3 class="feature-title">Handcrafted</h3>
+                        <p class="feature-text">Every cake is carefully handcrafted with attention to detail and artistic flair</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌟</div>
+                        <h3 class="feature-title">Premium Quality</h3>
+                        <p class="feature-text">We use only the finest ingredients to ensure exceptional taste and quality</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚚</div>
+                        <h3 class="feature-title">Fresh Delivery</h3>
+                        <p class="feature-text">Same-day delivery to ensure your treats arrive fresh and delicious</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💝</div>
+                        <h3 class="feature-title">Custom Orders</h3>
+                        <p class="feature-text">Personalized cakes for your special occasions and celebrations</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="products" id="products">
+    <!-- Products Preview Section -->
+    <section class="products-preview" id="products">
         <div class="container">
-            <h2 class="section-title center">
-                Our <span class="title-highlight">Signature</span>
-            </h2>
-
+            <div class="section-header">
+                <span class="section-badge">Our Products</span>
+                <h2 class="section-title">
+                    Sweet <span class="highlight">Delights</span>
+                </h2>
+                <p class="section-subtitle">
+                    Discover our collection of handcrafted treats
+                </p>
+            </div>
+            
             <div class="products-grid">
                 <div class="product-card">
-                    <div class="product-image">
-                        <img src="/img/cupcake.jpg" alt="Descendant Choco Chips">
-                        <button class="add-to-cart">🛒</button>
-                    </div>
-                    <div class="product-info">
-                        <h3>Descendant Choco Chips</h3>
-                        <p class="product-price">$15</p>
-                        <button class="more-details">More Details</button>
-                    </div>
+                    <div class="product-image">🍰</div>
+                    <h3 class="product-title">Birthday Cakes</h3>
+                    <p class="product-description">Custom designed cakes for your special day</p>
+                    <span class="product-price">From $25</span>
                 </div>
-
                 <div class="product-card">
-                    <div class="product-image">
-                        <img src="/img/classic.jpg" alt="Classic Vanilla Chiffon Cake">
-                        <button class="add-to-cart">🛒</button>
-                    </div>
-                    <div class="product-info">
-                        <h3>Classic Vanilla Chiffon Cake</h3>
-                        <p class="product-price">$25</p>
-                        <button class="more-details">More Details</button>
-                    </div>
+                    <div class="product-image">🧁</div>
+                    <h3 class="product-title">Cupcakes</h3>
+                    <p class="product-description">Delicious bite-sized treats in various flavors</p>
+                    <span class="product-price">From $3</span>
                 </div>
-
                 <div class="product-card">
-                    <div class="product-image">
-                        <img src="/img/celebration.jpg" alt="Choco Mousse Extravaganza">
-                        <button class="add-to-cart">🛒</button>
-                    </div>
-                    <div class="product-info">
-                        <h3>Choco Mousse Extravaganza</h3>
-                        <p class="product-price">$35</p>
-                        <button class="more-details">More Details</button>
-                    </div>
+                    <div class="product-image">🍪</div>
+                    <h3 class="product-title">Cookies</h3>
+                    <p class="product-description">Freshly baked cookies with love</p>
+                    <span class="product-price">From $2</span>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🥐</div>
+                    <h3 class="product-title">Pastries</h3>
+                    <p class="product-description">Buttery, flaky pastries for every occasion</p>
+                    <span class="product-price">From $4</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="how-to-order">
-        <div class="container">
-            <h2 class="section-title center">
-                <span class="title-highlight">How to Order</span>
-            </h2>
+    <script>
+        // Video control functions
+        let video = document.querySelector('.video-background');
+        let playPauseBtn = document.getElementById('playPauseBtn');
+        let muteBtn = document.getElementById('muteBtn');
 
-            <div class="order-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Choose</h3>
-                    <p>Pick your favorite cake flavor and design</p>
-                </div>
+        function toggleVideo() {
+            if (video.paused) {
+                video.play();
+                playPauseBtn.querySelector('.control-icon').innerHTML = '⏸️';
+            } else {
+                video.pause();
+                playPauseBtn.querySelector('.control-icon').innerHTML = '▶️';
+            }
+        }
 
-                <div class="step-number-large">2</div> <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Order</h3>
-                    <p>Place and pay your order via app!</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        function toggleMute() {
+            if (video.muted) {
+                video.muted = false;
+                muteBtn.querySelector('.control-icon').innerHTML = '🔊';
+            } else {
+                video.muted = true;
+                muteBtn.querySelector('.control-icon').innerHTML = '🔇';
+            }
+        }
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>Sweetshop</h3> <p>Bringing sweetness to every celebration</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Quick Links</h4>
-                        <ul>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#products">Products</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Contact Info</h4>
-                        <ul>
-                            <li>📞 (021) 123-4567</li>
-                            <li>✉️ hello@sweetshop.com</li> <li>📍 Jakarta, Indonesia</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Sweetshop. All rights reserved.</p> </div>
-        </div>
-    </footer>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
 
-    <script src="/js/script.js"></script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Video loading fallback
+        video.addEventListener('error', function() {
+            console.log('Video failed to load, showing fallback background');
+            document.querySelector('.video-hero').style.background = 
+                'linear-gradient(135deg, #ff9a9e 0%, #fecfef 30%, #fad0c4 100%)';
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.feature-card, .product-card, .about-text, .about-visual').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Add interactive hover effects
+        document.querySelectorAll('.feature-card, .product-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Stats counter animation
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const finalValue = stat.textContent;
+                const numericValue = parseInt(finalValue.replace(/\D/g, ''));
+                const suffix = finalValue.replace(/\d/g, '');
+                
+                let current = 0;
+                const increment = numericValue / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= numericValue) {
+                        stat.textContent = finalValue;
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = Math.floor(current) + suffix;
+                    }
+                }, 30);
+            });
+        }
+
+        // Trigger stats animation when hero section is visible
+        const heroObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(animateStats, 1000);
+                    heroObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        heroObserver.observe(document.querySelector('.video-hero'));
+    </script>
 </body>
 </html>
