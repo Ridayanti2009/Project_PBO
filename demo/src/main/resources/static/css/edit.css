@@ -1,0 +1,236 @@
+/* Edit Product CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 30%, #fad0c4 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: slideDown 0.6s ease-out;
+}
+
+form {
+    background: white;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #ff6b6b;
+    font-size: 1.1rem;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid #ffa8a8;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #ff6b6b;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+    transform: translateY(-2px);
+}
+
+input[readonly] {
+    background-color: #f0f0f0;
+    color: #666;
+    cursor: not-allowed;
+}
+
+input[readonly]:focus {
+    border-color: #ccc;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Conditional fields styling */
+div:has(input[name="ukuran"]),
+div:has(input[name="varian"]) {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border-left: 4px solid #ff8e8e;
+}
+
+div:has(input[name="ukuran"]) label,
+div:has(input[name="varian"]) label {
+    color: #ff8e8e;
+}
+
+/* Submit button */
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #ff5252 0%, #ff7575 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+}
+
+button[type="submit"]:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+}
+
+/* Back link */
+a[href*="detail"] {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 12px 25px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #ff6b6b;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    max-width: 600px;
+    display: block;
+}
+
+a[href*="detail"]:hover {
+    background: white;
+    transform: translateX(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Form field groups */
+form > label:first-of-type {
+    margin-top: 0;
+}
+
+/* Input validation styling */
+input:invalid {
+    border-color: #ff4757;
+}
+
+input:valid {
+    border-color: #2ed573;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    form {
+        padding: 25px;
+        margin: 0 10px;
+    }
+    
+    input[type="text"],
+    input[type="number"] {
+        padding: 12px;
+    }
+    
+    button[type="submit"] {
+        padding: 12px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    form {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+    
+    div:has(input[name="ukuran"]),
+    div:has(input[name="varian"]) {
+        padding: 15px;
+    }
+}
+
+/* Loading state for form submission */
+form:has(button:active) {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+/* Hover effects for better UX */
+form:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* Focus within form */
+form:focus-within {
+    box-shadow: 0 15px 40px rgba(255, 107, 107, 0.3);
+}

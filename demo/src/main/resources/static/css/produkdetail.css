@@ -1,0 +1,195 @@
+/* Product Detail CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 30%, #fad0c4 100%);
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #ff8e8e;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    border-bottom: 3px solid #ff6b6b;
+    padding-bottom: 10px;
+}
+
+img {
+    display: block;
+    margin: 0 auto 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    height: auto;
+}
+
+p {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #ff8e8e;
+}
+
+p strong {
+    color: #2c3e50;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 120px;
+}
+
+p span {
+    color: #555;
+}
+
+/* Special styling for price */
+p:has(strong:contains("Price")) span {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Special styling for stock */
+p:has(strong:contains("Stock")) span {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+/* Action buttons container */
+div:has(a[href*="edit"]) {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Edit and Delete links */
+a[href*="edit"], a[href*="delete"] {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+
+a[href*="edit"] {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+a[href*="edit"]:hover {
+    background-color: #ff8e8e;
+    transform: translateY(-2px);
+}
+
+a[href*="delete"] {
+    background-color: #e74c3c;
+    color: white;
+}
+
+a[href*="delete"]:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Separator between edit and delete */
+div:has(a[href*="edit"]) {
+    font-size: 1.2rem;
+    color: #bdc3c7;
+}
+
+/* Back link */
+a[href="/products"] {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #ff8e8e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+a[href="/products"]:hover {
+    background-color: #ff6b6b;
+    transform: translateX(-5px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    p {
+        padding: 12px;
+        font-size: 1rem;
+    }
+    
+    p strong {
+        min-width: 100px;
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    img {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    a[href*="edit"], a[href*="delete"] {
+        display: block;
+        margin: 10px 0;
+        text-align: center;
+    }
+}
+
+/* Animation for page load */
+body {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover effects for info cards */
+p:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+/* Special styling for conditional fields */
+p:has(strong:contains("Size")), p:has(strong:contains("Variant")) {
+    border-left-color: #9b59b6;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+}

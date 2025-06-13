@@ -31,7 +31,7 @@ public class Transaction {
 
     @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<TransactionDetail> transactionDetails = new ArrayList<>();
+    private List<TransactionDetail> transactionDetails;
 
     // Getters and Setters
     public Long getId() { return id; }

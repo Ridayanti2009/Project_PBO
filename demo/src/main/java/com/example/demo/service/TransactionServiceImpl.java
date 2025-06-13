@@ -1,5 +1,19 @@
 package com.example.demo.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.demo.dto.CheckoutRequest;
 import com.example.demo.model.Cart;
 import com.example.demo.model.CartItem;
@@ -11,18 +25,6 @@ import com.example.demo.repository.CartRepository;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.TransactionRepository;
 import com.example.demo.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
@@ -210,4 +212,10 @@ public class TransactionServiceImpl implements TransactionService {
         // return transactionRepository.findByOrderDateBetweenOrderByOrderDateDesc(startOfDay, endOfDay, PageRequest.of(0, 5)).getContent();
         return transactionRepository.findByOrderDateBetweenOrderByOrderDateDesc(startOfDay, endOfDay); // Tanpa pagination untuk saat ini
     }
+
+    @Override
+    public Transaction findById(Long id) {
+        return transactionRepository.findById(id).orElse(null);
+    }
+
 }

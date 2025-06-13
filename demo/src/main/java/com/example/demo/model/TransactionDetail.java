@@ -13,8 +13,8 @@ public class TransactionDetail {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "transaction_id", nullable = false)
     @JsonBackReference
+    @JoinColumn(name = "transaction_id", nullable = false)
     private Transaction transaction;
 
     @ManyToOne

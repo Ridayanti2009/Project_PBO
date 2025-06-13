@@ -1,8 +1,9 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import com.example.demo.dto.CheckoutRequest;
 import com.example.demo.model.Transaction;
-import java.util.List;
 
 public interface TransactionService {
 
@@ -40,5 +41,7 @@ public interface TransactionService {
     double getTodaysRevenue();
     List<Transaction> getTodaysOrders();
     List<Transaction> findTodaysRecentOrders();
+    Transaction findById(Long id);
+
 
 }

@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 // Tambahkan import-import yang dibutuhkan
 import com.example.demo.dto.StatusUpdateRequest;
+import com.example.demo.dto.TransactionDTO;
 import com.example.demo.model.Transaction;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.TransactionService;
@@ -77,8 +78,22 @@ public class AdminController {
             transactionService.cancelTransaction(orderId);
             return ResponseEntity.ok().build(); // Kirim status 200 OK
         } catch (RuntimeException e) {
-            // Jika ada error, kirim pesan errornya
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/api/orders/{id}")
+    @ResponseBody
+    public ResponseEntity<?> getOrderDTO(@PathVariable Long id) {
+        Transaction trx = transactionService.findById(id);
+        if (trx != null) {
+            return ResponseEntity.ok(new TransactionDTO(trx));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    
+
+    }
+
 }
+
