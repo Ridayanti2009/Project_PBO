@@ -10,7 +10,6 @@
         .order-summary, .shipping-options { flex: 1; min-width: 300px; }
         .summary-item, .summary-line { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; align-items: center; }
         .summary-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; margin-right: 10px; }
-        /* Mengubah nama class agar lebih jelas */
         .summary-grand-total { font-size: 1.2em; font-weight: bold; text-align: right; margin-top: 15px; border-top: 2px solid #ddd; padding-top: 10px; }
         .shipping-form .form-group { margin-bottom: 15px; }
         .shipping-form label { display: block; margin-bottom: 5px; font-weight: bold; }
@@ -18,36 +17,28 @@
         #address-form { display: none; margin-top: 20px; border-top: 2px solid #f0f0f0; padding-top: 20px;}
         #confirm-order-btn { background-color: #28a745; color: white; padding: 15px 25px; border: none; border-radius: 5px; font-size: 1.2em; cursor: pointer; width: 100%; margin-top: 20px;}
         #confirm-order-btn:hover { background-color: #218838; }
-
-        /* === INI TAMBAHANNYA === */
-        /* CSS untuk merapikan form alamat */
         #address-form .form-group textarea {
-            display: block; /* Memaksa textarea untuk mengambil satu baris penuh */
+            display: block;
             width: 100%;
         }
         #address-form .form-group small {
-            display: block; /* Memaksa teks kecil untuk berada di baris baru */
-            margin-top: 8px; /* Memberi jarak dari textarea di atasnya */
+            display: block;
+            margin-top: 8px;
             font-size: 0.9em;
             color: #666;
         }
-        /* ======================== */
     </style>
 </head>
 <body>
-
-<!-- Menggunakan Fragment Sidebar -->
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
     <h1 style="text-align: center;">Order Confirmation</h1>
 
     <div class="checkout-container">
-        <!-- Kolom Kiri: Ringkasan Pesanan -->
         <div class="order-summary">
             <h3>Order Summary</h3>
             <div th:if="${cart != null and not #lists.isEmpty(cart.items)}">
-                <!-- Daftar item (tidak berubah) -->
                 <div th:each="item : ${cart.items}" class="summary-item">
                     <div style="display: flex; align-items: center;">
                         <img th:if="${item.imageUrl != null}" th:src="@{'/uploads/' + ${item.imageUrl}}" />
@@ -59,11 +50,8 @@
                     </div>
                     <span th:text="'IDR ' + ${#numbers.formatDecimal(item.subtotal, 0, 'POINT', 0, 'COMMA')}"></span>
                 </div>
-
-                <!-- === INI BAGIAN YANG DIPERBARUI === -->
                 <div class="summary-line">
                     <span>Subtotal</span>
-                    <!-- Menyimpan subtotal mentah di hidden input untuk dibaca JavaScript -->
                     <input type="hidden" id="subtotal-value" th:value="${cart.grandTotal}" />
                     <span id="subtotal-display" th:text="'IDR ' + ${#numbers.formatDecimal(cart.grandTotal, 0, 'POINT', 0, 'COMMA')}"></span>
                 </div>
@@ -82,11 +70,8 @@
                     <span>Grand Total:</span>
                     <span id="grand-total-display">IDR 0</span>
                 </div>
-                <!-- =================================== -->
             </div>
         </div>
-
-        <!-- Kolom Kanan: Opsi Pengiriman -->
         <div class="shipping-options">
             <h3>Shipping Options</h3>
             <form id="checkout-form">
@@ -96,10 +81,8 @@
                 </div>
                 <div class="form-group">
                     <input type="radio" id="delivery" name="deliveryOption" value="DELIVERY">
-                    <label for="delivery">Delivery</label> <!-- Teks ongkir dihapus dari sini -->
+                    <label for="delivery">Delivery</label>
                 </div>
-
-                <!-- Form Alamat yang bisa disembunyikan -->
                 <div id="address-form" th:if="${user != null}">
                     <h4>Shipping Details</h4>
                     <div class="form-group">
@@ -117,49 +100,32 @@
 </div>
 
 <script>
-    // --- (Variabel elemen) ---
     const addressForm = document.getElementById('address-form');
     const deliveryRadio = document.getElementById('delivery');
     const pickupRadio = document.getElementById('pickup');
-
-    // --- (Variabel baru untuk elemen total) ---
     const subtotalValueInput = document.getElementById('subtotal-value');
     const vatAmountSpan = document.getElementById('vat-amount');
     const shippingLineDiv = document.getElementById('shipping-line');
     const grandTotalDisplaySpan = document.getElementById('grand-total-display');
-
-    // === TAMBAHAN: FUNGSI BARU UNTUK MENGHITUNG TOTAL ===
     function updateOrderSummary() {
         const subtotal = parseFloat(subtotalValueInput.value) || 0;
-        const vat = subtotal * 0.03; // PPN 3%
+        const vat = subtotal * 0.03;
         const isDelivery = deliveryRadio.checked;
         const shippingFee = isDelivery ? 10000 : 0;
         const grandTotal = subtotal + vat + shippingFee;
-
-        // Update tampilan
         vatAmountSpan.textContent = formatRupiah(vat);
         grandTotalDisplaySpan.textContent = formatRupiah(grandTotal);
         shippingLineDiv.style.display = isDelivery ? 'flex' : 'none';
-
-        // Menampilkan atau menyembunyikan form alamat
         addressForm.style.display = isDelivery ? 'block' : 'none';
     }
-
-    // === TAMBAHAN: FUNGSI UNTUK FORMAT RUPIAH ===
     function formatRupiah(angka) {
-        const numberToFormat = Math.round(angka || 0); // Pembulatan untuk menghindari desimal
+        const numberToFormat = Math.round(angka || 0);
         const formattedNumber = new Intl.NumberFormat('id-ID').format(numberToFormat);
         return 'IDR ' + formattedNumber;
     }
-
-    // Panggil fungsi saat halaman pertama kali dimuat
     document.addEventListener('DOMContentLoaded', updateOrderSummary);
-
-    // Tambahkan event listener ke radio button
     deliveryRadio.addEventListener('change', updateOrderSummary);
     pickupRadio.addEventListener('change', updateOrderSummary);
-
-    // (Kode JavaScript lain untuk submit form, tidak ada yang berubah)
     document.getElementById('checkout-form').addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(this);

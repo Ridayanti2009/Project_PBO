@@ -1,4 +1,3 @@
-// src/main/java/com/example/demo/dto/CheckoutRequest.java
 package com.example.demo.dto;
 
 public class CheckoutRequest {

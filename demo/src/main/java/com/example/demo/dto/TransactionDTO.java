@@ -18,8 +18,6 @@ public class TransactionDTO {
 
 
     private List<ItemDTO> transactionDetails;
-
-    // Konstruktor dari entity Transaction
     public TransactionDTO(Transaction trx) {
         this.id = trx.getId();
         this.status = trx.getStatus();
@@ -43,7 +41,6 @@ public class TransactionDTO {
         }
     }
 
-    // Getter semua field
     public Long getId() {
         return id;
     }
@@ -68,8 +65,6 @@ public class TransactionDTO {
     public List<ItemDTO> getTransactionDetails() {
         return transactionDetails;
     }
-
-    // Inner class ItemDTO
     public static class ItemDTO {
         private int quantity;
         private double price;

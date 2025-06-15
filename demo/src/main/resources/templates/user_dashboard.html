@@ -15,21 +15,14 @@
 
 <script>
     document.getElementById('logout-form').addEventListener('submit', function(event) {
-        // 1. Mencegah form dikirim secara normal
         event.preventDefault();
-
-        // 2. Kirim request POST ke /logout menggunakan JavaScript
         fetch(this.action, {
             method: 'POST',
             headers: {
-                // Jika kamu menggunakan CSRF protection, header ini mungkin perlu
-                // 'X-CSRF-TOKEN': 'nilai_token_csrf_kamu'
             }
         })
         .then(response => {
-            // 3. Jika server merespons OK (logout berhasil)
             if (response.ok) {
-                // 4. Arahkan browser ke halaman login
                 window.location.href = '/login';
             } else {
                 alert('Logout gagal!');

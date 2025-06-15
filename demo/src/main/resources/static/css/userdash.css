@@ -1,4 +1,3 @@
-/* RESET & BASE */
 * {
     margin: 0;
     padding: 0;
@@ -35,7 +34,6 @@ body::before {
     100% { transform: translateX(100%); }
 }
 
-/* SIDEBAR */
 .sidebar {
     position: fixed;
     top: 0;
@@ -99,7 +97,6 @@ body::before {
     box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
 }
 
-/* MAIN CONTENT */
 .main-content {
     margin-left: 280px;
     padding: 3rem 2rem;
@@ -118,7 +115,6 @@ body::before {
     text-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
 }
 
-/* TABEL KERANJANG */
 .order-table {
     width: 100%;
     border-collapse: collapse;
@@ -146,7 +142,6 @@ body::before {
     font-size: 1.05rem;
 }
 
-/* HAPUS BUTTON */
 .btn-hapus {
     background: #ff6b81;
     color: white;
@@ -162,7 +157,6 @@ body::before {
     background: #e63946;
 }
 
-/* TOTAL BOX */
 .total-box {
     text-align: right;
     font-size: 1.3rem;
@@ -176,7 +170,6 @@ body::before {
     display: inline-block;
 }
 
-/* CHECKOUT BUTTON */
 .btn-checkout {
     background: linear-gradient(135deg, #28a745, #218838);
     color: white;

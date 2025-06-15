@@ -1,4 +1,3 @@
-/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -18,7 +17,6 @@ body {
     padding: 20px;
 }
 
-/* Floating Background Elements */
 .floating-elements {
     position: fixed;
     width: 100%;
@@ -53,7 +51,6 @@ body {
     }
 }
 
-/* Register Form Styles */
 .register-container {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(15px);
@@ -157,7 +154,6 @@ body {
     text-decoration: underline;
 }
 
-/* Custom Modal for Alerts */
 .modal {
     display: none;
     position: fixed;
@@ -226,7 +222,6 @@ body {
     box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
 }
 
-/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .register-container {
         padding: 1.8rem 1.5rem;

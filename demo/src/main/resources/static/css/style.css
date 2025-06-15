@@ -1,4 +1,3 @@
-/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -6,12 +5,12 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif; /* Changed font to Poppins */
+    font-family: 'Poppins', sans-serif; 
     background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 30%, #fad0c4 100%);
     min-height: 100vh;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden; 
     line-height: 1.6;
-    color: #333; /* Default text color */
+    color: #333;
 }
 
 .container {
@@ -20,13 +19,12 @@ body {
     padding: 0 2rem;
 }
 
-/* Floating Background Elements - Adds subtle, animated shapes to the background */
 .floating-elements {
     position: fixed;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Allows clicks to pass through */
-    z-index: 1; /* Behind main content */
+    pointer-events: none; 
+    z-index: 1; 
 }
 
 .floating-cake {
@@ -55,14 +53,13 @@ body {
     }
 }
 
-/* Header Styles - Navigation bar at the top of the page */
 .header {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(15px);
     padding: 1rem 0;
-    position: sticky; /* Stays at the top when scrolling */
+    position: sticky; 
     top: 0;
-    z-index: 100; /* Ensures it's above other content */
+    z-index: 100; 
     box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
     border-bottom: 3px solid rgba(255, 182, 193, 0.2);
 }
@@ -78,7 +75,7 @@ body {
     background: linear-gradient(45deg, #ff6b6b, #ff8e8e, #ffa8a8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 0; /* Removed extra margin */
+    margin-bottom: 0;
     font-weight: 700;
 }
 
@@ -86,7 +83,7 @@ body {
     display: flex;
     gap: 1.5rem;
     align-items: center;
-    list-style: none; /* Remove bullet points */
+    list-style: none;
 }
 
 .nav-link {
@@ -107,7 +104,6 @@ body {
     color: #ff6b6b;
 }
 
-/* Reusable Button Styles */
 .btn {
     text-decoration: none;
     padding: 1rem 2rem;
@@ -117,13 +113,13 @@ body {
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
-    justify-content: center; /* Center text within button */
+    justify-content: center; 
     gap: 0.5rem;
-    border: none; /* Ensure no default button border */
-    cursor: pointer; /* Indicate clickable */
+    border: none; 
+    cursor: pointer;
 }
 
-.cta-button { /* Used for REGISTER button */
+.cta-button { 
     background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
     color: white !important;
     box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
@@ -135,7 +131,7 @@ body {
     box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
 }
 
-.btn-primary { /* Used for SHOP NOW button */
+.btn-primary { 
     background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
     color: white;
     box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
@@ -147,15 +143,14 @@ body {
     box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
 }
 
-/* Hero Section Styles - Main content area */
 .hero {
     padding: 4rem 0;
     position: relative;
     z-index: 10;
-    overflow: hidden; /* Hide overflow from decorative elements */
+    overflow: hidden; 
 }
 
-.hero-main-content { /* New container for hero left/right to apply grid */
+.hero-main-content { 
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
@@ -173,9 +168,9 @@ body {
 .laptop-container {
     position: relative;
     width: 100%;
-    max-width: 600px; /* Max width for laptop image */
-    padding-top: 60%; /* Aspect ratio for laptop frame (adjust as needed) */
-    background: #333; /* Laptop frame color */
+    max-width: 600px;
+    padding-top: 60%; 
+    background: #333;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     overflow: hidden;
@@ -189,10 +184,10 @@ body {
 
 .laptop-screen {
     position: absolute;
-    top: 5%; /* Adjust to fit screen inside laptop frame */
+    top: 5%;
     left: 5%;
     width: 90%;
-    height: 85%; /* Adjust to fit screen inside laptop frame */
+    height: 85%;
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -207,7 +202,7 @@ body {
 
 .testimonial-card {
     position: absolute;
-    bottom: 10%; /* Position relative to laptop screen */
+    bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.9);
@@ -218,8 +213,8 @@ body {
     font-size: 0.9rem;
     color: #555;
     max-width: 80%;
-    opacity: 0; /* Hidden by default */
-    animation: fadeIn 1s forwards 1s; /* Fade in after 1 second */
+    opacity: 0;
+    animation: fadeIn 1s forwards 1s;
 }
 
 @keyframes fadeIn {
@@ -243,7 +238,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start; /* Align content to the left */
+    align-items: flex-start; 
 }
 
 .hero-content {

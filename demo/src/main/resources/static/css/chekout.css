@@ -1,4 +1,3 @@
-/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +13,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Floating Background Elements */
 body::before {
     content: '🎂 🧁 🍰 🎂 🧁 🍰 🎂 🧁 🍪 🍰 🧁 🎂';
     position: fixed;
@@ -36,7 +34,6 @@ body::before {
     100% { transform: translateX(100%); }
 }
 
-/* Sidebar Styles */
 .sidebar {
     position: fixed;
     top: 0;
@@ -99,7 +96,6 @@ body::before {
     transform: translateX(10px);
 }
 
-/* Main Content Styles */
 .main-content {
     margin-left: 280px;
     padding: 3rem 2rem;
@@ -169,7 +165,6 @@ body::before {
     100% { left: 100%; }
 }
 
-/* Welcome Card Animation */
 .main-content p {
     animation: floatUp 0.8s ease-out;
 }
@@ -185,7 +180,6 @@ body::before {
     }
 }
 
-/* Menu Toggle Button for Mobile */
 .menu-toggle {
     display: none;
     position: fixed;
@@ -209,7 +203,6 @@ body::before {
     box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .sidebar {
         width: 250px;
@@ -268,7 +261,6 @@ body::before {
     }
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -287,7 +279,6 @@ body::before {
     background: rgba(255, 107, 107, 0.8);
 }
 
-/* Additional Sweet Touches */
 .sidebar ul li a::after {
     content: '🍰';
     opacity: 0;
@@ -299,7 +290,6 @@ body::before {
     opacity: 1;
 }
 
-/* Special styling for logout link */
 .sidebar ul li:last-child a {
     color: #ff8a80;
     font-weight: 600;
@@ -365,15 +355,11 @@ body::before {
     background-color: #5e3a9b;
 }
 
-/* ====== ADDITIONAL CHECKOUT STYLES ====== */
-
-/* Checkout Page Specific Adjustments */
 .main-content {
     align-items: flex-start;
     justify-content: flex-start;
 }
 
-/* Checkout Container */
 .checkout-container {
     display: flex;
     gap: 30px;
@@ -383,7 +369,6 @@ body::before {
     margin: 0 auto;
 }
 
-/* Order Summary & Shipping Options Cards */
 .order-summary, .shipping-options {
     flex: 1;
     min-width: 300px;
@@ -450,7 +435,6 @@ body::before {
     }
 }
 
-/* Summary Items */
 .summary-item {
     display: flex;
     justify-content: space-between;
@@ -483,7 +467,6 @@ body::before {
     border-color: #ff6b6b;
 }
 
-/* Summary Total */
 .summary-total {
     font-size: 1.2em;
     font-weight: bold;
@@ -496,7 +479,6 @@ body::before {
     color: #ff6b6b;
 }
 
-/* Shipping Form */
 .shipping-form .form-group {
     margin-bottom: 15px;
 }
@@ -525,7 +507,6 @@ body::before {
     background: white;
 }
 
-/* Address Form */
 #address-form {
     display: none;
     margin-top: 20px;
@@ -550,7 +531,6 @@ body::before {
     }
 }
 
-/* Confirm Order Button */
 #confirm-order-btn {
     background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
     color: white;
@@ -572,7 +552,6 @@ body::before {
     box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
 }
 
-/* Checkout Notification */
 #checkout-notification {
     margin-top: 15px;
     padding: 10px;
@@ -580,7 +559,6 @@ body::before {
     text-align: center;
 }
 
-/* Mobile Responsive for Checkout */
 @media (max-width: 768px) {
     .checkout-container {
         flex-direction: column;
@@ -599,11 +577,8 @@ body::before {
     }
 }
 
-/* Tambahkan atau ganti style ini di dalam file chekout.css Anda */
-
-/* Mengatur kontainer form alamat agar rapi */
 #address-form {
-    display: block; /* Pastikan ini adalah block, bukan flex/inline */
+    display: block;
     margin-top: 20px;
     border-top: 2px solid #f0f0f0;
     padding-top: 20px;
@@ -615,35 +590,32 @@ body::before {
     color: #333;
 }
 
-/* Mengatur grup form di dalamnya */
 #address-form .form-group {
-    /* Tidak perlu style khusus jika elemen di dalamnya sudah block */
 }
 
 #address-form .form-group label {
-    display: block; /* Pastikan label berada di barisnya sendiri */
+    display: block;
     margin-bottom: 8px;
     font-weight: bold;
     color: #555;
 }
 
 #address-form .form-group textarea {
-    width: 100%; /* Buat textarea mengisi lebar penuh */
+    width: 100%;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 8px;
     border: 1px solid #ccc;
-    font-family: inherit; /* Gunakan font yang sama dengan body */
+    font-family: inherit;
     font-size: 1rem;
     min-height: 100px;
-    resize: vertical; /* Izinkan user mengubah tinggi textarea */
-    /* Pastikan textarea juga merupakan block untuk konsistensi */
+    resize: vertical;
     display: block;
 }
 
 #address-form .form-group small {
-    display: block; /* Paksa teks kecil ini untuk berada di baris baru */
-    margin-top: 8px; /* Beri jarak dari textarea di atasnya */
+    display: block; 
+    margin-top: 8px;
     font-size: 0.85rem;
     color: #777;
     line-height: 1.4;

@@ -1,4 +1,3 @@
-/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -20,7 +19,6 @@ body {
   padding: 0 2rem;
 }
 
-/* Header */
 .header {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(15px);
@@ -102,7 +100,7 @@ body {
   color: #fff;
   box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
 }
-/* Hero Section */
+
 .video-hero {
   position: relative;
   height: 100vh;
@@ -239,7 +237,6 @@ body {
   font-weight: 700;
 }
 
-/* About Section */
 .about {
   padding: 5rem 0;
   background: rgba(255, 255, 255, 0.95);
@@ -340,7 +337,6 @@ body {
   color: #555;
 }
 
-/* Products Section */
 .products-preview {
   padding: 5rem 0;
   background: #ffe6ec;
@@ -389,7 +385,6 @@ body {
   font-size: 1.1rem;
 }
 
-/* Scroll Indicator */
 .scroll-indicator {
   position: absolute;
   bottom: 20px;
@@ -417,7 +412,6 @@ body {
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .nav-menu {
     flex-wrap: wrap;

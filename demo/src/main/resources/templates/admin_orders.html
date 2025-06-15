@@ -42,13 +42,10 @@
                 <td th:text="${#temporals.format(order.orderDate, 'dd MMM yy, HH:mm')}">Order Date</td>
 
                 <td>
-                    <!-- =============================================== -->
-                    <!-- == PERBAIKAN PADA DROPDOWN == -->
-                    <!-- =============================================== -->
                     <div th:if="${order.status != 'COMPLETED' and order.status != 'CANCELLED'}" style="text: #d63384">
                         <select class="status-select"
                                 onchange="updateStatus(this)"
-                                th:data-orderid="${order.id}"> <!-- 1. ID disimpan di data-orderid -->
+                                th:data-orderid="${order.id}"> 
                             <option value="PENDING" th:selected="${order.status == 'PENDING'}">PENDING</option>
                             <option value="PROCESSING" th:selected="${order.status == 'PROCESSING'}">PROCESSING</option>
                             <option value="SHIPPED" th:selected="${order.status == 'SHIPPED'}">SHIPPED</option>
@@ -74,13 +71,9 @@
         notifBar.style.display = 'block';
         setTimeout(() => { notifBar.style.display = 'none'; }, 3000);
     }
-
-    // ===============================================
-    // == PERBAIKAN PADA FUNGSI JAVASCRIPT ==
-    // ===============================================
-    function updateStatus(selectElement) { // 2. Fungsi hanya menerima elemen 'select'
+    function updateStatus(selectElement) {
         const newStatus = selectElement.value;
-        const transactionId = selectElement.getAttribute('data-orderid'); // 3. ID diambil dari atribut data-
+        const transactionId = selectElement.getAttribute('data-orderid'); 
 
         const data = { status: newStatus };
 

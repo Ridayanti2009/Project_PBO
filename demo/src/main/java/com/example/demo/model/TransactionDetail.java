@@ -1,8 +1,15 @@
 // src/main/java/com/example/demo/model/TransactionDetail.java
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "transaction_details")
@@ -22,9 +29,7 @@ public class TransactionDetail {
     private Product product;
 
     private int quantity;
-    private Double price; // Menyimpan harga produk PADA SAAT transaksi
-
-    // Getters and Setters
+    private Double price;
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Transaction getTransaction() { return transaction; }

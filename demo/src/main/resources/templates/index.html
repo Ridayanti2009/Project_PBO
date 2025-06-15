@@ -8,7 +8,6 @@
     <link rel="stylesheet" th:href="@{/css/oke.css}">
 </head>
 <body>
-    <!-- Header -->
     <header class="header" id="header">
         <div class="container">
             <nav class="navbar">
@@ -25,20 +24,13 @@
             </nav>
         </div>
     </header>
-
-    <!-- Video Hero Section -->
     <section class="video-hero">
-        <!-- Background Video -->
         <video class="video-background" autoplay muted loop playsinline>
             <source src="/videos/sweetshop-hero.mp4" type="video/mp4">
             <source src="/videos/sweetshop-hero.webm" type="video/webm">
             Your browser does not support the video tag.
         </video>
-
-        <!-- Video Overlay -->
         <div class="video-overlay"></div>
-
-        <!-- Floating Elements -->
         <div class="floating-elements">
             <div class="floating-item">🍰</div>
             <div class="floating-item">🍩</div>
@@ -49,8 +41,6 @@
             <div class="floating-item">🍭</div>
             <div class="floating-item">🍫</div>
         </div>
-
-        <!-- Hero Content -->
         <div class="video-content">
             <div class="hero-badge">
                 <span class="badge-icon">✨</span>
@@ -73,8 +63,6 @@
                     <span class="btn-text">Our Story</span>
                 </a>
             </div>
-
-            <!-- Stats -->
             <div class="hero-stats">
                 <div class="stat-item">
                     <span class="stat-number">1000+</span>
@@ -90,8 +78,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Video Controls -->
         <div class="video-controls">
             <button class="control-btn" onclick="toggleVideo()" id="playPauseBtn" title="Play/Pause">
                 <span class="control-icon">⏸️</span>
@@ -100,15 +86,11 @@
                 <span class="control-icon">🔇</span>
             </button>
         </div>
-
-        <!-- Scroll Indicator -->
         <div class="scroll-indicator">
             <span class="scroll-text">Discover More</span>
             <div class="scroll-arrow">⬇️</div>
         </div>
     </section>
-
-    <!-- About Section -->
     <section class="about" id="about">
         <div class="container">
             <div class="about-content">
@@ -168,8 +150,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Products Preview Section -->
     <section class="products-preview" id="products">
         <div class="container">
             <div class="section-header">
@@ -212,7 +192,6 @@
     </section>
 
     <script>
-        // Video control functions
         let video = document.querySelector('.video-background');
         let playPauseBtn = document.getElementById('playPauseBtn');
         let muteBtn = document.getElementById('muteBtn');
@@ -236,8 +215,6 @@
                 muteBtn.querySelector('.control-icon').innerHTML = '🔇';
             }
         }
-
-        // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
             if (window.scrollY > 100) {
@@ -246,8 +223,6 @@
                 header.classList.remove('scrolled');
             }
         });
-
-        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -260,15 +235,11 @@
                 }
             });
         });
-
-        // Video loading fallback
         video.addEventListener('error', function() {
             console.log('Video failed to load, showing fallback background');
             document.querySelector('.video-hero').style.background =
                 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 30%, #fad0c4 100%)';
         });
-
-        // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -281,13 +252,9 @@
                 }
             });
         }, observerOptions);
-
-        // Observe elements for animation
         document.querySelectorAll('.feature-card, .product-card, .about-text, .about-visual').forEach(element => {
             observer.observe(element);
         });
-
-        // Add interactive hover effects
         document.querySelectorAll('.feature-card, .product-card').forEach(card => {
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-10px) scale(1.02)';
@@ -297,8 +264,6 @@
                 this.style.transform = 'translateY(0) scale(1)';
             });
         });
-
-        // Stats counter animation
         function animateStats() {
             const stats = document.querySelectorAll('.stat-number');
             stats.forEach(stat => {
@@ -319,8 +284,6 @@
                 }, 30);
             });
         }
-
-        // Trigger stats animation when hero section is visible
         const heroObserver = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Order History</title>
     <link rel="stylesheet" th:href="@{/css/history.css}" />
-    <!-- Menambahkan CSS untuk struk belanja langsung di sini -->
     <style>
         .receipt-container {
             font-family: 'Courier New', Courier, monospace;
@@ -12,7 +11,7 @@
             margin: 0 auto;
             border: 2px dashed #333;
             padding: 15px;
-            position: relative; /* Diperlukan untuk stempel */
+            position: relative;
             background: #fff;
         }
         .receipt-header, .shipping-address-container {
@@ -82,8 +81,6 @@
     </style>
 </head>
 <body>
-
-<!-- Menggunakan Fragment Sidebar -->
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
@@ -101,12 +98,9 @@
             </tr>
         </thead>
         <tbody id="history-body">
-            <!-- Data riwayat pesanan dimuat di sini -->
         </tbody>
     </table>
 </div>
-
-<!-- Modal untuk menampilkan Struk Belanja -->
 <div id="detailModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="document.getElementById('detailModal').style.display='none'">&times;</span>
@@ -115,17 +109,15 @@
 </div>
 
 <script>
-    // --- Fungsi Helper ---
     function formatRupiah(angka) {
         const formatted = new Intl.NumberFormat('id-ID').format(angka || 0);
         return `IDR ${formatted}`;
     }
     function formatTanggal(tanggalString) {
         const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-        return new Date(tanggalString).toLocaleDateString('en-GB', options); // Menggunakan locale Inggris
+        return new Date(tanggalString).toLocaleDateString('en-GB', options);
     }
 
-    // --- Fungsi Utama ---
     function fetchOrderHistory() {
         fetch('/api/orders', { credentials: 'include' })
             .then(response => response.ok ? response.json() : Promise.reject('Failed to load history'))
@@ -137,12 +129,10 @@
                     return;
                 }
                 orders.forEach(order => {
-                    // === INI PERUBAHANNYA ===
-                    // Kita akan hitung ulang grand total di sini agar sudah termasuk PPN.
                     const shippingFee = (order.deliveryOption && order.deliveryOption.toUpperCase() === 'DELIVERY') ? 10000 : 0;
-                    const subtotal = order.totalAmount - shippingFee; // Dapatkan subtotal murni
-                    const vat = subtotal * 0.03; // Hitung PPN 3%
-                    const finalGrandTotal = order.totalAmount + vat; // Total akhir = (subtotal + ongkir) + PPN
+                    const subtotal = order.totalAmount - shippingFee;
+                    const vat = subtotal * 0.03;
+                    const finalGrandTotal = order.totalAmount + vat;
 
                     const row = `
                         <tr>
@@ -155,7 +145,6 @@
                             <td><a href="#" class="detail-btn" data-order='${JSON.stringify(order)}'>Detail</a></td>
                         </tr>
                     `;
-                    // =========================
                     tbody.innerHTML += row;
                 });
             })
@@ -258,15 +247,13 @@
         .then(() => {
             alert('Order successfully cancelled!');
             document.getElementById('detailModal').style.display = 'none';
-            fetchOrderHistory(); // Muat ulang riwayat pesanan
+            fetchOrderHistory();
         })
         .catch(error => {
             console.error('Error:', error);
             alert(`Error: ${error.message}`);
         });
     }
-
-    // --- Event Listener ---
     document.addEventListener('DOMContentLoaded', function() {
         fetchOrderHistory();
 
