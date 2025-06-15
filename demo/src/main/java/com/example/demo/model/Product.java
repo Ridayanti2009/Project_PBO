@@ -1,9 +1,15 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) // bisa juga SINGLE_TABLE atau TABLE_PER_CLASS
+@Inheritance(strategy = InheritanceType.JOINED) 
 @Table(name = "products")
 public abstract class Product {
 
@@ -17,10 +23,8 @@ public abstract class Product {
     private String gambarUrl;
     private int stok;
 
-    // Constructor kosong
     public Product() {}
 
-    // Constructor lengkap
     public Product(String nama, String deskripsi, Double harga, String gambarUrl, int stok) {
         this.nama = nama;
         this.deskripsi = deskripsi;
@@ -29,7 +33,6 @@ public abstract class Product {
         this.stok = stok;
     }
 
-    // Getters dan Setters
     public Long getId() {
         return id;
     }

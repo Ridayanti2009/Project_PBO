@@ -1,4 +1,3 @@
-/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -9,22 +8,21 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 30%, #fad0c4 100%);
     min-height: 100vh;
-    display: flex; /* Use flexbox for centering */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    overflow: hidden; /* Hide overflow for floating elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
     line-height: 1.6;
-    position: relative; /* Needed for z-index of floating elements */
-    z-index: 1; /* Ensure body content is above floating elements */
+    position: relative;
+    z-index: 1;
 }
 
-/* Floating Background Elements (from your theme) */
 .floating-elements {
     position: fixed;
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 0; /* Place behind login form */
+    z-index: 0;
 }
 
 .floating-cake {
@@ -53,7 +51,6 @@ body {
     }
 }
 
-/* Login Form Styles */
 .login-container {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(15px);
@@ -62,9 +59,9 @@ body {
     box-shadow: 0 20px 60px rgba(255, 182, 193, 0.4);
     text-align: center;
     width: 100%;
-    max-width: 400px; /* Limit form width */
+    max-width: 400px;
     position: relative;
-    z-index: 10; /* Ensure form is above floating elements */
+    z-index: 10;
     border: 2px solid rgba(255, 182, 193, 0.5);
     animation: fadeInScale 0.6s ease-out forwards;
 }
@@ -91,7 +88,7 @@ body {
 
 .login-container form input[type="text"],
 .login-container form input[type="password"] {
-    width: calc(100% - 20px); /* Adjust for padding/border */
+    width: calc(100% - 20px);
     padding: 1.2rem 1rem;
     margin-bottom: 1.5rem;
     border: 2px solid rgba(255, 182, 193, 0.6);
@@ -154,11 +151,10 @@ body {
     text-decoration: underline;
 }
 
-/* Responsive adjustments for smaller screens */
 @media (max-width: 480px) {
     .login-container {
         padding: 2rem 1.5rem;
-        margin: 0 1rem; /* Add some margin on very small screens */
+        margin: 0 1rem;
     }
 
     .login-container h2 {

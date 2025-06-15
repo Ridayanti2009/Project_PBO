@@ -21,7 +21,6 @@
         <input type="email" name="email" placeholder="Email" th:value="${user.email}" required />
         <input type="text" name="username" placeholder="Username" th:value="${user.username}" required />
 
-        <!-- Password hanya muncul jika user baru -->
         <div th:if="${#strings.isEmpty(user.id)}">
             <input type="password" name="password" placeholder="Password" required />
         </div>

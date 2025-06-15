@@ -1,8 +1,8 @@
-// src/main/java/com/example/demo/dto/UpdateProfileRequest.java
 package com.example.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class UpdateProfileRequest {
     private String nama;
@@ -13,7 +13,6 @@ public class UpdateProfileRequest {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate tanggalLahir;
 
-    // Getters dan Setters
     public String getNama() {
         return nama;
     }

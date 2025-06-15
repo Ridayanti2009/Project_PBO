@@ -1,4 +1,3 @@
-/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +13,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Floating Background Elements */
 body::before {
     content: '🎂 🧁 🍰 🎂 🧁 🍰 🎂 🧁';
     position: fixed;
@@ -36,7 +34,6 @@ body::before {
     100% { transform: translateX(100%); }
 }
 
-/* Sidebar Styles */
 .sidebar {
     position: fixed;
     top: 0;

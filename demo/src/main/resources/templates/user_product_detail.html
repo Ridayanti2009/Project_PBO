@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <title th:text="${product.nama}">Product Detail</title>
     <link rel="stylesheet" th:href="@{/css/detail1.css}" />
-    <!-- CSS untuk Notifikasi di Atas -->
     <style>
         #notification-bar {
             position: fixed;
@@ -20,35 +19,29 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .btn-order:disabled {
-            background: linear-gradient(135deg, #ff8a80, #ff5722); /* Ganti dengan gradient asli tombol Anda */
+            background: linear-gradient(135deg, #ff8a80, #ff5722);
             opacity: 0.5;
-            cursor: not-allowed; /* Mengubah kursor menjadi 'tidak diizinkan' */
-            box-shadow: none; /* Menghilangkan bayangan agar terlihat flat dan disabled */
+            cursor: not-allowed;
+            box-shadow: none; 
             transform: none;
-            /* Penting: Override gaya default browser */
-            -webkit-appearance: none; /* Untuk browser Webkit (Chrome, Safari) */
-            -moz-appearance: none;    /* Untuk Firefox */
-            appearance: none;         /* Standar */
+           
+            -webkit-appearance: none; 
+            -moz-appearance: none; 
+            appearance: none; 
         }
-
-        /* Pastikan efek hover dan active tidak berlaku saat disabled */
         .btn-order:disabled:hover,
         .btn-order:disabled:active {
             background: linear-gradient(135deg, #ff8a80, #ff5722);
-            opacity: 0.5; /* Pertahankan opacity disabled */
-            transform: none; /* Hilangkan efek transisi */
-            box-shadow: none; /* Hilangkan bayangan */
+            opacity: 0.5; 
+            transform: none; 
+            box-shadow: none; 
             cursor: not-allowed;
         }
 
     </style>
 </head>
 <body>
-
-<!-- Elemen Notifikasi Baru -->
 <div id="notification-bar"></div>
-
-<!-- Sidebar Anda -->
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
@@ -79,23 +72,18 @@
 
                 <button type="submit" class="btn-order" th:disabled="${product.stok == 0}">🛒 Add to Cart</button>
             </form>
-            <!-- Div notifikasi lama sudah dihapus -->
         </div>
     </div>
 </div>
 
 <script>
-    // --- FUNGSI BARU UNTUK NOTIFIKASI ATAS ---
     function showNotification(message, isError = false) {
         const notifBar = document.getElementById('notification-bar');
         notifBar.textContent = message;
-        notifBar.style.backgroundColor = isError ? '#dc3545' : '#28a745'; // Merah untuk error, Hijau untuk sukses
+        notifBar.style.backgroundColor = isError ? '#dc3545' : '#28a745'; 
         notifBar.style.display = 'block';
         setTimeout(() => { notifBar.style.display = 'none'; }, 3000);
     }
-
-    // --- LOGIKA LOGOUT ---
-    // Pastikan event listener logout ada di dalam DOMContentLoaded
     document.addEventListener('DOMContentLoaded', function() {
         const logoutForm = document.getElementById('logout-form');
         if (logoutForm) {
@@ -116,8 +104,6 @@
             });
         }
     });
-
-    // --- LOGIKA ADD TO CART (SUDAH DIPERBARUI) ---
     document.getElementById('add-to-cart-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -140,16 +126,13 @@
         })
         .then(response => {
             if (response.ok) {
-                // Panggil fungsi notifikasi baru untuk sukses
                 showNotification('✅ Added to cart successfully!');
             } else {
-                // Panggil fungsi notifikasi baru untuk error
                 showNotification('❌ Failed to add, please try again.', true);
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            // Panggil fungsi notifikasi baru untuk network error
             showNotification('❌ Network error occurred.', true);
         });
     });

@@ -1,4 +1,3 @@
-/* Product Detail CSS */
 * {
     margin: 0;
     padding: 0;
@@ -54,20 +53,17 @@ p span {
     color: #555;
 }
 
-/* Special styling for price */
 p:has(strong:contains("Price")) span {
     color: #e74c3c;
     font-weight: bold;
     font-size: 1.2rem;
 }
 
-/* Special styling for stock */
 p:has(strong:contains("Stock")) span {
     color: #27ae60;
     font-weight: bold;
 }
 
-/* Action buttons container */
 div:has(a[href*="edit"]) {
     background-color: white;
     padding: 20px;
@@ -77,7 +73,6 @@ div:has(a[href*="edit"]) {
     margin: 20px 0;
 }
 
-/* Edit and Delete links */
 a[href*="edit"], a[href*="delete"] {
     display: inline-block;
     padding: 10px 20px;
@@ -108,13 +103,11 @@ a[href*="delete"]:hover {
     transform: translateY(-2px);
 }
 
-/* Separator between edit and delete */
 div:has(a[href*="edit"]) {
     font-size: 1.2rem;
     color: #bdc3c7;
 }
 
-/* Back link */
 a[href="/products"] {
     display: inline-block;
     padding: 12px 25px;
@@ -132,7 +125,6 @@ a[href="/products"]:hover {
     transform: translateX(-5px);
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
     body {
         padding: 15px;
@@ -165,7 +157,6 @@ a[href="/products"]:hover {
     }
 }
 
-/* Animation for page load */
 body {
     animation: fadeIn 0.5s ease-in;
 }
@@ -181,14 +172,12 @@ body {
     }
 }
 
-/* Hover effects for info cards */
 p:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
 }
 
-/* Special styling for conditional fields */
 p:has(strong:contains("Size")), p:has(strong:contains("Variant")) {
     border-left-color: #9b59b6;
     background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);

@@ -1,4 +1,3 @@
-/* Reset dan Tampilan Dasar */
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +13,6 @@ body {
     position: relative;
 }
 
-/* Background Mengambang */
 body::before {
     content: '📦 📋 🍰 📦 📋 🍰 📦 📋 📦 📋 🍰';
     position: fixed;
@@ -36,7 +34,6 @@ body::before {
     100% { transform: translateX(100%); }
 }
 
-/* Sidebar */
 .sidebar {
     position: fixed;
     top: 0;
@@ -98,7 +95,6 @@ body::before {
     transform: translateX(10px);
 }
 
-/* Logout Button */
 #logout-form button {
     width: 100%;
     padding: 1rem 2rem;
@@ -136,7 +132,6 @@ body::before {
     opacity: 1;
 }
 
-/* Konten Utama */
 .main-content {
     margin-left: 280px;
     padding: 3rem 2rem;
@@ -156,7 +151,6 @@ body::before {
     text-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
 }
 
-/* Tabel Riwayat */
 .history-table {
     width: 100%;
     border-collapse: collapse;
@@ -182,7 +176,6 @@ body::before {
 }
 
 
-/* Tombol Aksi */
 .detail-btn {
     background-color: #17a2b8;
     color: white;
@@ -197,7 +190,6 @@ body::before {
     background-color: #138496;
 }
 
-/* Status Label */
 .status {
     padding: 6px 12px;
     border-radius: 20px;
@@ -228,7 +220,6 @@ body::before {
     color: #d63384;
 }
 
-/* Modal Detail */
 .modal {
     display: none;
     position: fixed;
@@ -259,7 +250,6 @@ body::before {
     cursor: pointer;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .sidebar {
         width: 250px;
@@ -295,7 +285,7 @@ body::before {
     margin: 0 auto;
     border: 2px dashed #333;
     padding: 15px;
-    position: relative; /* Diperlukan untuk stempel */
+    position: relative; 
 }
 .receipt-header {
     text-align: center;
@@ -336,6 +326,6 @@ body::before {
     border-radius: 10px;
     font-weight: bold;
     z-index: 100;
-    pointer-events: none; /* Agar stempel tidak bisa diklik */
-    display: none; /* Disembunyikan secara default */
+    pointer-events: none; 
+    display: none;
 }

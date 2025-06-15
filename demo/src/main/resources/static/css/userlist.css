@@ -1,4 +1,3 @@
-/* RESET & BASE STYLES */
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +12,6 @@ body {
     position: relative;
 }
 
-/* FLOATING BACKGROUND (optional)
 body::before {
     content: '👥 🍰 🧁 📋 🧁 🍰';
     position: fixed;
@@ -32,9 +30,8 @@ body::before {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
-*/
 
-/* SIDEBAR (tetap sama) */
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -97,7 +94,6 @@ body::before {
     transform: translateX(10px);
 }
 
-/* MAIN CONTENT */
 .main-content {
     margin-left: 280px;
     padding: 3rem 2rem;
@@ -116,7 +112,6 @@ body::before {
     text-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
 }
 
-/* TAMBAH USER BUTTON */
 .main-content a[href*="add"] {
     display: inline-block;
     margin-bottom: 1.5rem;
@@ -136,7 +131,6 @@ body::before {
     transform: scale(1.03);
 }
 
-/* TABEL PENGGUNA */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -182,7 +176,6 @@ td a:hover {
     color: #d63031;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
     .sidebar {
         width: 250px;
@@ -208,7 +201,6 @@ td a:hover {
     }
 }
 
-/* BUTTON EDIT */
 .btn-edit {
     background: linear-gradient(135deg, #38d9a9, #20c997);
     color: white;
@@ -226,7 +218,6 @@ td a:hover {
     transform: scale(1.05);
 }
 
-/* BUTTON HAPUS */
 .btn-hapus {
     background: linear-gradient(135deg, #ff6b81, #e63946);
     color: white;

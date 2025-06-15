@@ -1,7 +1,8 @@
 package com.example.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class RegisterRequest {
     private String nama;
@@ -14,7 +15,6 @@ public class RegisterRequest {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate tanggalLahir;
 
-    // Getter & Setter
     public String getNama() {
         return nama;
     }
