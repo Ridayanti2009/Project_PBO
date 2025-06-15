@@ -20,4 +20,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Query("SELECT COALESCE(SUM(t.totalAmount), 0) FROM Transaction t WHERE t.orderDate >= :startOfDay AND t.orderDate < :endOfDay AND t.status = 'COMPLETED'")
     double findTodaysRevenue(@Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);
     List<Transaction> findByOrderDateBetweenOrderByOrderDateDesc(LocalDateTime startDate, LocalDateTime endDate);
+    List<Transaction> findByStatusAndOrderDateBetween(String status, LocalDateTime start, LocalDateTime end);
 }

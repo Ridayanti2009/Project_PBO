@@ -15,7 +15,7 @@ body {
 
 h1 {
     text-align: center;
-    color: white;
+    color: #ff8e8e;
     margin-bottom: 30px;
     font-size: 2.5rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -180,21 +180,21 @@ input:valid {
     body {
         padding: 15px;
     }
-    
+
     h1 {
         font-size: 2rem;
     }
-    
+
     form {
         padding: 25px;
         margin: 0 10px;
     }
-    
+
     input[type="text"],
     input[type="number"] {
         padding: 12px;
     }
-    
+
     button[type="submit"] {
         padding: 12px;
         font-size: 1.1rem;
@@ -205,12 +205,12 @@ input:valid {
     form {
         padding: 20px;
     }
-    
+
     h1 {
         font-size: 1.8rem;
         margin-bottom: 20px;
     }
-    
+
     div:has(input[name="ukuran"]),
     div:has(input[name="varian"]) {
         padding: 15px;

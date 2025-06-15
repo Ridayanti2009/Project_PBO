@@ -179,9 +179,35 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public double getTodaysRevenue() {
+        // === INI PERBAIKANNYA ===
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
-        LocalDateTime endOfDay = startOfDay.plusDays(1);
-        return transactionRepository.findTodaysRevenue(startOfDay, endOfDay);
+        LocalDateTime endOfDay = LocalDate.now().atTime(LocalTime.MAX);
+
+        // 1. Ambil semua transaksi yang statusnya COMPLETED hari ini
+        List<Transaction> completedOrdersToday = transactionRepository.findByStatusAndOrderDateBetween("COMPLETED", startOfDay, endOfDay);
+
+        // 2. Jika tidak ada, kembalikan 0
+        if (completedOrdersToday.isEmpty()) {
+            return 0.0;
+        }
+
+        // 3. Hitung GRAND TOTAL (termasuk PPN) untuk setiap pesanan, lalu jumlahkan semuanya
+        double totalRevenueWithTax = completedOrdersToday.stream()
+                .mapToDouble(order -> {
+                    // Logika ini meniru perhitungan di struk Anda
+                    double amountFromDb = order.getTotalAmount(); // Ini adalah subtotal + ongkir
+
+                    // Pisahkan subtotal dan ongkir untuk menghitung PPN dengan benar
+                    double shippingFee = ("DELIVERY".equalsIgnoreCase(order.getDeliveryOption())) ? 10000 : 0;
+                    double subtotalForTax = amountFromDb - shippingFee;
+                    double taxAmount = subtotalForTax * 0.03; // PPN 3%
+
+                    // Kembalikan total akhir untuk pesanan ini
+                    return amountFromDb + taxAmount;
+                })
+                .sum(); // Jumlahkan semua total akhir
+
+        return totalRevenueWithTax;
     }
 
     @Override

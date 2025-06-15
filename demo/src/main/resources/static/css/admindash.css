@@ -514,7 +514,7 @@ table tbody td:first-child {
 
 /* Gaya untuk tombol Detail di tabel */
 .detail-btn {
-    background: linear-gradient(45deg, #1abc9c, #16a085); /* Contoh warna hijau */
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e); /* Contoh warna hijau */
     color: white;
     padding: 5px 10px;
     border-radius: 15px;
@@ -526,7 +526,7 @@ table tbody td:first-child {
 }
 
 .detail-btn:hover {
-    background: linear-gradient(45deg, #16a085, #138d72);
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
