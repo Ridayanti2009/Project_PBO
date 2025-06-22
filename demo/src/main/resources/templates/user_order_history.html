@@ -78,13 +78,29 @@
         .cancel-button-container button:hover {
             background-color: #c82333;
         }
+        .detail-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e); /* Contoh warna hijau */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .detail-btn:hover {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 <div class="main-content">
-    <h1>📋 My Order History</h1>
+    <h1>My Order History</h1>
 
     <table class="history-table">
         <thead>

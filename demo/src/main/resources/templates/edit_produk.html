@@ -24,12 +24,12 @@
     <label>Stock</label>
     <input type="number" name="stock" th:value="${product.stok}" />
 
-    <div th:if="${kategori == 'cookie' or kategori == 'celebrationcake'}">
+    <div th:if="${kategori.toLowerCase() == 'cookie' or kategori.toLowerCase() == 'celebrationcake'}">
         <label>Size</label>
         <input type="text" name="ukuran" th:value="${product.ukuran}" />
     </div>
 
-    <div th:if="${kategori == 'dessert' or kategori == 'classiccake'}">
+    <div th:if="${kategori.toLowerCase() == 'dessert' or kategori.toLowerCase() == 'classiccake'}">
         <label>Variant</label>
         <input type="text" name="varian" th:value="${product.varian}" />
     </div>

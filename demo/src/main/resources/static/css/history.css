@@ -177,17 +177,21 @@ body::before {
 
 
 .detail-btn {
-    background-color: #17a2b8;
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e); /* Contoh warna hijau */
     color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
+    padding: 5px 10px;
+    border-radius: 15px;
     text-decoration: none;
-    font-size: 0.9rem;
-    transition: background 0.3s ease;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .detail-btn:hover {
-    background-color: #138496;
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .status {
@@ -285,7 +289,7 @@ body::before {
     margin: 0 auto;
     border: 2px dashed #333;
     padding: 15px;
-    position: relative; 
+    position: relative;
 }
 .receipt-header {
     text-align: center;
@@ -326,6 +330,6 @@ body::before {
     border-radius: 10px;
     font-weight: bold;
     z-index: 100;
-    pointer-events: none; 
+    pointer-events: none;
     display: none;
 }

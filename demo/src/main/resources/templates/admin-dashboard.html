@@ -199,6 +199,7 @@
 
         const receiptHtml = `
             <div class="receipt-container">
+                <div class="paid-stamp" style="display: ${order.status && order.status.toUpperCase() === 'COMPLETED' ? 'block' : 'none'};">PAID</div>
                 <div class="receipt-header">
                     <h2>Sweet Shop</h2>
                     <p>Order ID: #${order.id}</p>

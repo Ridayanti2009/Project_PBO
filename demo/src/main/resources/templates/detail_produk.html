@@ -26,7 +26,6 @@
 
   <div>
     <a th:href="@{'/products/edit/' + ${kategori} + '/' + ${product.id}}">Edit</a>
-    |
     <a th:href="@{'/products/delete/' + ${kategori} + '/' + ${product.id}}"
         onclick="return confirm('Yakin ingin menghapus produk ini?')">Delete</a>
   </div>
